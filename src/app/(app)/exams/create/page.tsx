@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/toast';
 import { PageHeader } from '@/components/ui/page-header';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ArrowLeft, ArrowRight, Check, Plus, Trash2, GripVertical } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
 import type { QuestionType, Difficulty, ExamSettings } from '@/types';
@@ -146,7 +147,19 @@ export default function CreateExamPage() {
     : [];
 
   if (isLoadingData) {
-    return <div className="p-8 text-center text-gray-500">Loading data...</div>;
+    return (
+      <div className="max-w-3xl animate-fade-in space-y-8">
+        <Skeleton className="h-8 w-40 mb-6" />
+        <div className="space-y-4">
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-10 w-full" />
+          <div className="flex gap-4">
+            <Skeleton className="h-10 w-1/2" />
+            <Skeleton className="h-10 w-1/2" />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

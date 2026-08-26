@@ -6,7 +6,8 @@ import { useAuth } from '@/lib/auth-context';
 import { PageHeader } from '@/components/ui/page-header';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { EmptyState } from '@/components/ui/empty-state';
-import { Search, Plus, FileText, Filter } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Search, Plus, Filter, FileText, Calendar, Clock, MapPin } from 'lucide-react';
 import { fetchExams, fetchSubjects } from '@/lib/data/supabase-service';
 
 const tabs = [
@@ -146,9 +147,27 @@ export default function ExamsPage() {
 
       {/* ── Data Table ── */}
         {loading ? (
-          <div className="py-20 flex flex-col items-center justify-center">
-            <i className="fa-solid fa-circle-notch fa-spin text-2xl text-blue-500 mb-4"></i>
-            <p className="text-sm font-medium text-gray-500 animate-pulse">Loading exams...</p>
+          <div className="flex flex-col gap-3 w-full animate-fade-in">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 bg-white rounded-xl border border-[#F4F4F5]">
+                <div className="flex gap-4 items-start">
+                  <Skeleton className="w-10 h-10 rounded-lg shrink-0" />
+                  <div className="space-y-2 w-full max-w-[300px]">
+                    <Skeleton className="h-4 w-[250px]" />
+                    <Skeleton className="h-3 w-[150px]" />
+                    <div className="flex items-center gap-4 mt-2">
+                      <Skeleton className="h-3 w-20" />
+                      <Skeleton className="h-3 w-20" />
+                      <Skeleton className="h-3 w-20" />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <Skeleton className="h-6 w-20 rounded-full" />
+                  <Skeleton className="h-8 w-24 rounded-md" />
+                </div>
+              </div>
+            ))}
           </div>
         ) : filteredExams.length === 0 ? (
         <EmptyState

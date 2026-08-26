@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { PageHeader } from '@/components/ui/page-header';
 import { StatusBadge } from '@/components/ui/status-badge';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { useToast } from '@/components/ui/toast';
 import { Search } from 'lucide-react';
@@ -85,7 +86,17 @@ export default function StudentsPage() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={7} className="text-center py-10 text-gray-500">Loading students...</td></tr>
+              [1, 2, 3, 4, 5].map(i => (
+                <tr key={i}>
+                  <td className="px-4 py-3"><Skeleton className="h-4 w-24" /></td>
+                  <td className="px-4 py-3"><Skeleton className="h-4 w-16" /></td>
+                  <td className="px-4 py-3"><Skeleton className="h-4 w-32" /></td>
+                  <td className="px-4 py-3"><Skeleton className="h-4 w-20" /></td>
+                  <td className="px-4 py-3"><Skeleton className="h-4 w-12" /></td>
+                  <td className="px-4 py-3"><Skeleton className="h-5 w-16 rounded-full" /></td>
+                  <td className="px-4 py-3 text-right"><Skeleton className="h-6 w-8 ml-auto" /></td>
+                </tr>
+              ))
             ) : filtered.length === 0 ? (
               <tr><td colSpan={7} className="text-center py-10 text-gray-500">No students found.</td></tr>
             ) : filtered.map(student => (

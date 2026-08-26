@@ -4,8 +4,10 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { useToast } from '@/components/ui/toast';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Clock, Save, AlertTriangle } from 'lucide-react';
+import { getDynamicExamStatus } from '@/lib/utils/exam-status';
 import { supabase } from '@/lib/supabase';
 import type { StudentAnswer, QuestionNavStatus } from '@/types';
 
@@ -89,6 +91,14 @@ export default function ExamTakePage() {
         router.replace('/exams');
         return;
       }
+      
+      const dynamicStatus = getDynamicExamStatus(examData);
+      if (dynamicStatus !== 'live') {
+        addToast(`This exam is currently ${dynamicStatus} and cannot be taken right now.`, 'error');
+        router.replace(`/exams/${examId}`);
+        return;
+      }
+
       setExam(examData);
 
       const { data: subData } = await supabase.from('subjects').select('*').eq('id', examData.subject_id).single();
@@ -532,10 +542,39 @@ export default function ExamTakePage() {
 
   if (loadingData) {
     return (
-      <div className="min-h-screen bg-bg flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <h2 className="text-lg font-medium text-text">Setting up secure environment...</h2>
+      <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
+        <header className="h-[60px] border-b border-[#F4F4F5] bg-white flex items-center justify-between px-6">
+          <Skeleton className="h-5 w-40" />
+          <Skeleton className="h-8 w-32 rounded-md" />
+        </header>
+        <div className="flex-1 flex overflow-hidden">
+          <main className="flex-1 overflow-y-auto p-6 lg:p-10 border-r border-[#F4F4F5]">
+            <div className="max-w-3xl mx-auto space-y-8 animate-fade-in">
+              <div className="flex justify-between items-center">
+                <Skeleton className="h-5 w-32" />
+                <div className="flex gap-2">
+                  <Skeleton className="h-6 w-24 rounded" />
+                  <Skeleton className="h-6 w-16 rounded" />
+                </div>
+              </div>
+              <Skeleton className="h-8 w-3/4 mb-10" />
+              <div className="space-y-4">
+                {[1, 2, 3, 4].map(i => (
+                  <Skeleton key={i} className="h-14 w-full rounded-md" />
+                ))}
+              </div>
+            </div>
+          </main>
+          <aside className="w-[300px] bg-white hidden lg:flex flex-col">
+            <div className="p-5 border-b border-[#F4F4F5]">
+              <Skeleton className="h-5 w-24 mb-4" />
+              <div className="grid grid-cols-5 gap-2">
+                {[...Array(20)].map((_, i) => (
+                  <Skeleton key={i} className="aspect-square rounded" />
+                ))}
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     );

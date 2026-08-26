@@ -5,6 +5,7 @@ import Link from 'next/link';
 import type { User } from '@/types';
 import { ChevronRight } from 'lucide-react';
 import { MetricStrip, MetricItem } from '@/components/ui/stat-card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { fetchPlatformStats } from '@/lib/data/supabase-service';
 
 export function AdminDashboard({ user }: { user: User }) {
@@ -50,9 +51,27 @@ export function AdminDashboard({ user }: { user: User }) {
       </div>
 
       {loading ? (
-        <div className="py-20 flex flex-col items-center justify-center">
-          <i className="fa-solid fa-circle-notch fa-spin text-2xl text-blue-500 mb-4"></i>
-          <p className="text-sm font-medium text-gray-500 animate-pulse">Loading system metrics...</p>
+        <div className="space-y-12 w-full animate-fade-in">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-[1px] bg-[#E5E5E5] overflow-hidden rounded-xl border border-[#E5E5E5]">
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} className="bg-white p-6 h-[110px]">
+                <Skeleton className="h-3 w-24 mb-4" />
+                <Skeleton className="h-8 w-12 mb-2" />
+                <Skeleton className="h-3 w-28" />
+              </div>
+            ))}
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} className="bg-white border border-[#F4F4F5] p-5 rounded-xl flex justify-between h-[80px]">
+                <div>
+                  <Skeleton className="h-4 w-32 mb-2" />
+                  <Skeleton className="h-3 w-40" />
+                </div>
+                <Skeleton className="h-8 w-8 rounded-full" />
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
         <>

@@ -9,6 +9,7 @@ import { EmptyState } from '@/components/ui/empty-state';
 import {
   fetchStudentUpcomingExams, fetchStudentCompletedExams, fetchStudentResults, fetchSubjects
 } from '@/lib/data/supabase-service';
+import { Skeleton } from '@/components/ui/skeleton';
 import type { Exam, Result } from '@/types';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -83,9 +84,43 @@ export function StudentDashboard({ user }: { user: User }) {
       </div>
 
       {loading ? (
-        <div className="py-20 flex flex-col items-center justify-center">
-          <i className="fa-solid fa-circle-notch fa-spin text-2xl text-blue-500 mb-4"></i>
-          <p className="text-sm font-medium text-gray-500 animate-pulse">Loading live dashboard data...</p>
+        <div className="space-y-12 w-full animate-fade-in">
+          {/* Skeleton Metrics */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-[1px] bg-[#E5E5E5] overflow-hidden rounded-xl border border-[#E5E5E5]">
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} className="bg-white p-6 h-[110px]">
+                <Skeleton className="h-3 w-20 mb-4" />
+                <Skeleton className="h-8 w-16 mb-2" />
+                <Skeleton className="h-3 w-32" />
+              </div>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <Skeleton className="h-5 w-48 mb-6" />
+              {[1, 2, 3].map(i => (
+                <div key={i} className="bg-white border border-[#F4F4F5] p-5 rounded-xl h-[120px]">
+                  <Skeleton className="h-5 w-3/4 mb-4" />
+                  <Skeleton className="h-4 w-1/2 mb-4" />
+                  <div className="flex gap-2">
+                    <Skeleton className="h-6 w-20 rounded" />
+                    <Skeleton className="h-6 w-24 rounded" />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="space-y-4">
+              <Skeleton className="h-5 w-48 mb-6" />
+              <div className="bg-white border border-[#F4F4F5] p-6 rounded-xl h-[300px] flex flex-col justify-end">
+                <div className="flex items-end justify-between gap-4 h-full">
+                  {[1, 2, 3, 4, 5].map(i => (
+                    <Skeleton key={i} className="w-12 rounded-t-sm" style={{ height: `${Math.random() * 60 + 30}%` }} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
         <>

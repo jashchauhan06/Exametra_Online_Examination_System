@@ -12,6 +12,7 @@ import {
 } from '@/lib/data/supabase-service';
 import { supabase } from '@/lib/supabase';
 import { MetricStrip, MetricItem } from '@/components/ui/stat-card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ResultsPage() {
   const { user } = useAuth();
@@ -54,7 +55,12 @@ function StudentResults({ userId }: { userId: string }) {
       />
 
       {loading ? (
-        <div className="py-20 text-center"><i className="fa-solid fa-circle-notch fa-spin text-2xl text-blue-500"></i></div>
+        <div className="space-y-4 w-full animate-fade-in">
+          <Skeleton className="h-[40px] w-full mb-4 rounded-md" />
+          {[1, 2, 3, 4, 5].map((i) => (
+            <Skeleton key={i} className="h-[50px] w-full rounded-md" />
+          ))}
+        </div>
       ) : results.length === 0 ? (
         <EmptyState
           icon={BarChart3}
@@ -85,8 +91,8 @@ function StudentResults({ userId }: { userId: string }) {
                         {new Date((result as any).evaluated_at || result.evaluatedAt || new Date()).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
                       </div>
                     </td>
-                    <td className="font-mono text-[13px] font-medium text-[#18181B]">{(result as any).obtained_marks ?? result.obtainedMarks} / {(result as any).total_marks ?? result.totalMarks}</td>
-                    <td className="font-mono text-[13px] font-semibold text-[#18181B]">{result.percentage}%</td>
+                    <td className="text-[13px] font-medium text-[#18181B] tabular-nums">{(result as any).obtained_marks ?? result.obtainedMarks} / {(result as any).total_marks ?? result.totalMarks}</td>
+                    <td className="text-[13px] font-medium text-[#18181B] tabular-nums">{result.percentage}%</td>
                     <td><StatusBadge variant={result.status} /></td>
                     <td className="text-right">
                       <Link
@@ -241,7 +247,19 @@ function FacultyResults({ userId, userRole }: { userId: string; userRole: string
                 </tr>
               </thead>
               <tbody>
-                {examResults.map((result, i) => {
+                {loadingResults ? (
+                  [1, 2, 3, 4, 5].map(i => (
+                    <tr key={i}>
+                      <td><Skeleton className="h-4 w-32" /></td>
+                      <td><Skeleton className="h-5 w-24 rounded" /></td>
+                      <td><Skeleton className="h-4 w-16" /></td>
+                      <td><Skeleton className="h-4 w-12" /></td>
+                      <td><Skeleton className="h-6 w-20 rounded-full" /></td>
+                      <td><Skeleton className="h-4 w-16" /></td>
+                      <td className="text-right"><Skeleton className="h-8 w-16 rounded-md ml-auto" /></td>
+                    </tr>
+                  ))
+                ) : examResults.map((result, i) => {
                   const student = allStudents.find(s => s.id === (result as any).student_id || s.id === result.studentId);
                   const timeSpent = (result as any).time_spent ?? result.timeSpent ?? 0;
                   const mins = Math.floor(timeSpent / 60);
@@ -256,8 +274,8 @@ function FacultyResults({ userId, userRole }: { userId: string; userRole: string
                           {student?.student_id || '—'}
                         </div>
                       </td>
-                      <td className="font-mono text-[13px] font-medium text-[#18181B]">{(result as any).obtained_marks ?? result.obtainedMarks}/{(result as any).total_marks ?? result.totalMarks}</td>
-                      <td className="font-mono text-[13px] font-semibold text-[#18181B]">{result.percentage}%</td>
+                      <td className="text-[13px] font-medium text-[#18181B] tabular-nums">{(result as any).obtained_marks ?? result.obtainedMarks}/{(result as any).total_marks ?? result.totalMarks}</td>
+                      <td className="text-[13px] font-medium text-[#18181B] tabular-nums">{result.percentage}%</td>
                       <td><StatusBadge variant={result.status} /></td>
                       <td className="text-[13px] text-[#52525B]">{mins}m {secs.toString().padStart(2, '0')}s</td>
                       <td className="text-right">

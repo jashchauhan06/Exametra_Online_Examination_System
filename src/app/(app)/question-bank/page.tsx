@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { PageHeader } from '@/components/ui/page-header';
 import { StatusBadge } from '@/components/ui/status-badge';
+import { Skeleton } from '@/components/ui/skeleton';
 import { EmptyState } from '@/components/ui/empty-state';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { useToast } from '@/components/ui/toast';
@@ -198,7 +199,36 @@ export default function QuestionBankPage() {
       )}
 
       {/* Table */}
-      {questions.length === 0 ? (
+      {loading ? (
+        <div className="bg-surface border border-border rounded-lg overflow-hidden">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border bg-bg">
+                <th className="w-10 px-4 py-2.5"></th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-text-secondary uppercase tracking-wide">Question</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-text-secondary uppercase tracking-wide">Subject</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-text-secondary uppercase tracking-wide">Topic</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-text-secondary uppercase tracking-wide">Type</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-text-secondary uppercase tracking-wide">Difficulty</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-text-secondary uppercase tracking-wide">Marks</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[1, 2, 3, 4, 5].map(i => (
+                <tr key={i}>
+                  <td className="px-4 py-3"><Skeleton className="h-4 w-4" /></td>
+                  <td className="px-4 py-3"><Skeleton className="h-4 w-48" /></td>
+                  <td className="px-4 py-3"><Skeleton className="h-4 w-16" /></td>
+                  <td className="px-4 py-3"><Skeleton className="h-4 w-24" /></td>
+                  <td className="px-4 py-3"><Skeleton className="h-4 w-12" /></td>
+                  <td className="px-4 py-3"><Skeleton className="h-5 w-16 rounded-full" /></td>
+                  <td className="px-4 py-3"><Skeleton className="h-4 w-8" /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : questions.length === 0 ? (
         <EmptyState icon={BookOpen} title="No questions found" description="Add questions to build your question bank." />
       ) : (
         <div className="bg-surface border border-border rounded-lg overflow-hidden">

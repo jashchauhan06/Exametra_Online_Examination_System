@@ -6,8 +6,11 @@ import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { useToast } from '@/components/ui/toast';
 import { StatusBadge } from '@/components/ui/status-badge';
-import { ArrowLeft, Calendar, Clock, FileText, User, Award, Target, CheckCircle2, RotateCcw, Shield, AlertTriangle } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import { ArrowLeft, Calendar, Clock, FileText, User, Award, Target, CheckCircle2, RotateCcw, Shield, AlertTriangle, Trash2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { getDynamicExamStatus } from '@/lib/utils/exam-status';
 
 export default function ExamDetailPage() {
   const params = useParams();
@@ -15,6 +18,7 @@ export default function ExamDetailPage() {
   const { user } = useAuth();
   const { addToast } = useToast();
   const [acknowledged, setAcknowledged] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const [exam, setExam] = useState<any>(null);
   const [subject, setSubject] = useState<any>(null);
@@ -33,6 +37,7 @@ export default function ExamDetailPage() {
       const { data: examData } = await supabase.from('exams').select('*').eq('id', examId).single();
       
       if (examData) {
+        examData.status = getDynamicExamStatus(examData);
         setExam(examData);
         const { data: subData } = await supabase.from('subjects').select('*').eq('id', examData.subject_id).single();
         setSubject(subData);
@@ -122,8 +127,39 @@ export default function ExamDetailPage() {
     addToast('Student can now retake the exam.', 'success');
   };
 
+  const handleDeleteExam = async () => {
+    if (!exam) return;
+    const { error } = await supabase.from('exams').delete().eq('id', exam.id);
+    if (error) {
+      addToast('Failed to delete exam.', 'error');
+    } else {
+      addToast('Exam deleted successfully.', 'success');
+      router.replace('/exams');
+    }
+  };
+
   if (loading) {
-    return <div className="max-w-3xl text-center py-20 text-gray-500">Loading exam details...</div>;
+    return (
+      <div className="max-w-3xl mx-auto animate-fade-in space-y-6">
+        <Skeleton className="h-4 w-24 mb-6" />
+        <div className="space-y-4">
+          <Skeleton className="h-8 w-3/4" />
+          <Skeleton className="h-4 w-1/2" />
+          <Skeleton className="h-6 w-20 rounded-full mt-2" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+            <div key={i} className="flex items-center gap-3 p-3 bg-surface rounded-md border border-border">
+              <Skeleton className="w-8 h-8 rounded-md" />
+              <div>
+                <Skeleton className="h-3 w-16 mb-1.5" />
+                <Skeleton className="h-4 w-32" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (!exam) {
@@ -152,7 +188,8 @@ export default function ExamDetailPage() {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto animate-page-enter">
+    <>
+      <div className="max-w-3xl mx-auto animate-page-enter">
       {/* Back */}
       <Link href="/exams" className="inline-flex items-center gap-1.5 text-sm text-text-secondary hover:text-text mb-4">
         <ArrowLeft size={16} /> Back to Exams
@@ -164,7 +201,17 @@ export default function ExamDetailPage() {
           <h1 className="text-2xl font-semibold text-text">{exam.title}</h1>
           <p className="text-sm text-text-secondary mt-1">{exam.description}</p>
         </div>
-        <StatusBadge variant={exam.status} />
+        <div className="flex flex-col items-end gap-2">
+          <StatusBadge variant={exam.status} />
+          {user?.role === 'admin' && (
+            <button
+              onClick={() => setShowDeleteDialog(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-error/20 bg-error/5 text-error hover:bg-error/10 transition-colors text-xs font-medium"
+            >
+              <Trash2 size={14} /> Delete Exam
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Details */}
@@ -346,6 +393,17 @@ export default function ExamDetailPage() {
           )}
         </section>
       )}
-    </div>
+      </div>
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={showDeleteDialog}
+        title="Delete Exam?"
+        message={`Are you sure you want to delete "${exam.title}"? This will also delete all associated questions, attempts, and results. This action cannot be undone.`}
+        confirmText="Delete Exam"
+        variant="danger"
+        onConfirm={handleDeleteExam}
+        onCancel={() => setShowDeleteDialog(false)}
+      />
+    </>
   );
 }

@@ -4,7 +4,11 @@ import React from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Download, CheckCircle2, XCircle, MinusCircle, Clock, AlertTriangle } from 'lucide-react';
+import { useAuth } from '@/lib/auth-context';
+import { PageHeader } from '@/components/ui/page-header';
 import { StatusBadge } from '@/components/ui/status-badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { MetricStrip, MetricItem } from '@/components/ui/stat-card';
 import { supabase } from '@/lib/supabase';
 
 export default function ResultDetailPage() {
@@ -46,7 +50,29 @@ export default function ResultDetailPage() {
   }, [params.id]);
 
   if (loading) {
-    return <div className="max-w-3xl text-center py-20 text-gray-500">Loading result...</div>;
+    return (
+      <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
+        <Skeleton className="h-4 w-24 mb-6" />
+        <div className="space-y-4">
+          <Skeleton className="h-8 w-1/2" />
+          <Skeleton className="h-4 w-1/3" />
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-[#E5E5E5] overflow-hidden rounded-xl border border-[#E5E5E5]">
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className="bg-white p-6 h-[110px]">
+              <Skeleton className="h-3 w-16 mb-4" />
+              <Skeleton className="h-8 w-12 mb-2" />
+              <Skeleton className="h-3 w-20" />
+            </div>
+          ))}
+        </div>
+        <div className="space-y-4 mt-8">
+          {[1, 2, 3].map(i => (
+            <Skeleton key={i} className="h-32 w-full rounded-xl" />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (!result) {

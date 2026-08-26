@@ -7,6 +7,7 @@ import { Plus, BookOpen } from 'lucide-react';
 import { MetricStrip, MetricItem } from '@/components/ui/stat-card';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { EmptyState } from '@/components/ui/empty-state';
+import { Skeleton } from '@/components/ui/skeleton';
 import { fetchFacultyDashboardData, fetchSubjects } from '@/lib/data/supabase-service';
 import type { Exam } from '@/types';
 import {
@@ -80,9 +81,25 @@ export function FacultyDashboard({ user }: { user: User }) {
       </div>
 
       {loading ? (
-        <div className="py-20 flex flex-col items-center justify-center">
-          <i className="fa-solid fa-circle-notch fa-spin text-2xl text-blue-500 mb-4"></i>
-          <p className="text-sm font-medium text-gray-500 animate-pulse">Loading dashboard metrics...</p>
+        <div className="space-y-12 w-full animate-fade-in">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-[1px] bg-[#E5E5E5] overflow-hidden rounded-xl border border-[#E5E5E5]">
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} className="bg-white p-6 h-[110px]">
+                <Skeleton className="h-3 w-24 mb-4" />
+                <Skeleton className="h-8 w-12 mb-2" />
+                <Skeleton className="h-3 w-28" />
+              </div>
+            ))}
+          </div>
+          <div className="space-y-4">
+            <Skeleton className="h-5 w-48 mb-6" />
+            {[1, 2].map(i => (
+              <div key={i} className="bg-white border border-[#F4F4F5] p-5 rounded-xl h-[80px]">
+                <Skeleton className="h-4 w-1/4 mb-3" />
+                <Skeleton className="h-3 w-1/2" />
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
         <>

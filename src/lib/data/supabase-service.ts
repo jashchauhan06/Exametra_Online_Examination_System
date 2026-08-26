@@ -1,5 +1,6 @@
 import { supabase } from '../supabase';
 import type { Exam, Result } from '@/types';
+import { getDynamicExamStatus } from '../utils/exam-status';
 
 /**
  * Fetches upcoming exams for a student.
@@ -8,14 +9,16 @@ export async function fetchStudentUpcomingExams(studentId: string): Promise<Exam
   const { data, error } = await supabase
     .from('exams')
     .select('*')
-    .eq('status', 'upcoming')
+    .neq('status', 'draft')
     .order('date', { ascending: true });
 
   if (error) {
     console.error('Error fetching upcoming exams:', error);
     return [];
   }
-  return data || [];
+  return (data || [])
+    .map(e => ({ ...e, status: getDynamicExamStatus(e as Exam) }))
+    .filter(e => e.status === 'upcoming' || e.status === 'live');
 }
 
 /**
@@ -25,14 +28,16 @@ export async function fetchStudentCompletedExams(studentId: string): Promise<Exa
   const { data, error } = await supabase
     .from('exams')
     .select('*')
-    .eq('status', 'completed')
+    .neq('status', 'draft')
     .order('date', { ascending: false });
 
   if (error) {
     console.error('Error fetching completed exams:', error);
     return [];
   }
-  return data || [];
+  return (data || [])
+    .map(e => ({ ...e, status: getDynamicExamStatus(e as Exam) }))
+    .filter(e => e.status === 'completed');
 }
 
 /**
@@ -68,9 +73,14 @@ export async function fetchFacultyDashboardData(facultyId: string) {
     .select('*', { count: 'exact', head: true })
     .eq('role', 'student');
 
+  // Map to dynamic status
+  const dynamicExams = (exams || []).map(e => ({ ...e, status: getDynamicExamStatus(e as Exam) }));
+  const activeExams = dynamicExams.filter(e => e.status === 'live').length;
+  const upcomingExams = dynamicExams.filter(e => e.status === 'upcoming').length;
+
   // 3. For completed exams, fetch analytics (results)
   // In a real system, you'd aggregate this in SQL, but for now we'll fetch results for these exams
-  const completedExamIds = (exams || []).filter(e => e.status === 'completed').map(e => e.id);
+  const completedExamIds = dynamicExams.filter(e => e.status === 'completed').map(e => e.id);
   
   let analyticsData: Record<string, { averageScore: number, passRate: number, totalAttempts: number }> = {};
   
@@ -132,7 +142,7 @@ export async function fetchExams(facultyId?: string) {
     console.error('Error fetching exams:', error);
     return [];
   }
-  return data || [];
+  return (data || []).map(e => ({ ...e, status: getDynamicExamStatus(e as Exam) }));
 }
 
 /**
