@@ -4,6 +4,9 @@ import React from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Download, CheckCircle2, XCircle, MinusCircle, Clock, AlertTriangle } from 'lucide-react';
+import dynamic from 'next/dynamic';
+const CodeEditor = dynamic(() => import('@/components/coding/CodeEditor'), { ssr: false });
+import TestCasePanel from '@/components/coding/TestCasePanel';
 import { useAuth } from '@/lib/auth-context';
 import { PageHeader } from '@/components/ui/page-header';
 import { StatusBadge } from '@/components/ui/status-badge';
@@ -214,7 +217,9 @@ export default function ResultDetailPage() {
                   }`}
                 >
                   <div className="flex items-start justify-between mb-2">
-                    <span className="text-xs font-medium text-text-secondary">Question {i + 1}</span>
+                    <span className="text-xs font-medium text-text-secondary">
+                      Question {i + 1} {question.type === 'coding' && <span className="ml-2 px-1.5 py-0.5 bg-bg border border-border rounded text-[10px]">Coding</span>}
+                    </span>
                     <span className={`text-xs font-medium ${
                       qr.isCorrect ? 'text-success' : qr.studentAnswer.length === 0 ? 'text-text-muted' : 'text-error'
                     }`}>
@@ -222,22 +227,48 @@ export default function ResultDetailPage() {
                     </span>
                   </div>
                   <p className="text-sm text-text mb-3">{question.text}</p>
-                  <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div>
-                      <span className="text-text-muted">Your answer</span>
-                      <div className={`mt-0.5 font-medium ${
-                        qr.isCorrect ? 'text-success' : qr.studentAnswer.length === 0 ? 'text-text-muted' : 'text-error'
-                      }`}>
-                        {studentOptions.length > 0 ? studentOptions.join(', ') : 'Not answered'}
+                  
+                  {question.type === 'coding' && qr.codingResult ? (
+                    <div className="mt-4 space-y-4">
+                      {qr.codingResult.error ? (
+                        <div className="text-xs text-red-400 bg-red-500/10 p-3 rounded border border-red-500/20 whitespace-pre-wrap">
+                          {qr.codingResult.error}
+                        </div>
+                      ) : (
+                        <>
+                          <CodeEditor
+                            language={qr.codingResult.language}
+                            onLanguageChange={() => {}}
+                            code={qr.codingResult.code}
+                            onCodeChange={() => {}}
+                            readOnly={true}
+                            height="200px"
+                          />
+                          <TestCasePanel
+                            testCases={question.test_cases || []}
+                            results={qr.codingResult.results}
+                          />
+                        </>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-3 text-xs">
+                      <div>
+                        <span className="text-text-muted">Your answer</span>
+                        <div className={`mt-0.5 font-medium ${
+                          qr.isCorrect ? 'text-success' : qr.studentAnswer.length === 0 ? 'text-text-muted' : 'text-error'
+                        }`}>
+                          {studentOptions.length > 0 ? studentOptions.join(', ') : 'Not answered'}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-text-muted">Correct answer</span>
+                        <div className="mt-0.5 font-medium text-success">
+                          {correctOptions.join(', ')}
+                        </div>
                       </div>
                     </div>
-                    <div>
-                      <span className="text-text-muted">Correct answer</span>
-                      <div className="mt-0.5 font-medium text-success">
-                        {correctOptions.join(', ')}
-                      </div>
-                    </div>
-                  </div>
+                  )}
                 </div>
               );
             })}

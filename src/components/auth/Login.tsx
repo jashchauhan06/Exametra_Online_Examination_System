@@ -136,7 +136,7 @@ export default function Login() {
           <div className="mb-10">
             <div className="text-center mb-6">
               <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">
-                Online<span className="text-blue-500">Exam</span>
+                Exam<span className="text-blue-500">etra</span>
               </h1>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">
                 Secure Assessment & Examination Portal
@@ -206,7 +206,7 @@ export default function Login() {
       <div className="mb-10">
         <div className="text-center mb-6">
           <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">
-            Online<span className="text-blue-500">Exam</span>
+            Exam<span className="text-blue-500">etra</span>
           </h1>
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">
             Secure Assessment & Examination Portal

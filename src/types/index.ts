@@ -1,5 +1,5 @@
 // ============================================================
-// Online Examination System — Type Definitions
+// Exametra — Type Definitions
 // ============================================================
 
 export type UserRole = 'student' | 'faculty' | 'admin';
@@ -43,13 +43,23 @@ export interface Subject {
   facultyId: string;
 }
 
-export type QuestionType = 'mcq' | 'true-false' | 'multi-select';
+export type QuestionType = 'mcq' | 'true-false' | 'multi-select' | 'coding';
 export type Difficulty = 'easy' | 'medium' | 'hard';
+
+export type CodingLanguage = 'c' | 'cpp' | 'python' | 'javascript' | 'java' | 'sql';
 
 export interface QuestionOption {
   id: string;
   text: string;
   isCorrect: boolean;
+}
+
+export interface TestCase {
+  id: string;
+  input: string;
+  expected_output: string;
+  is_hidden: boolean;
+  points: number;
 }
 
 export interface Question {
@@ -64,6 +74,33 @@ export interface Question {
   createdBy: string;
   explanation?: string;
   usedInExams: string[];
+  // Coding question fields
+  coding_languages?: CodingLanguage[];
+  starter_code?: Record<string, string>;
+  test_cases?: TestCase[];
+  time_limit_ms?: number;
+  memory_limit_kb?: number;
+}
+
+export interface CodingSubmission {
+  questionId: string;
+  language: CodingLanguage;
+  code: string;
+  results?: TestCaseResult[];
+  totalPassed?: number;
+  totalCases?: number;
+}
+
+export interface TestCaseResult {
+  testCaseId: string;
+  input: string;
+  expectedOutput: string;
+  actualOutput: string;
+  passed: boolean;
+  time_ms?: number;
+  memory_kb?: number;
+  error?: string;
+  status: 'passed' | 'failed' | 'error' | 'tle' | 'mle';
 }
 
 export type ExamStatus = 'draft' | 'upcoming' | 'live' | 'completed' | 'cancelled' | 'missed';

@@ -6,14 +6,18 @@ import { StatusBadge } from '@/components/ui/status-badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { useToast } from '@/components/ui/toast';
-import { Search } from 'lucide-react';
+import { Search, UserPlus } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/lib/auth-context';
+import { CreateUserModal } from '@/components/admin/CreateUserModal';
 
 export default function StudentsPage() {
+  const { user } = useAuth();
   const { addToast } = useToast();
   const [search, setSearch] = useState('');
   const [deptFilter, setDeptFilter] = useState('');
   const [confirmAction, setConfirmAction] = useState<{ id: string; name: string; action: 'disable' | 'enable' } | null>(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const [, forceUpdate] = useState(0);
 
   const [students, setStudents] = useState<any[]>([]);
@@ -55,7 +59,21 @@ export default function StudentsPage() {
 
   return (
     <div className="max-w-5xl">
-      <PageHeader title="Students" subtitle="Manage student accounts." />
+      <PageHeader 
+        title="Students" 
+        subtitle="Manage student accounts." 
+        actions={
+          user?.role === 'admin' ? (
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-[#111] text-white text-[13px] font-medium rounded-lg hover:bg-black/80 transition-colors"
+            >
+              <UserPlus size={16} />
+              Add Student
+            </button>
+          ) : undefined
+        }
+      />
 
       <div className="flex items-center gap-3 mb-4">
         <div className="relative flex-1 max-w-xs">
@@ -135,6 +153,16 @@ export default function StudentsPage() {
         variant={confirmAction?.action === 'disable' ? 'danger' : 'default'}
         onConfirm={handleToggleStatus}
         onCancel={() => setConfirmAction(null)}
+      />
+
+      <CreateUserModal 
+        isOpen={showCreateModal}
+        onClose={() => setShowCreateModal(false)}
+        onSuccess={(newUser) => {
+          setShowCreateModal(false);
+          addToast(`Student ${newUser.name} created successfully!`, 'success');
+          setStudents(prev => [newUser, ...prev]);
+        }}
       />
     </div>
   );

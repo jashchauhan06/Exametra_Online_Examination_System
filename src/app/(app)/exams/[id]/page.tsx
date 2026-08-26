@@ -29,6 +29,38 @@ export default function ExamDetailPage() {
   const [attemptResults, setAttemptResults] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
   const [resettingStudent, setResettingStudent] = useState<string | null>(null);
+  const [timeUntilStart, setTimeUntilStart] = useState<number | null>(null);
+
+  React.useEffect(() => {
+    if (!exam || exam.status !== 'upcoming') return;
+    const examDate = new Date(exam.date + 'T' + (exam.start_time || '00:00'));
+    
+    const updateTime = () => {
+      const now = new Date();
+      const diff = Math.floor((examDate.getTime() - now.getTime()) / 1000);
+      if (diff <= 0) {
+        setTimeUntilStart(0);
+        setExam((prev: any) => ({ ...prev, status: 'live' }));
+      } else {
+        setTimeUntilStart(diff);
+      }
+    };
+    
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, [exam?.date, exam?.start_time, exam?.status]);
+
+  const formatCountdown = (seconds: number) => {
+    if (seconds <= 0) return '00:00:00';
+    const d = Math.floor(seconds / 86400);
+    const h = Math.floor((seconds % 86400) / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    
+    if (d > 0) return `${d}d ${h.toString().padStart(2, '0')}h ${m.toString().padStart(2, '0')}m`;
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
 
   React.useEffect(() => {
     async function loadExam() {
@@ -174,7 +206,7 @@ export default function ExamDetailPage() {
   const examDate = new Date(exam.date + 'T' + (exam.start_time || '00:00'));
   const isStudent = user?.role === 'student';
   const isFacultyOrAdmin = user?.role === 'faculty' || user?.role === 'admin';
-  const canStart = isStudent && (exam.status === 'upcoming' || exam.status === 'live') && (!existingAttempt || existingAttempt.status === 'in-progress');
+  const canStart = isStudent && exam.status === 'live' && (!existingAttempt || existingAttempt.status === 'in-progress');
 
   const details = [
     { icon: FileText, label: 'Subject', value: `${subject?.name || '—'} (${subject?.code || '—'})` },
@@ -266,11 +298,24 @@ export default function ExamDetailPage() {
                   checked={acknowledged}
                   onChange={e => setAcknowledged(e.target.checked)}
                   className="mt-0.5 w-4 h-4 rounded border-border text-primary accent-primary"
+                  disabled={!canStart && exam.status !== 'upcoming'}
                 />
                 <span className="text-sm text-text">
                   I have read and understood the examination instructions.
                 </span>
               </label>
+
+              {exam.status === 'upcoming' && timeUntilStart !== null && timeUntilStart > 0 ? (
+                <div className="flex flex-col sm:flex-row items-center gap-4 bg-primary/5 border border-primary/20 rounded-md p-4 mb-4">
+                  <div className="text-sm font-medium text-primary flex items-center gap-2">
+                    <Clock size={16} /> Exam starts in:
+                  </div>
+                  <div className="text-2xl font-bold font-mono tracking-tight text-primary">
+                    {formatCountdown(timeUntilStart)}
+                  </div>
+                </div>
+              ) : null}
+
               <button
                 onClick={async () => {
                   try {

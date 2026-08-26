@@ -9,7 +9,11 @@ import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Clock, Save, AlertTriangle } from 'lucide-react';
 import { getDynamicExamStatus } from '@/lib/utils/exam-status';
 import { supabase } from '@/lib/supabase';
-import type { StudentAnswer, QuestionNavStatus } from '@/types';
+import type { StudentAnswer, QuestionNavStatus, CodingLanguage, TestCaseResult, CodingSubmission } from '@/types';
+import dynamic from 'next/dynamic';
+const CodeEditor = dynamic(() => import('@/components/coding/CodeEditor'), { ssr: false });
+import TestCasePanel from '@/components/coding/TestCasePanel';
+import { DEFAULT_STARTER_CODE } from '@/lib/judge0';
 
 export default function ExamTakePage() {
   const params = useParams();
@@ -38,6 +42,12 @@ export default function ExamTakePage() {
   const startTimeRef = useRef<number>(Date.now());
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const lastViolationTimeRef = useRef<number>(0);
+
+  // Coding question state
+  const [codingAnswers, setCodingAnswers] = useState<Record<string, CodingSubmission>>({});
+  const [codingResults, setCodingResults] = useState<Record<string, TestCaseResult[]>>({});
+  const [isRunningCode, setIsRunningCode] = useState(false);
+  const [compileError, setCompileError] = useState<string | undefined>();
 
   const triggerViolation = React.useCallback((voiceMessage: string) => {
     const now = Date.now();
@@ -80,6 +90,56 @@ export default function ExamTakePage() {
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, []);
+
+  // Anti-Cheat: Screen Obfuscation & Screenshot Blocking
+  const [isWindowFocused, setIsWindowFocused] = useState(true);
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Block PrintScreen key
+      if (e.key === 'PrintScreen' || e.code === 'PrintScreen') {
+        e.preventDefault();
+        navigator.clipboard.writeText('Screenshots are disabled.');
+        triggerViolation("Screenshots are strictly prohibited.");
+      }
+      
+      // Block Mac/Windows screenshot shortcuts (Cmd/Win + Shift + 3/4/5/S)
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && ['3', '4', '5', 's', 'S'].includes(e.key)) {
+        e.preventDefault();
+        navigator.clipboard.writeText('Screenshots are disabled.');
+        triggerViolation("Screenshots are strictly prohibited.");
+      }
+
+      // Block Copy/Paste/Print
+      if ((e.metaKey || e.ctrlKey) && ['c', 'v', 'p', 'C', 'V', 'P'].includes(e.key)) {
+        e.preventDefault();
+        addToast("Action not allowed during exam", "error");
+      }
+    };
+
+    const handleBlur = () => {
+      setIsWindowFocused(false);
+      triggerViolation("Window focus lost. Please return immediately.");
+    };
+
+    const handleFocus = () => {
+      setIsWindowFocused(true);
+    };
+
+    // Block right click
+    const handleContextMenu = (e: MouseEvent) => e.preventDefault();
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('blur', handleBlur);
+    window.addEventListener('focus', handleFocus);
+    window.addEventListener('contextmenu', handleContextMenu);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('blur', handleBlur);
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('contextmenu', handleContextMenu);
+    };
+  }, [triggerViolation, addToast]);
 
   // Initialize exam
   useEffect(() => {
@@ -405,40 +465,116 @@ export default function ExamTakePage() {
     const questionResults = [];
     
     for (const q of questions) {
-      const studentAns = answers[q.id] || [];
-      const correctAns = q.options.filter((o: any) => o.isCorrect).map((o: any) => o.id);
-      
       let marksAwarded = 0;
       let marksDeducted = 0;
       let isCorrect = false;
-      
-      if (studentAns.length === 0) {
-        unansweredCount++;
-      } else {
-        const isMatch = studentAns.length === correctAns.length && studentAns.every((id: string) => correctAns.includes(id));
-        if (isMatch) {
-          isCorrect = true;
-          marksAwarded = q.marks;
-          obtainedMarks += q.marks;
-          correctCount++;
+
+      if (q.type === 'coding') {
+        const codingAns = codingAnswers[q.id];
+        if (!codingAns || !codingAns.code.trim()) {
+          unansweredCount++;
+          questionResults.push({
+            questionId: q.id,
+            studentAnswer: [],
+            correctAnswer: [],
+            isCorrect: false,
+            marksAwarded: 0,
+            marksDeducted: 0,
+            codingResult: null
+          });
         } else {
-          incorrectCount++;
-          if (exam.settings?.enableNegativeMarking) {
-            const deduction = (q.marks * (exam.settings.negativeMarkPercentage || 0)) / 100;
-            marksDeducted = deduction;
-            obtainedMarks -= deduction;
+          // Evaluate against ALL test cases for final submission
+          try {
+            const res = await fetch('/api/execute', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                code: codingAns.code,
+                language: codingAns.language,
+                testCases: q.test_cases || [],
+              }),
+            });
+            const data = await res.json();
+            
+            if (!data.error && data.results) {
+              const passedCount = data.totalPassed || 0;
+              const totalCases = data.totalCases || 1;
+              const ratio = passedCount / totalCases;
+              
+              if (ratio === 1) {
+                isCorrect = true;
+                correctCount++;
+              } else if (ratio === 0) {
+                incorrectCount++;
+              }
+              
+              marksAwarded = parseFloat((q.marks * ratio).toFixed(2));
+              obtainedMarks += marksAwarded;
+
+              questionResults.push({
+                questionId: q.id,
+                studentAnswer: [codingAns.code],
+                correctAnswer: [],
+                isCorrect: ratio === 1,
+                marksAwarded,
+                marksDeducted: 0,
+                codingResult: {
+                  language: codingAns.language,
+                  code: codingAns.code,
+                  results: data.results,
+                  totalPassed: passedCount,
+                  totalCases: totalCases
+                }
+              });
+            } else {
+              throw new Error(data.error || 'Execution failed');
+            }
+          } catch (err) {
+            console.error('Final code evaluation failed:', err);
+            incorrectCount++;
+            questionResults.push({
+              questionId: q.id,
+              studentAnswer: [codingAns.code],
+              correctAnswer: [],
+              isCorrect: false,
+              marksAwarded: 0,
+              marksDeducted: 0,
+              codingResult: { error: 'Failed to evaluate code' }
+            });
           }
         }
+      } else {
+        const studentAns = answers[q.id] || [];
+        const correctAns = q.options.filter((o: any) => o.isCorrect).map((o: any) => o.id);
+        
+        if (studentAns.length === 0) {
+          unansweredCount++;
+        } else {
+          const isMatch = studentAns.length === correctAns.length && studentAns.every((id: string) => correctAns.includes(id));
+          if (isMatch) {
+            isCorrect = true;
+            marksAwarded = q.marks;
+            obtainedMarks += q.marks;
+            correctCount++;
+          } else {
+            incorrectCount++;
+            if (exam.settings?.enableNegativeMarking) {
+              const deduction = (q.marks * (exam.settings.negativeMarkPercentage || 0)) / 100;
+              marksDeducted = deduction;
+              obtainedMarks -= deduction;
+            }
+          }
+        }
+        
+        questionResults.push({
+          questionId: q.id,
+          studentAnswer: studentAns,
+          correctAnswer: correctAns,
+          isCorrect,
+          marksAwarded,
+          marksDeducted
+        });
       }
-      
-      questionResults.push({
-        questionId: q.id,
-        studentAnswer: studentAns,
-        correctAnswer: correctAns,
-        isCorrect,
-        marksAwarded,
-        marksDeducted
-      });
     }
     
     const percentage = Math.max(0, Math.round((obtainedMarks / exam.total_marks) * 100));
@@ -489,7 +625,7 @@ export default function ExamTakePage() {
       setIsSubmitting(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [attemptId, exam, isSubmitting, answers, markedForReview, questions, examId, user, router, addToast]);
+  }, [attemptId, exam, isSubmitting, answers, codingAnswers, markedForReview, questions, examId, user, router, addToast]);
 
   // Keep a stable ref to the submit function to avoid dependency cycles in timers
   const submitRef = useRef(handleSubmitExam);
@@ -533,8 +669,6 @@ export default function ExamTakePage() {
     animFrame = requestAnimationFrame(checkThrottle);
     return () => cancelAnimationFrame(animFrame);
   }, []);
-
-  // Counts
   const answeredCount = questions.filter(q => answers[q.id]?.length > 0).length;
   const unansweredCount = questions.filter(q => visitedQuestions.has(q.id) && (!answers[q.id] || answers[q.id].length === 0)).length;
   const markedCount = markedForReview.size;
@@ -584,12 +718,31 @@ export default function ExamTakePage() {
 
   if (isSubmitting) {
     return (
-      <div className="min-h-screen bg-bg flex items-center justify-center">
+      <div className="min-h-screen bg-bg flex items-center justify-center select-none">
         <div className="text-center">
           <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <h2 className="text-lg font-semibold text-text mb-1">Evaluating your responses...</h2>
           <p className="text-sm text-text-secondary">Please wait while we process your submission.</p>
         </div>
+      </div>
+    );
+  }
+
+  if (!isWindowFocused) {
+    return (
+      <div className="fixed inset-0 z-[9999] bg-black text-white flex flex-col items-center justify-center p-6 text-center select-none">
+        <AlertTriangle size={64} className="text-red-500 mb-6" />
+        <h1 className="text-3xl font-bold mb-4">Exam Focus Lost</h1>
+        <p className="text-lg text-gray-300 max-w-md mb-8">
+          You have clicked out of the exam window. Screenshots and background tools are strictly prohibited.
+        </p>
+        <button 
+          onClick={() => {
+            // Usually, clicking here will trigger focus event and restore state
+          }} 
+          className="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-md font-medium text-white transition-colors">
+          Click here to return to exam
+        </button>
       </div>
     );
   }
@@ -638,8 +791,66 @@ export default function ExamTakePage() {
   }
 
   const currentQuestion = questions[currentQ];
+  const isCoding = currentQuestion?.type === 'coding';
   const isMultiSelect = currentQuestion?.type === 'multi-select';
   const selectedAnswers = answers[currentQuestion.id] || [];
+
+  // Coding helpers
+  const currentCodingAnswer = codingAnswers[currentQuestion?.id] || {
+    questionId: currentQuestion?.id,
+    language: (currentQuestion?.coding_languages?.[0] || 'python') as CodingLanguage,
+    code: currentQuestion?.starter_code?.[currentQuestion?.coding_languages?.[0] || 'python'] || DEFAULT_STARTER_CODE[currentQuestion?.coding_languages?.[0] || 'python'] || '',
+  };
+
+  const handleRunCode = async () => {
+    if (!currentQuestion || isRunningCode) return;
+    setIsRunningCode(true);
+    setCompileError(undefined);
+
+    const visibleCases = (currentQuestion.test_cases || []).filter((tc: any) => !tc.is_hidden);
+
+    try {
+      const res = await fetch('/api/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          code: currentCodingAnswer.code,
+          language: currentCodingAnswer.language,
+          testCases: visibleCases,
+        }),
+      });
+      const data = await res.json();
+
+      if (data.error) {
+        setCompileError(data.error);
+      } else {
+        setCodingResults(prev => ({ ...prev, [currentQuestion.id]: data.results }));
+        // Check for compile errors in results
+        const errResult = data.results.find((r: any) => r.status === 'error' && r.error);
+        if (errResult) setCompileError(errResult.error);
+      }
+
+      // Mark as answered
+      setCodingAnswers(prev => ({
+        ...prev,
+        [currentQuestion.id]: {
+          ...currentCodingAnswer,
+          results: data.results,
+          totalPassed: data.totalPassed,
+          totalCases: data.totalCases,
+        },
+      }));
+
+      // Also mark in the answers map so navigation shows it as answered
+      if (currentCodingAnswer.code.trim()) {
+        setAnswers(prev => ({ ...prev, [currentQuestion.id]: ['code_submitted'] }));
+      }
+    } catch (err: any) {
+      setCompileError(err.message || 'Failed to execute code');
+    } finally {
+      setIsRunningCode(false);
+    }
+  };
 
   const navStatusColors: Record<QuestionNavStatus, string> = {
     'answered': 'bg-primary text-white border-primary',
@@ -649,7 +860,7 @@ export default function ExamTakePage() {
   };
 
   return (
-    <div className="min-h-screen bg-bg flex flex-col select-none" style={{ WebkitUserSelect: 'none', userSelect: 'none' }}>
+    <div className="min-h-screen bg-bg flex flex-col select-none" style={{ WebkitUserSelect: 'none', userSelect: 'none' }} onContextMenu={(e) => e.preventDefault()}>
       {/* Header */}
       <header className="h-14 bg-surface border-b border-border flex items-center justify-between px-6 flex-shrink-0 z-10">
         <div>
@@ -689,7 +900,7 @@ export default function ExamTakePage() {
               </span>
               <div className="flex items-center gap-3">
                 <span className="text-xs text-text-secondary px-2 py-1 bg-bg rounded border border-border">
-                  {currentQuestion.type === 'mcq' ? 'Multiple Choice' : currentQuestion.type === 'true-false' ? 'True / False' : 'Multiple Select'}
+                  {currentQuestion.type === 'mcq' ? 'Multiple Choice' : currentQuestion.type === 'true-false' ? 'True / False' : currentQuestion.type === 'coding' ? 'Coding' : 'Multiple Select'}
                 </span>
                 <span className="text-xs text-text-secondary px-2 py-1 bg-bg rounded border border-border">
                   +{currentQuestion.marks} marks
@@ -703,7 +914,45 @@ export default function ExamTakePage() {
               {currentQuestion.text}
             </div>
 
-            {/* Options */}
+            {/* Options / Code Editor */}
+            {isCoding ? (
+              <div className="mb-8">
+                <CodeEditor
+                  language={currentCodingAnswer.language}
+                  onLanguageChange={(lang) => {
+                    setCodingAnswers(prev => ({
+                      ...prev,
+                      [currentQuestion.id]: {
+                        ...currentCodingAnswer,
+                        language: lang,
+                        code: currentQuestion.starter_code?.[lang] || DEFAULT_STARTER_CODE[lang] || currentCodingAnswer.code,
+                      },
+                    }));
+                  }}
+                  code={currentCodingAnswer.code}
+                  onCodeChange={(code) => {
+                    setCodingAnswers(prev => ({
+                      ...prev,
+                      [currentQuestion.id]: { ...currentCodingAnswer, code },
+                    }));
+                    // Mark as answered if code is non-empty
+                    if (code.trim()) {
+                      setAnswers(prev => ({ ...prev, [currentQuestion.id]: ['code_submitted'] }));
+                    }
+                  }}
+                  allowedLanguages={currentQuestion.coding_languages}
+                  starterCode={currentQuestion.starter_code}
+                  height="350px"
+                />
+                <TestCasePanel
+                  testCases={currentQuestion.test_cases || []}
+                  results={codingResults[currentQuestion.id]}
+                  isRunning={isRunningCode}
+                  onRun={handleRunCode}
+                  compileError={compileError}
+                />
+              </div>
+            ) : (
             <div className="space-y-2.5 mb-8">
               {isMultiSelect && (
                 <p className="text-xs text-text-muted mb-1">Select all that apply</p>
@@ -736,6 +985,7 @@ export default function ExamTakePage() {
                 );
               })}
             </div>
+            )}
 
             {/* Navigation */}
             <div className="flex items-center justify-between border-t border-border pt-4">

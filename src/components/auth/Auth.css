@@ -153,3 +153,93 @@
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
+
+.btn-black:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Overlay Content */
+.overlay-content {
+    animation: fadeSlide 0.5s ease 0.3s both;
+}
+
+@keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-wrapper.active .overlay-content {
+    animation: fadeSlide 0.5s ease 0.3s both;
+}
+
+.overlay-btn {
+    display: inline-block;
+    padding: 14px 32px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+.overlay-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Input group select styling */
+.input-group select {
+    appearance: none;
+    cursor: pointer;
+    color: #374151;
+}
+
+.input-group select option[value=""] {
+    color: #9ca3af;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .auth-wrapper {
+        width: 95vw;
+        height: auto;
+        min-height: 500px;
+        flex-direction: column;
+    }
+
+    .form-box {
+        position: relative;
+        width: 100%;
+        padding: 40px 30px;
+    }
+
+    .sign-up-box {
+        display: none;
+    }
+
+    .overlay-panel {
+        position: relative;
+        width: 100%;
+        left: 0;
+        padding: 40px 30px;
+        border-radius: 0 0 32px 32px;
+    }
+
+    .auth-wrapper.active .overlay-panel {
+        transform: none;
+    }
+
+    .auth-wrapper.active .sign-in-box {
+        transform: none;
+        opacity: 1;
+    }
+}

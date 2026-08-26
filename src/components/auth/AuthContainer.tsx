@@ -1,22 +1,12 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import './Auth.css';
 import Login from './Login';
-import Register from './Register';
+import NeedHelp from './NeedHelp';
 
 export default function AuthContainer() {
-  const [isActive, setIsActive] = useState(false); // false = login, true = register
-  const [showOverlaySignUp, setShowOverlaySignUp] = useState(isActive);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setShowOverlaySignUp(isActive);
-    }, 300);
-    return () => clearTimeout(timeout);
-  }, [isActive]);
-
-  const toggleMode = () => {
-    setIsActive(!isActive);
-  };
+  const [isActive, setIsActive] = useState(false);
 
   return (
     <div className="auth-page-container">
@@ -28,44 +18,47 @@ export default function AuthContainer() {
 
       {/* Auth Wrapper */}
       <div className={`auth-wrapper ${isActive ? 'active' : ''}`} id="authWrapper">
-        
-        {/* Sliding Overlay */}
-        <div className="overlay-panel">
-          {!showOverlaySignUp ? (
-            <div id="overlay-signin">
-              <h1 className="text-3xl font-extrabold mb-4">Empower Learning.</h1>
-              <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-                Join thousands of students and faculty on our secure online examination and assessment platform.
-              </p>
-              <span className="tag text-gray-500">Need an account?</span>
-              <button 
-                type="button"
-                className="border-2 border-white/20 hover:border-white/50 px-8 py-3 rounded-xl font-bold text-sm transition-all cursor-pointer" 
-                onClick={toggleMode}
-              >
-                Create Account
-              </button>
-            </div>
-          ) : (
-            <div id="overlay-signup">
-              <h1 className="text-3xl font-extrabold mb-4">Welcome Back.</h1>
-              <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-                Access your upcoming exams, past results, and detailed performance analytics instantly.
-              </p>
-              <span className="tag text-gray-500">Already have an account?</span>
-              <button 
-                type="button"
-                className="border-2 border-white/20 hover:border-white/50 px-8 py-3 rounded-xl font-bold text-sm transition-all cursor-pointer" 
-                onClick={toggleMode}
-              >
-                Sign In Now
-              </button>
-            </div>
-          )}
-        </div>
-
         <Login />
-        <Register />
+        <NeedHelp />
+
+        {/* Sliding Overlay Panel */}
+        <div className="overlay-panel">
+          <div className="overlay-content">
+            {!isActive ? (
+              <>
+                <h2 className="text-3xl font-extrabold tracking-tight mb-3">
+                  Need Assistance?
+                </h2>
+                <p className="text-sm text-gray-400 leading-relaxed mb-8">
+                  Can't access your account? Haven't received your credentials? 
+                  Our support team is here to help you get started.
+                </p>
+                <button
+                  onClick={() => setIsActive(true)}
+                  className="overlay-btn"
+                >
+                  Get Help →
+                </button>
+              </>
+            ) : (
+              <>
+                <h2 className="text-3xl font-extrabold tracking-tight mb-3">
+                  Already have access?
+                </h2>
+                <p className="text-sm text-gray-400 leading-relaxed mb-8">
+                  If you already have your credentials, sign in to access 
+                  your examination dashboard and start your exams.
+                </p>
+                <button
+                  onClick={() => setIsActive(false)}
+                  className="overlay-btn"
+                >
+                  ← Sign In
+                </button>
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"next dev\" \"npm run lockdown\"",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.5.7",
+    "@monaco-editor/react": "^4.7.0",
     "@supabase/supabase-js": "^2.112.4",
+    "@tsparticles/engine": "^4.3.2",
+    "@tsparticles/react": "^4.3.2",
     "date-fns": "^4.4.0",
     "gsap": "^3.15.0",
     "lottie-react": "^3.1.0",
@@ -21,6 +24,7 @@
     "react-dom": "19.2.4",
     "react-hook-form": "^7.83.0",
     "recharts": "^3.10.1",
+    "tsparticles": "^4.3.2",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -28,6 +32,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "concurrently": "^10.0.5",
     "electron": "^44.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.12",

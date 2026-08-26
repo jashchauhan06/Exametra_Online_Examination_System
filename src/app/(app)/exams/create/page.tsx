@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/toast';
@@ -9,6 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ArrowLeft, ArrowRight, Check, Plus, Trash2, GripVertical } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
 import type { QuestionType, Difficulty, ExamSettings } from '@/types';
+import AiButton from '@/components/animata/button/ai-button';
 
 import { supabase } from '@/lib/supabase';
 
@@ -98,6 +99,43 @@ export default function CreateExamPage() {
     localStorage.setItem('exam_draft_v1', JSON.stringify(draft));
   }, [step, details, selectedQuestionIds, settings, attemptsAllowed, isDraftLoaded]);
 
+  // Picker Filters State
+  const [pickerSearch, setPickerSearch] = useState('');
+  const [pickerSort, setPickerSort] = useState('newest');
+  const [pickerTopic, setPickerTopic] = useState('');
+  const [pickerType, setPickerType] = useState('');
+
+  const subjectQs = useMemo(() => {
+    let filtered = allQuestions.filter(q => q.subject_id === details.subjectId && !selectedQuestionIds.includes(q.id));
+    
+    if (pickerSearch) {
+      filtered = filtered.filter(q => q.text.toLowerCase().includes(pickerSearch.toLowerCase()));
+    }
+    if (pickerTopic) {
+      filtered = filtered.filter(q => q.topic === pickerTopic);
+    }
+    if (pickerType) {
+      filtered = filtered.filter(q => q.type === pickerType);
+    }
+    
+    // Sort
+    if (pickerSort === 'marks-asc') filtered.sort((a, b) => a.marks - b.marks);
+    else if (pickerSort === 'marks-desc') filtered.sort((a, b) => b.marks - a.marks);
+    else if (pickerSort === 'difficulty') {
+      const weight: any = { easy: 1, medium: 2, hard: 3 };
+      filtered.sort((a, b) => (weight[a.difficulty] || 0) - (weight[b.difficulty] || 0));
+    } else {
+      // newest (assuming id or created_at, fallback to id for stable sort if created_at absent)
+      filtered.sort((a, b) => a.id > b.id ? -1 : 1);
+    }
+    return filtered;
+  }, [allQuestions, details.subjectId, selectedQuestionIds, pickerSearch, pickerSort, pickerTopic, pickerType]);
+
+  const availableTopics = useMemo(() => {
+    const qs = allQuestions.filter(q => q.subject_id === details.subjectId);
+    return Array.from(new Set(qs.map(q => q.topic))).filter(Boolean) as string[];
+  }, [allQuestions, details.subjectId]);
+
   const selectedQs = selectedQuestionIds.map(id => allQuestions.find(q => q.id === id)).filter(Boolean);
   const totalMarks = selectedQs.reduce((a, q) => a + (q?.marks || 0), 0);
 
@@ -141,10 +179,6 @@ export default function CreateExamPage() {
     addToast('Exam published successfully!', 'success');
     router.push('/exams');
   };
-
-  const subjectQs = details.subjectId
-    ? allQuestions.filter(q => q.subject_id === details.subjectId && !selectedQuestionIds.includes(q.id))
-    : [];
 
   if (isLoadingData) {
     return (
@@ -263,6 +297,9 @@ export default function CreateExamPage() {
               <Plus size={14} /> Add from Question Bank
             </button>
           </div>
+          <div className="flex justify-end mb-2">
+            <AiButton />
+          </div>
 
           {selectedQs.length === 0 ? (
             <div className="bg-surface border border-border rounded-lg py-12 text-center text-sm text-text-secondary">
@@ -291,32 +328,72 @@ export default function CreateExamPage() {
                   <h3 className="text-base font-semibold text-text">Add Questions from Bank</h3>
                   <button onClick={() => setShowQuestionPicker(false)} className="text-text-secondary hover:text-text text-sm">Close</button>
                 </div>
-                <div className="flex-1 overflow-y-auto px-5 py-3 min-h-0">
-                  {subjectQs.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center py-8 text-center">
-                      <p className="text-sm text-text-secondary mb-3">
-                        {details.subjectId ? 'No more questions available for this subject.' : 'Please select a subject first.'}
-                      </p>
-                      {details.subjectId && (
-                        <button onClick={() => router.push('/question-bank')} className="text-xs text-primary hover:underline">
-                          Go to Question Bank to create more
-                        </button>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="space-y-1.5">
-                      {subjectQs.map(q => (
-                        <button key={q.id} onClick={() => {
-                          setSelectedQuestionIds(prev => [...prev, q.id]);
-                        }}
-                          className="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-md border border-border hover:border-primary hover:bg-primary-light transition-colors text-sm">
-                          <Plus size={14} className="text-primary flex-shrink-0" />
-                          <span className="flex-1 truncate text-text">{q.text}</span>
-                          <span className="text-xs text-text-muted">{q.marks}m • {q.difficulty}</span>
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                <div className="flex flex-col flex-1 min-h-0">
+                  <div className="px-5 py-3 border-b border-border bg-bg/50 flex flex-wrap gap-3">
+                    <input type="text" placeholder="Search questions..." value={pickerSearch} onChange={e => setPickerSearch(e.target.value)}
+                      className="flex-1 min-w-[150px] h-8 px-3 text-xs bg-surface border border-border rounded focus:outline-none focus:border-primary" />
+                    
+                    <select value={pickerTopic} onChange={e => setPickerTopic(e.target.value)}
+                      className="h-8 px-2 text-xs bg-surface border border-border rounded text-text-secondary focus:outline-none focus:border-primary">
+                      <option value="">All Topics</option>
+                      {availableTopics.map(t => <option key={t} value={t}>{t}</option>)}
+                    </select>
+
+                    <select value={pickerType} onChange={e => setPickerType(e.target.value)}
+                      className="h-8 px-2 text-xs bg-surface border border-border rounded text-text-secondary focus:outline-none focus:border-primary">
+                      <option value="">All Types</option>
+                      <option value="mcq">MCQ</option>
+                      <option value="true-false">T/F</option>
+                      <option value="multi-select">Multi</option>
+                      <option value="coding">Coding</option>
+                    </select>
+
+                    <select value={pickerSort} onChange={e => setPickerSort(e.target.value)}
+                      className="h-8 px-2 text-xs bg-surface border border-border rounded text-text-secondary focus:outline-none focus:border-primary">
+                      <option value="newest">Newest First</option>
+                      <option value="marks-asc">Marks (Low to High)</option>
+                      <option value="marks-desc">Marks (High to Low)</option>
+                      <option value="difficulty">Difficulty</option>
+                    </select>
+                  </div>
+                  <div className="flex-1 overflow-y-auto px-5 py-3 min-h-0">
+                    {subjectQs.length === 0 ? (
+                      <div className="flex flex-col items-center justify-center py-8 text-center">
+                        <p className="text-sm text-text-secondary mb-3">
+                          {details.subjectId ? 'No matching questions found.' : 'Please select a subject first.'}
+                        </p>
+                        {details.subjectId && (
+                          <button onClick={() => router.push('/question-bank')} className="text-xs text-primary hover:underline">
+                            Go to Question Bank to create more
+                          </button>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="space-y-1.5">
+                        <div className="flex justify-between items-center mb-2 px-1">
+                           <span className="text-xs font-medium text-text-secondary">{subjectQs.length} questions available</span>
+                        </div>
+                        {subjectQs.map(q => (
+                          <button key={q.id} onClick={() => {
+                            setSelectedQuestionIds(prev => [...prev, q.id]);
+                          }}
+                            className="w-full text-left flex items-start gap-3 px-3 py-2.5 rounded-md border border-border hover:border-primary hover:bg-primary-light transition-colors text-sm group">
+                            <Plus size={14} className="text-primary flex-shrink-0 mt-0.5" />
+                            <div className="flex-1 min-w-0">
+                               <span className="block truncate text-text group-hover:whitespace-normal group-hover:break-words">{q.text}</span>
+                               <div className="flex gap-2 mt-1">
+                                  <span className="text-[10px] uppercase font-semibold text-text-muted bg-bg px-1.5 rounded">{q.type === 'mcq' ? 'MCQ' : q.type === 'true-false' ? 'T/F' : q.type === 'coding' ? '{ }' : 'Multi'}</span>
+                                  {q.topic && <span className="text-[10px] text-text-muted bg-bg px-1.5 rounded truncate max-w-[100px]">{q.topic}</span>}
+                               </div>
+                            </div>
+                            <span className="text-xs font-medium text-text-muted whitespace-nowrap bg-bg px-2 py-0.5 rounded border border-border flex items-center gap-1.5">
+                               {q.marks}m <span className="w-1 h-1 rounded-full bg-border inline-block"/> {q.difficulty}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="px-5 py-4 border-t border-border bg-bg rounded-b-lg">
                   <button onClick={() => setShowQuestionPicker(false)}

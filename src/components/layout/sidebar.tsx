@@ -79,11 +79,11 @@ export function Sidebar() {
           <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-xs"
             style={{ background: '#8B5CF6' }} // Purple accent
           >
-            OE
+            EX
           </div>
           <div>
             <div className="text-[13px] font-semibold text-[#18181B] leading-tight tracking-tight">
-              Online Exam
+              Exametra
             </div>
             <div className="text-[11px] leading-tight" style={{ color: '#71717A' }}>
               Assessment Portal

@@ -7,11 +7,14 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { EmptyState } from '@/components/ui/empty-state';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { useToast } from '@/components/ui/toast';
-import { Search, Plus, BookOpen, Trash2, X } from 'lucide-react';
+import { Search, Plus, BookOpen, Trash2, X, Code2 } from 'lucide-react';
 import { fetchQuestions, fetchSubjects } from '@/lib/data/supabase-service';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
-import type { QuestionType, Difficulty, QuestionOption } from '@/types';
+import type { QuestionType, Difficulty, QuestionOption, TestCase, CodingLanguage } from '@/types';
+import AiButton from '@/components/animata/button/ai-button';
+import TestCaseEditor from '@/components/coding/TestCaseEditor';
+import { SUPPORTED_LANGUAGES, DEFAULT_STARTER_CODE } from '@/lib/judge0';
 
 export default function QuestionBankPage() {
   const { addToast } = useToast();
@@ -43,6 +46,7 @@ export default function QuestionBankPage() {
   const [subjectFilter, setSubjectFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState('');
+  const [sortFilter, setSortFilter] = useState('newest');
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
@@ -56,6 +60,11 @@ export default function QuestionBankPage() {
       { id: 'new_c', text: '', isCorrect: false },
       { id: 'new_d', text: '', isCorrect: false },
     ] as QuestionOption[],
+    // Coding fields
+    coding_languages: ['python'] as CodingLanguage[],
+    test_cases: [] as TestCase[],
+    time_limit_ms: 2000,
+    memory_limit_kb: 128000,
   });
 
   const questions = useMemo(() => {
@@ -67,8 +76,18 @@ export default function QuestionBankPage() {
       const s = search.toLowerCase();
       filtered = filtered.filter(q => q.text.toLowerCase().includes(s));
     }
+
+    if (sortFilter === 'marks-asc') filtered.sort((a, b) => a.marks - b.marks);
+    else if (sortFilter === 'marks-desc') filtered.sort((a, b) => b.marks - a.marks);
+    else if (sortFilter === 'difficulty') {
+      const weight: any = { easy: 1, medium: 2, hard: 3 };
+      filtered.sort((a, b) => (weight[a.difficulty] || 0) - (weight[b.difficulty] || 0));
+    }
+    else if (sortFilter === 'alpha') filtered.sort((a, b) => a.text.localeCompare(b.text));
+    else filtered.sort((a, b) => a.id > b.id ? -1 : 1); // newest
+
     return filtered;
-  }, [baseQuestions, search, subjectFilter, typeFilter, difficultyFilter]);
+  }, [baseQuestions, search, subjectFilter, typeFilter, difficultyFilter, sortFilter]);
 
   const allTopics = [...new Set(baseQuestions.map(q => q.topic))].sort();
 
@@ -104,12 +123,22 @@ export default function QuestionBankPage() {
   };
 
   const handleAddQuestion = async () => {
-    if (!newQ.text || !newQ.subjectId || newQ.options.some(o => !o.text) || !newQ.options.some(o => o.isCorrect)) {
-      addToast('Please fill all fields and select at least one correct answer.', 'error');
+    if (!newQ.text || !newQ.subjectId) {
+      addToast('Please fill all required fields.', 'error');
       return;
     }
 
-    const { data, error } = await supabase.from('questions').insert({
+    if (newQ.type !== 'coding' && (newQ.options.some(o => !o.text) || !newQ.options.some(o => o.isCorrect))) {
+      addToast('Please fill all options and select at least one correct answer.', 'error');
+      return;
+    }
+
+    if (newQ.type === 'coding' && newQ.test_cases.length === 0) {
+      addToast('Please add at least one test case for coding questions.', 'error');
+      return;
+    }
+
+    const insertData: any = {
       text: newQ.text,
       type: newQ.type,
       marks: newQ.marks,
@@ -117,8 +146,19 @@ export default function QuestionBankPage() {
       topic: newQ.topic || 'General',
       subject_id: newQ.subjectId,
       created_by: user?.id,
-      options: newQ.options,
-    }).select().single();
+    };
+
+    if (newQ.type === 'coding') {
+      insertData.options = [];
+      insertData.coding_languages = newQ.coding_languages;
+      insertData.starter_code = Object.fromEntries(newQ.coding_languages.map(l => [l, DEFAULT_STARTER_CODE[l] || '']));
+      insertData.test_cases = newQ.test_cases;
+      insertData.time_limit_ms = newQ.time_limit_ms;
+      insertData.memory_limit_kb = newQ.memory_limit_kb;
+    } else {
+      insertData.options = newQ.options;
+    }
+    const { data, error } = await supabase.from('questions').insert(insertData).select().single();
 
     if (error) {
       addToast('Failed to create question.', 'error');
@@ -136,6 +176,10 @@ export default function QuestionBankPage() {
         { id: `new_${Date.now()}_c`, text: '', isCorrect: false },
         { id: `new_${Date.now()}_d`, text: '', isCorrect: false },
       ],
+      coding_languages: ['python'],
+      test_cases: [],
+      time_limit_ms: 2000,
+      memory_limit_kb: 128000,
     });
     addToast('Question added successfully.', 'success');
   };
@@ -153,6 +197,10 @@ export default function QuestionBankPage() {
           </button>
         }
       />
+      
+      <div className="flex justify-end mb-2">
+        <AiButton />
+      </div>
 
       {/* Filters */}
       <div className="flex items-center gap-3 mb-4 flex-wrap">
@@ -175,6 +223,7 @@ export default function QuestionBankPage() {
           <option value="mcq">Multiple Choice</option>
           <option value="true-false">True / False</option>
           <option value="multi-select">Multiple Select</option>
+          <option value="coding">Coding</option>
         </select>
         <select value={difficultyFilter} onChange={e => setDifficultyFilter(e.target.value)}
           className="h-9 px-3 text-sm bg-surface border border-border rounded-md text-text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20">
@@ -182,6 +231,14 @@ export default function QuestionBankPage() {
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>
+        </select>
+        <select value={sortFilter} onChange={e => setSortFilter(e.target.value)}
+          className="h-9 px-3 text-sm bg-surface border border-border rounded-md text-text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20">
+          <option value="newest">Newest First</option>
+          <option value="alpha">Alphabetical (Spot Dups)</option>
+          <option value="marks-asc">Marks (Low to High)</option>
+          <option value="marks-desc">Marks (High to Low)</option>
+          <option value="difficulty">Difficulty</option>
         </select>
       </div>
 
@@ -250,7 +307,7 @@ export default function QuestionBankPage() {
             <tbody>
               {questions.map(q => {
                 const subject = subjects.find(s => s.id === q.subject_id);
-                const typeLabel = q.type === 'mcq' ? 'MCQ' : q.type === 'true-false' ? 'T/F' : 'Multi';
+                const typeLabel = q.type === 'mcq' ? 'MCQ' : q.type === 'true-false' ? 'T/F' : q.type === 'coding' ? '{ }' : 'Multi';
                 return (
                   <tr key={q.id} className="border-b border-border last:border-b-0 hover:bg-bg/50">
                     <td className="px-4 py-3">
@@ -317,6 +374,7 @@ export default function QuestionBankPage() {
                     <option value="mcq">Multiple Choice</option>
                     <option value="true-false">True / False</option>
                     <option value="multi-select">Multiple Select</option>
+                    <option value="coding">Coding</option>
                   </select>
                 </div>
                 <div>
@@ -342,7 +400,8 @@ export default function QuestionBankPage() {
                     className="w-full h-9 px-3 text-sm bg-surface border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20" min={1} />
                 </div>
               </div>
-              {/* Options */}
+              {/* Options (MCQ/TF/Multi only) */}
+              {newQ.type !== 'coding' && (
               <div>
                 <label className="block text-[13px] font-medium text-text mb-1.5">Options</label>
                 <div className="space-y-2">
@@ -372,6 +431,51 @@ export default function QuestionBankPage() {
                   ))}
                 </div>
               </div>
+              )}
+              {/* Coding Question Fields */}
+              {newQ.type === 'coding' && (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-[13px] font-medium text-text mb-1.5">Allowed Languages</label>
+                  <div className="flex flex-wrap gap-2">
+                    {SUPPORTED_LANGUAGES.map(lang => (
+                      <label key={lang.key} className="flex items-center gap-1.5 px-2.5 py-1.5 bg-surface border border-border rounded-md cursor-pointer hover:border-primary transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={newQ.coding_languages.includes(lang.key as CodingLanguage)}
+                          onChange={(e) => {
+                            setNewQ(p => ({
+                              ...p,
+                              coding_languages: e.target.checked
+                                ? [...p.coding_languages, lang.key as CodingLanguage]
+                                : p.coding_languages.filter(l => l !== lang.key),
+                            }));
+                          }}
+                          className="w-3.5 h-3.5 accent-primary"
+                        />
+                        <span className="text-xs font-medium text-text-secondary">{lang.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[13px] font-medium text-text mb-1.5">Time Limit (ms)</label>
+                    <input type="number" value={newQ.time_limit_ms} onChange={e => setNewQ(p => ({ ...p, time_limit_ms: Number(e.target.value) }))}
+                      className="w-full h-9 px-3 text-sm bg-surface border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20" min={500} step={500} />
+                  </div>
+                  <div>
+                    <label className="block text-[13px] font-medium text-text mb-1.5">Memory Limit (KB)</label>
+                    <input type="number" value={newQ.memory_limit_kb} onChange={e => setNewQ(p => ({ ...p, memory_limit_kb: Number(e.target.value) }))}
+                      className="w-full h-9 px-3 text-sm bg-surface border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20" min={16000} step={16000} />
+                  </div>
+                </div>
+                <TestCaseEditor
+                  testCases={newQ.test_cases}
+                  onChange={(tc) => setNewQ(p => ({ ...p, test_cases: tc }))}
+                />
+              </div>
+              )}
             </div>
             <div className="flex items-center justify-end gap-2 px-5 py-3 border-t border-border bg-bg rounded-b-lg">
               <button onClick={() => setShowAddDialog(false)}

@@ -44,7 +44,13 @@
   font-display: swap;
 }
 
+@keyframes sparkle {
+  0%, 100% { opacity: 0.75; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
 @theme {
+  --animate-sparkle: sparkle 2s ease-in-out infinite;
   /* ── Restrained Neutral Palette ── */
   --color-primary: #111111;
   --color-primary-hover: #000000;

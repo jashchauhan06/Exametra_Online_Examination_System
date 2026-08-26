@@ -12,9 +12,12 @@ export function StatusBadge({ variant }: { variant: StatusVariant | string }) {
     missed: { text: '#F59E0B', dot: '#F59E0B', label: 'Not Given' },
     active: { text: '#EF4444', dot: '#EF4444', label: 'Active' },
     inactive: { text: '#71717A', dot: '#71717A', label: 'Disabled' },
+    easy: { text: '#10B981', dot: '#10B981', label: 'Easy' },
+    medium: { text: '#F59E0B', dot: '#F59E0B', label: 'Medium' },
+    hard: { text: '#EF4444', dot: '#EF4444', label: 'Hard' },
   };
 
-  const config = styles[variant] || styles.upcoming;
+  const config = styles[variant?.toLowerCase()] || styles.upcoming;
 
   return (
     <span
