@@ -49,10 +49,35 @@ export default function ExamTakePage() {
   const [isRunningCode, setIsRunningCode] = useState(false);
   const [compileError, setCompileError] = useState<string | undefined>();
 
+  const examRef = useRef(exam);
+  const userRef = useRef(user);
+
+  useEffect(() => {
+    examRef.current = exam;
+    userRef.current = user;
+  }, [exam, user]);
+
   const triggerViolation = React.useCallback((voiceMessage: string) => {
     const now = Date.now();
     if (now - lastViolationTimeRef.current < 2000) return; // Debounce events within 2s
     lastViolationTimeRef.current = now;
+
+    // Notify Faculty
+    const currentExam = examRef.current;
+    const currentUser = userRef.current;
+
+    if (currentExam?.faculty_id && currentUser) {
+      fetch('/api/notifications/notify-faculty', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          facultyId: currentExam.faculty_id,
+          title: `Exam Violation: ${currentUser.name || currentUser.email}`,
+          message: `Student navigated away or lost focus during exam "${currentExam.title}": ${voiceMessage}`,
+          type: 'exam-violation'
+        })
+      }).catch(err => console.error('Failed to notify faculty:', err));
+    }
 
     // Voice Warning
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -75,7 +100,7 @@ export default function ExamTakePage() {
       }
       return next;
     });
-  }, []);
+  }, [exam, user]);
 
   // Monitor Fullscreen Status
   useEffect(() => {
@@ -89,7 +114,7 @@ export default function ExamTakePage() {
     };
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  }, []);
+  }, [triggerViolation]);
 
   // Anti-Cheat: Screen Obfuscation & Screenshot Blocking
   const [isWindowFocused, setIsWindowFocused] = useState(true);

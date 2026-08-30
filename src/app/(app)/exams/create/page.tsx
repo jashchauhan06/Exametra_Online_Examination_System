@@ -145,7 +145,7 @@ export default function CreateExamPage() {
       return;
     }
 
-    const { error } = await supabase.from('exams').insert({
+    const { data: newExam, error } = await supabase.from('exams').insert({
       title: details.title,
       description: details.description,
       subject_id: details.subjectId,
@@ -167,12 +167,26 @@ export default function CreateExamPage() {
       ],
       settings,
       question_ids: selectedQuestionIds,
-    });
+    }).select().single();
 
     if (error) {
       console.error('Error creating exam:', error);
       addToast('Failed to create exam.', 'error');
       return;
+    }
+
+    // Send notifications to faculty and students
+    if (newExam) {
+      fetch('/api/notifications/exam-created', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          examId: newExam.id,
+          examTitle: newExam.title,
+          facultyId: user?.id,
+          date: newExam.date
+        })
+      }).catch(err => console.error('Failed to broadcast notifications:', err));
     }
 
     localStorage.removeItem('exam_draft_v1');

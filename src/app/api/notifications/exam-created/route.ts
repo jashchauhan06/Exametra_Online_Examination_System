@@ -1,0 +1,69 @@
+import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false,
+  }
+});
+
+export async function POST(request: Request) {
+  try {
+    const { examId, examTitle, facultyId, date } = await request.json();
+
+    if (!examTitle || !facultyId) {
+      return NextResponse.json({ error: 'Missing parameters' }, { status: 400 });
+    }
+
+    // Fetch all students to notify them
+    const { data: students, error: studentError } = await supabaseAdmin
+      .from('users')
+      .select('id')
+      .eq('role', 'student');
+
+    if (studentError) {
+      console.error('Failed to fetch students:', studentError);
+    }
+
+    const notifications = [];
+
+    // Notification for Faculty
+    notifications.push({
+      user_id: facultyId,
+      title: 'Exam Created Successfully',
+      message: `Your exam "${examTitle}" has been scheduled for ${date}.`,
+      type: 'system',
+      is_read: false,
+      link: '/exams'
+    });
+
+    // Notifications for Students
+    if (students && students.length > 0) {
+      students.forEach(student => {
+        notifications.push({
+          user_id: student.id,
+          title: 'New Exam Scheduled',
+          message: `A new exam "${examTitle}" has been scheduled for ${date}.`,
+          type: 'exam-scheduled',
+          is_read: false,
+          link: `/exams/${examId || ''}`
+        });
+      });
+    }
+
+    const { error: insertError } = await supabaseAdmin
+      .from('notifications')
+      .insert(notifications);
+
+    if (insertError) throw insertError;
+
+    return NextResponse.json({ success: true, count: notifications.length });
+  } catch (error: any) {
+    console.error('Broadcast notification error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}

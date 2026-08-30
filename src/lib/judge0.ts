@@ -71,8 +71,7 @@ SELECT `,
 
 // ── Judge0 API Communication ──
 
-const JUDGE0_API_URL = process.env.JUDGE0_API_URL || 'https://judge0-ce.p.rapidapi.com';
-const JUDGE0_API_KEY = process.env.JUDGE0_API_KEY || '';
+const JUDGE0_API_URL = process.env.JUDGE0_API_URL || 'https://ce.judge0.com';
 
 interface Judge0Submission {
   source_code: string;
@@ -116,12 +115,6 @@ export async function submitCode(submission: Judge0Submission): Promise<string> 
     'Content-Type': 'application/json',
   };
 
-  // RapidAPI headers
-  if (JUDGE0_API_KEY) {
-    headers['x-rapidapi-host'] = 'judge0-ce.p.rapidapi.com';
-    headers['x-rapidapi-key'] = JUDGE0_API_KEY;
-  }
-
   const res = await fetch(`${JUDGE0_API_URL}/submissions?base64_encoded=true&wait=false`, {
     method: 'POST',
     headers,
@@ -146,11 +139,6 @@ export async function submitCode(submission: Judge0Submission): Promise<string> 
 
 export async function getResult(token: string): Promise<Judge0Result> {
   const headers: Record<string, string> = {};
-
-  if (JUDGE0_API_KEY) {
-    headers['x-rapidapi-host'] = 'judge0-ce.p.rapidapi.com';
-    headers['x-rapidapi-key'] = JUDGE0_API_KEY;
-  }
 
   const res = await fetch(`${JUDGE0_API_URL}/submissions/${token}?base64_encoded=true&fields=stdout,stderr,compile_output,message,status,time,memory`, {
     headers,
