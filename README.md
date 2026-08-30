@@ -30,31 +30,6 @@ Exametra is a role-based online assessment portal for students, faculty, and adm
 - An accessible Supabase project
 - A Supabase schema containing the tables used by the app: `users`, `subjects`, `questions`, `exams`, `exam_attempts`, `results`, and `notifications`
 
-### Install and configure
-
-1. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-2. Create a local `.env` file. It is ignored by Git. Add the following values from your Supabase project:
-
-   ```dotenv
-   NEXT_PUBLIC_SUPABASE_URL=your-project-url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-   SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
-   ```
-
-   `SUPABASE_SERVICE_ROLE_KEY` is server-only. Never expose it in browser code, commit it, or place it in a public `NEXT_PUBLIC_` variable.
-
-3. Start the development server:
-
-   ```bash
-   npm run dev
-   ```
-
-   Open [http://localhost:3000](http://localhost:3000). The root route is a short loading screen that redirects to `/dashboard` when the legacy `exam_user_id` browser value exists; otherwise it redirects to `/login`.
 
 ## Available commands
 
