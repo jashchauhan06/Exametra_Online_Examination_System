@@ -78,6 +78,7 @@ export default function NotificationsPage() {
 
   const handleMarkRead = async (id: string) => {
     setNotifications(prev => prev.map(n => n.id === id ? { ...n, isRead: true } : n));
+    window.dispatchEvent(new Event('notifications_read'));
     await fetch('/api/notifications/mark-read', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -87,6 +88,7 @@ export default function NotificationsPage() {
 
   const handleMarkAllRead = async () => {
     setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+    window.dispatchEvent(new Event('notifications_read'));
     await fetch('/api/notifications/mark-read', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

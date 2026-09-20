@@ -41,6 +41,10 @@ export function Header() {
 
     loadUnread();
     
+    // Listen to local events
+    const handleLocalUpdate = () => loadUnread();
+    window.addEventListener('notifications_read', handleLocalUpdate);
+    
     // Set up realtime subscription for notifications
     const channel = supabase
       .channel('notifications_header_channel')
@@ -55,6 +59,7 @@ export function Header() {
       .subscribe();
 
     return () => {
+      window.removeEventListener('notifications_read', handleLocalUpdate);
       supabase.removeChannel(channel);
     };
   }, [user]);
