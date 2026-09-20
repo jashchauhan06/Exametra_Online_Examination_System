@@ -23,6 +23,7 @@ export default function CreateAssignmentPage() {
   const [rubric, setRubric] = useState('');
   const [acceptedTypes, setAcceptedTypes] = useState<SubmissionType[]>(['text', 'pdf', 'image']);
   const [status, setStatus] = useState<'active' | 'draft'>('active');
+  const [attachmentFile, setAttachmentFile] = useState<File | null>(null);
 
   useEffect(() => {
     async function loadSubjects() {
@@ -60,7 +61,14 @@ export default function CreateAssignmentPage() {
 
     setSaving(true);
     try {
-      const result = await createAssignment({
+      let attachmentUrl = undefined;
+      let attachmentType = undefined;
+      
+      // We need a dummy ID for the attachment path before the assignment is created, 
+      // or we can generate a UUID beforehand.
+      // But simpler: just create the assignment first without attachment, then upload and update it.
+      
+      const newAssignmentData = {
         title: title.trim(),
         description: description.trim(),
         subject_id: subjectId,
@@ -70,9 +78,21 @@ export default function CreateAssignmentPage() {
         rubric: rubric.trim() || undefined,
         accepted_types: acceptedTypes,
         status,
-      });
+      };
+
+      const result = await createAssignment(newAssignmentData);
 
       if (result) {
+        if (attachmentFile) {
+          const { uploadTeacherAttachment, updateAssignment } = await import('@/lib/data/supabase-service');
+          const uploadRes = await uploadTeacherAttachment(attachmentFile, result.id);
+          if (uploadRes) {
+            await updateAssignment(result.id, { 
+              attachment_url: uploadRes.url, 
+              attachment_type: uploadRes.type 
+            });
+          }
+        }
         router.push('/assignments');
       } else {
         alert('Failed to create assignment. Please try again.');
@@ -147,6 +167,20 @@ export default function CreateAssignmentPage() {
                 onFocus={(e) => { e.currentTarget.style.borderColor = '#8B5CF6'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(139, 92, 246, 0.1)'; }}
                 onBlur={(e) => { e.currentTarget.style.borderColor = '#E4E4E7'; e.currentTarget.style.boxShadow = 'none'; }}
               />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-[#18181B] mb-2">Attachment (Optional PDF/Image)</label>
+              <input
+                type="file"
+                accept=".pdf,image/*"
+                onChange={(e) => setAttachmentFile(e.target.files?.[0] || null)}
+                className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all duration-200"
+                style={inputStyle}
+                onFocus={(e) => { e.currentTarget.style.borderColor = '#8B5CF6'; }}
+                onBlur={(e) => { e.currentTarget.style.borderColor = '#E4E4E7'; }}
+              />
+              <p className="text-[11px] text-[#71717A] mt-1">Upload a question paper, reference material, or image diagram.</p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">

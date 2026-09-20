@@ -237,6 +237,8 @@ export interface Assignment {
   id: string;
   title: string;
   description: string;
+  attachment_url?: string;
+  attachment_type?: 'pdf' | 'image';
   subject_id: string;
   faculty_id: string;
   deadline: string;

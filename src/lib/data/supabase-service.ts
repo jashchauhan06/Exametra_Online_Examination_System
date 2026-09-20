@@ -411,3 +411,30 @@ export async function uploadAssignmentFile(
   
   return urlData.publicUrl;
 }
+
+/**
+ * Uploads a teacher's assignment attachment.
+ */
+export async function uploadTeacherAttachment(
+  file: File,
+  assignmentId: string
+): Promise<{ url: string, type: 'pdf' | 'image' } | null> {
+  const ext = file.name.split('.').pop()?.toLowerCase();
+  const type = ext === 'pdf' ? 'pdf' : 'image';
+  const path = `${assignmentId}/teacher_attachment_${Date.now()}.${ext}`;
+  
+  const { error } = await supabase.storage
+    .from('assignments')
+    .upload(path, file, { upsert: true });
+  
+  if (error) {
+    console.error('Error uploading attachment:', error);
+    return null;
+  }
+  
+  const { data: urlData } = supabase.storage
+    .from('assignments')
+    .getPublicUrl(path);
+  
+  return { url: urlData.publicUrl, type };
+}

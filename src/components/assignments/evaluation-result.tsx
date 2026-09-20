@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import type { AssignmentSubmission } from '@/types';
+import ReactMarkdown from 'react-markdown';
 
 interface EvaluationResultProps {
   submission: AssignmentSubmission;
@@ -139,9 +140,9 @@ export function EvaluationResult({ submission }: EvaluationResultProps) {
               <h4 className="text-xs font-semibold text-[#71717A] uppercase tracking-wider mb-3">
                 Detailed Feedback
               </h4>
-              <div className="text-[13px] leading-relaxed text-[#3F3F46] whitespace-pre-wrap rounded-xl p-4"
+              <div className="text-[13px] leading-relaxed text-[#3F3F46] prose prose-sm max-w-none rounded-xl p-4"
                 style={{ background: '#FAFAFA', border: '1px solid #F4F4F5' }}>
-                {submission.feedback || 'No feedback available.'}
+                <ReactMarkdown>{submission.feedback || 'No feedback available.'}</ReactMarkdown>
               </div>
               {submission.evaluated_at && (
                 <p className="text-[11px] text-[#A1A1AA] mt-3">

@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS public.assignments (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   title TEXT NOT NULL,
   description TEXT NOT NULL,
+  attachment_url TEXT,                 -- optional PDF/image question file
+  attachment_type TEXT,                -- 'pdf' or 'image'
   subject_id UUID REFERENCES public.subjects(id) ON DELETE SET NULL,
   faculty_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
   deadline TIMESTAMPTZ NOT NULL,

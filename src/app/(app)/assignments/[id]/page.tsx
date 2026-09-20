@@ -17,6 +17,7 @@ import { SubmissionForm } from '@/components/assignments/submission-form';
 import { EvaluationResult } from '@/components/assignments/evaluation-result';
 import { ArrowLeft, Calendar, Clock, FileText, Trash2, Users, CheckCircle, AlertCircle, XCircle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import ReactMarkdown from 'react-markdown';
 
 export default function AssignmentDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -222,6 +223,35 @@ export default function AssignmentDetailPage() {
             </div>
           </div>
 
+          {assignment.attachment_url && (
+            <>
+              <div className="h-[1px]" style={{ background: '#F4F4F5' }} />
+              <div>
+                <h3 className="text-xs font-semibold text-[#71717A] uppercase tracking-wider mb-2">Attachment</h3>
+                {assignment.attachment_type === 'image' ? (
+                  <a href={assignment.attachment_url} target="_blank" rel="noreferrer" className="block w-max">
+                    <img src={assignment.attachment_url} alt="Assignment Attachment" className="max-h-64 rounded-xl border border-[#E4E4E7] shadow-sm hover:opacity-90 transition-opacity" />
+                  </a>
+                ) : (
+                  <a 
+                    href={assignment.attachment_url} 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-[#E4E4E7] bg-[#FAFAFA] hover:bg-[#F4F4F5] transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'rgba(139, 92, 246, 0.08)' }}>
+                      <FileText size={16} className="text-[#8B5CF6]" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-[#18181B]">View PDF Document</p>
+                      <p className="text-[10px] text-[#71717A]">Click to open in a new tab</p>
+                    </div>
+                  </a>
+                )}
+              </div>
+            </>
+          )}
+
           {assignment.rubric && (
             <>
               <div className="h-[1px]" style={{ background: '#F4F4F5' }} />
@@ -369,7 +399,9 @@ export default function AssignmentDetailPage() {
                       {sub.score}/{sub.max_marks}
                     </span>
                   </div>
-                  <p className="text-[12px] text-[#3F3F46] leading-relaxed whitespace-pre-wrap">{sub.feedback}</p>
+                  <div className="text-[12px] text-[#3F3F46] leading-relaxed prose prose-sm max-w-none">
+                    <ReactMarkdown>{sub.feedback || ''}</ReactMarkdown>
+                  </div>
                 </div>
               ))}
             </div>
