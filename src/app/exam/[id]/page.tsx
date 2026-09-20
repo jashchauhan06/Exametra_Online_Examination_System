@@ -568,6 +568,70 @@ export default function ExamTakePage() {
             });
           }
         }
+      } else if (q.type === 'subjective') {
+        const studentAns = answers[q.id]?.[0] || '';
+        if (!studentAns.trim()) {
+          unansweredCount++;
+          questionResults.push({
+            questionId: q.id,
+            studentAnswer: [],
+            correctAnswer: [],
+            isCorrect: false,
+            marksAwarded: 0,
+            marksDeducted: 0,
+            feedback: 'No answer provided.'
+          });
+        } else {
+          try {
+            const res = await fetch('/api/evaluate-subjective', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                questionId: q.id,
+                questionText: q.text,
+                studentAnswer: studentAns,
+                rubric: q.rubric,
+                expectedAnswer: q.expected_answer,
+                maxMarks: q.marks
+              }),
+            });
+            const data = await res.json();
+            
+            if (data.error) throw new Error(data.error);
+
+            const awarded = parseFloat(Number(data.score).toFixed(2));
+            obtainedMarks += awarded;
+            
+            if (awarded === q.marks) {
+              correctCount++;
+              isCorrect = true;
+            } else if (awarded === 0) {
+              incorrectCount++;
+            }
+
+            questionResults.push({
+              questionId: q.id,
+              studentAnswer: [studentAns],
+              correctAnswer: [],
+              isCorrect: awarded > 0,
+              marksAwarded: awarded,
+              marksDeducted: 0,
+              feedback: data.feedback
+            });
+          } catch (err) {
+            console.error('Subjective evaluation failed:', err);
+            incorrectCount++;
+            questionResults.push({
+              questionId: q.id,
+              studentAnswer: [studentAns],
+              correctAnswer: [],
+              isCorrect: false,
+              marksAwarded: 0,
+              marksDeducted: 0,
+              feedback: 'Evaluation failed due to server error.'
+            });
+          }
+        }
       } else {
         const studentAns = answers[q.id] || [];
         const correctAns = q.options.filter((o: any) => o.isCorrect).map((o: any) => o.id);
@@ -817,6 +881,7 @@ export default function ExamTakePage() {
 
   const currentQuestion = questions[currentQ];
   const isCoding = currentQuestion?.type === 'coding';
+  const isSubjective = currentQuestion?.type === 'subjective';
   const isMultiSelect = currentQuestion?.type === 'multi-select';
   const selectedAnswers = answers[currentQuestion.id] || [];
 
@@ -925,7 +990,7 @@ export default function ExamTakePage() {
               </span>
               <div className="flex items-center gap-3">
                 <span className="text-xs text-text-secondary px-2 py-1 bg-bg rounded border border-border">
-                  {currentQuestion.type === 'mcq' ? 'Multiple Choice' : currentQuestion.type === 'true-false' ? 'True / False' : currentQuestion.type === 'coding' ? 'Coding' : 'Multiple Select'}
+                  {currentQuestion.type === 'mcq' ? 'Multiple Choice' : currentQuestion.type === 'true-false' ? 'True / False' : currentQuestion.type === 'coding' ? 'Coding' : currentQuestion.type === 'subjective' ? 'Subjective' : 'Multiple Select'}
                 </span>
                 <span className="text-xs text-text-secondary px-2 py-1 bg-bg rounded border border-border">
                   +{currentQuestion.marks} marks
@@ -975,6 +1040,32 @@ export default function ExamTakePage() {
                   isRunning={isRunningCode}
                   onRun={handleRunCode}
                   compileError={compileError}
+                />
+              </div>
+            ) : isSubjective ? (
+              <div className="mb-8 relative z-20">
+                <label className="block text-sm font-medium text-text mb-2">Your Answer</label>
+                <textarea
+                  value={selectedAnswers[0] || ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setAnswers(prev => {
+                      const next = { ...prev };
+                      if (val.trim()) {
+                        next[currentQuestion.id] = [val];
+                      } else {
+                        delete next[currentQuestion.id];
+                      }
+                      return next;
+                    });
+                  }}
+                  placeholder="Type your answer here..."
+                  rows={8}
+                  className="w-full px-4 py-3 text-[15px] bg-surface border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary resize-y"
+                  onPaste={(e) => {
+                    e.preventDefault();
+                    addToast('Pasting is not allowed during the exam.', 'error');
+                  }}
                 />
               </div>
             ) : (

@@ -360,6 +360,7 @@ export default function CreateExamPage() {
                       <option value="true-false">T/F</option>
                       <option value="multi-select">Multi</option>
                       <option value="coding">Coding</option>
+                      <option value="subjective">Subjective</option>
                     </select>
 
                     <select value={pickerSort} onChange={e => setPickerSort(e.target.value)}
@@ -396,7 +397,7 @@ export default function CreateExamPage() {
                             <div className="flex-1 min-w-0">
                                <span className="block truncate text-text group-hover:whitespace-normal group-hover:break-words">{q.text}</span>
                                <div className="flex gap-2 mt-1">
-                                  <span className="text-[10px] uppercase font-semibold text-text-muted bg-bg px-1.5 rounded">{q.type === 'mcq' ? 'MCQ' : q.type === 'true-false' ? 'T/F' : q.type === 'coding' ? '{ }' : 'Multi'}</span>
+                                  <span className="text-[10px] uppercase font-semibold text-text-muted bg-bg px-1.5 rounded">{q.type === 'mcq' ? 'MCQ' : q.type === 'true-false' ? 'T/F' : q.type === 'coding' ? '{ }' : q.type === 'subjective' ? 'Subj' : 'Multi'}</span>
                                   {q.topic && <span className="text-[10px] text-text-muted bg-bg px-1.5 rounded truncate max-w-[100px]">{q.topic}</span>}
                                </div>
                             </div>

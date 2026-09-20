@@ -112,7 +112,7 @@ const initParticles = async (engine: any) => {
   await loadFull(engine);
 };
 
-export default function AiButton() {
+export default function AiButton({ onClick }: { onClick?: () => void }) {
   const [particleState, setParticlesReady] = useState<"loaded" | "ready">();
   const [isHovering, setIsHovering] = useState(false);
 
@@ -124,6 +124,7 @@ export default function AiButton() {
   return (
     <button
         type="button"
+        onClick={onClick}
         className="group/ai relative my-8 rounded-full bg-linear-to-r from-blue-300/30 via-blue-500/30 via-40% to-purple-500/30 p-1 text-white transition-transform hover:scale-110 active:scale-105"
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}

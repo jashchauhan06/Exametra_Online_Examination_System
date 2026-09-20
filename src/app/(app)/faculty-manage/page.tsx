@@ -10,6 +10,7 @@ import { Search, UserPlus } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import { CreateUserModal } from '@/components/admin/CreateUserModal';
+import { AssignSubjectsModal } from '@/components/admin/AssignSubjectsModal';
 import { fetchSubjects } from '@/lib/data/supabase-service';
 
 export default function FacultyManagePage() {
@@ -18,6 +19,7 @@ export default function FacultyManagePage() {
   const [search, setSearch] = useState('');
   const [confirmAction, setConfirmAction] = useState<{ id: string; name: string; action: 'disable' | 'enable' } | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [assignSubjectData, setAssignSubjectData] = useState<{ id: string; name: string; assignedIds: string[] } | null>(null);
   const [, forceUpdate] = useState(0);
 
   const [facultyList, setFacultyList] = useState<any[]>([]);
@@ -125,7 +127,13 @@ export default function FacultyManagePage() {
                 <td className="px-4 py-3">
                   <StatusBadge variant={f.is_active ? 'active' : 'inactive'} />
                 </td>
-                <td className="px-4 py-3 text-right">
+                <td className="px-4 py-3 text-right space-x-4">
+                  <button
+                    onClick={() => setAssignSubjectData({ id: f.id, name: f.name, assignedIds: f.teaching_subjects || [] })}
+                    className="text-[13px] font-medium text-primary hover:text-primary-hover"
+                  >
+                    Assign Subjects
+                  </button>
                   <button
                     onClick={() => setConfirmAction({ id: f.id, name: f.name, action: f.is_active ? 'disable' : 'enable' })}
                     className={`text-[13px] font-medium ${f.is_active ? 'text-error hover:text-red-700' : 'text-primary hover:text-primary-hover'}`}
@@ -156,6 +164,18 @@ export default function FacultyManagePage() {
           setShowCreateModal(false);
           addToast(`Faculty ${newUser.name} created successfully!`, 'success');
           setFacultyList(prev => [newUser, ...prev]);
+        }}
+      />
+
+      <AssignSubjectsModal 
+        isOpen={!!assignSubjectData}
+        onClose={() => setAssignSubjectData(null)}
+        facultyId={assignSubjectData?.id || ''}
+        facultyName={assignSubjectData?.name || ''}
+        initialAssignedSubjectIds={assignSubjectData?.assignedIds || []}
+        onSuccess={(updatedSubjectIds) => {
+          setFacultyList(prev => prev.map(f => f.id === assignSubjectData?.id ? { ...f, teaching_subjects: updatedSubjectIds } : f));
+          setAssignSubjectData(null);
         }}
       />
     </div>

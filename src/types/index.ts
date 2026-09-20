@@ -43,7 +43,7 @@ export interface Subject {
   facultyId: string;
 }
 
-export type QuestionType = 'mcq' | 'true-false' | 'multi-select' | 'coding';
+export type QuestionType = 'mcq' | 'true-false' | 'multi-select' | 'coding' | 'subjective';
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
 export type CodingLanguage = 'c' | 'cpp' | 'python' | 'javascript' | 'java' | 'sql';
@@ -80,6 +80,9 @@ export interface Question {
   test_cases?: TestCase[];
   time_limit_ms?: number;
   memory_limit_kb?: number;
+  // Subjective question fields
+  rubric?: string;
+  expected_answer?: string;
 }
 
 export interface CodingSubmission {
@@ -155,6 +158,7 @@ export interface ExamAttempt {
 export interface StudentAnswer {
   questionId: string;
   selectedOptionIds: string[];
+  textAnswer?: string; // For subjective/essay questions
   isMarkedForReview: boolean;
   answeredAt?: string;
   timeTaken: number; // seconds spent on this question
@@ -188,6 +192,8 @@ export interface QuestionResult {
   isCorrect: boolean;
   marksAwarded: number;
   marksDeducted: number;
+  codingResult?: any;
+  feedback?: string; // AI generated feedback for subjective questions
 }
 
 export type NotificationType =

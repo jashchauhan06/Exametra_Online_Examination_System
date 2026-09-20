@@ -218,7 +218,7 @@ export default function ResultDetailPage() {
                 >
                   <div className="flex items-start justify-between mb-2">
                     <span className="text-xs font-medium text-text-secondary">
-                      Question {i + 1} {question.type === 'coding' && <span className="ml-2 px-1.5 py-0.5 bg-bg border border-border rounded text-[10px]">Coding</span>}
+                      Question {i + 1} {question.type === 'coding' && <span className="ml-2 px-1.5 py-0.5 bg-bg border border-border rounded text-[10px]">Coding</span>} {question.type === 'subjective' && <span className="ml-2 px-1.5 py-0.5 bg-primary/10 text-primary border border-primary/20 rounded text-[10px]">AI Evaluated</span>}
                     </span>
                     <span className={`text-xs font-medium ${
                       qr.isCorrect ? 'text-success' : qr.studentAnswer.length === 0 ? 'text-text-muted' : 'text-error'
@@ -249,6 +249,25 @@ export default function ResultDetailPage() {
                             results={qr.codingResult.results}
                           />
                         </>
+                      )}
+                    </div>
+                  ) : question.type === 'subjective' ? (
+                    <div className="text-xs space-y-3 mt-3">
+                      <div>
+                        <span className="text-text-muted">Your answer</span>
+                        <div className={`mt-1 p-3 border rounded whitespace-pre-wrap ${
+                          qr.isCorrect ? 'border-success/20 bg-success/5 text-text' : qr.studentAnswer.length === 0 ? 'border-border bg-bg text-text-muted' : 'border-error/20 bg-error/5 text-text'
+                        }`}>
+                          {qr.studentAnswer[0] || 'Not answered'}
+                        </div>
+                      </div>
+                      {qr.feedback && (
+                        <div>
+                          <span className="text-text-muted">AI Feedback</span>
+                          <div className="mt-1 p-3 bg-primary/5 border border-primary/20 rounded text-primary-hover whitespace-pre-wrap">
+                            {qr.feedback}
+                          </div>
+                        </div>
                       )}
                     </div>
                   ) : (
