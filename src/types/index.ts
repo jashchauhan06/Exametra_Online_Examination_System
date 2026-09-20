@@ -225,6 +225,48 @@ export interface ActivityLog {
   ip?: string;
 }
 
+// ============================================================
+// Assignment Types
+// ============================================================
+
+export type AssignmentStatus = 'draft' | 'active' | 'closed';
+export type SubmissionStatus = 'pending' | 'evaluating' | 'evaluated' | 'error';
+export type SubmissionType = 'text' | 'pdf' | 'image';
+
+export interface Assignment {
+  id: string;
+  title: string;
+  description: string;
+  subject_id: string;
+  faculty_id: string;
+  deadline: string;
+  max_marks: number;
+  rubric?: string;
+  accepted_types: SubmissionType[];
+  status: AssignmentStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AssignmentSubmission {
+  id: string;
+  assignment_id: string;
+  student_id: string;
+  submission_type: SubmissionType;
+  text_content?: string;
+  file_url?: string;
+  file_name?: string;
+  score?: number;
+  max_marks?: number;
+  feedback?: string;
+  status: SubmissionStatus;
+  submitted_at: string;
+  evaluated_at?: string;
+  // Joined fields (optional, for display)
+  student_name?: string;
+  student_email?: string;
+}
+
 // UI State types
 export interface ExamTakingState {
   currentQuestionIndex: number;

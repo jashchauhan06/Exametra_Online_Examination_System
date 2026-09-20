@@ -37,6 +37,7 @@ export function Sidebar() {
       return [
         { label: 'Dashboard', href: '/dashboard' },
         { label: 'Examinations', href: '/exams' },
+        { label: 'Assignments', href: '/assignments' },
         { label: 'Results', href: '/results' },
         { label: 'Notifications', href: '/notifications' },
         { label: 'Settings', href: '/settings' },
@@ -46,6 +47,7 @@ export function Sidebar() {
       return [
         { label: 'Dashboard', href: '/dashboard' },
         { label: 'Examinations', href: '/exams' },
+        { label: 'Assignments', href: '/assignments' },
         { label: 'Create Exam', href: '/exams/create' },
         { label: 'Question Bank', href: '/question-bank' },
         { label: 'Analytics', href: '/analytics' },
@@ -56,6 +58,7 @@ export function Sidebar() {
     return [
       { label: 'Dashboard', href: '/dashboard' },
       { label: 'Examinations', href: '/exams' },
+      { label: 'Assignments', href: '/assignments' },
       { label: 'Results', href: '/results' },
       { label: 'Students', href: '/students' },
       { label: 'Faculty', href: '/faculty-manage' },

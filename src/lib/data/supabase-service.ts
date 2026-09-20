@@ -1,5 +1,5 @@
 import { supabase } from '../supabase';
-import type { Exam, Result } from '@/types';
+import type { Exam, Result, Assignment, AssignmentSubmission } from '@/types';
 import { getDynamicExamStatus } from '../utils/exam-status';
 
 /**
@@ -171,4 +171,243 @@ export async function fetchSubjects() {
     return [];
   }
   return data || [];
+}
+
+// ============================================================
+// Assignment Service Functions
+// ============================================================
+
+/**
+ * Fetches assignments. Faculty sees their own, others see all active.
+ */
+export async function fetchAssignments(facultyId?: string): Promise<Assignment[]> {
+  let query = supabase.from('assignments').select('*').order('created_at', { ascending: false });
+  if (facultyId) {
+    query = query.eq('faculty_id', facultyId);
+  } else {
+    query = query.eq('status', 'active');
+  }
+  const { data, error } = await query;
+  if (error) {
+    console.error('Error fetching assignments:', error);
+    return [];
+  }
+  return (data || []) as Assignment[];
+}
+
+/**
+ * Fetches a single assignment by ID.
+ */
+export async function fetchAssignmentById(id: string): Promise<Assignment | null> {
+  const { data, error } = await supabase
+    .from('assignments')
+    .select('*')
+    .eq('id', id)
+    .single();
+  if (error) {
+    console.error('Error fetching assignment:', error);
+    return null;
+  }
+  return data as Assignment;
+}
+
+/**
+ * Creates a new assignment.
+ */
+export async function createAssignment(assignment: Omit<Assignment, 'id' | 'created_at' | 'updated_at'>): Promise<Assignment | null> {
+  const { data, error } = await supabase
+    .from('assignments')
+    .insert(assignment)
+    .select()
+    .single();
+  if (error) {
+    console.error('Error creating assignment:', error);
+    return null;
+  }
+  return data as Assignment;
+}
+
+/**
+ * Updates an existing assignment.
+ */
+export async function updateAssignment(id: string, updates: Partial<Assignment>): Promise<Assignment | null> {
+  const { data, error } = await supabase
+    .from('assignments')
+    .update({ ...updates, updated_at: new Date().toISOString() })
+    .eq('id', id)
+    .select()
+    .single();
+  if (error) {
+    console.error('Error updating assignment:', error);
+    return null;
+  }
+  return data as Assignment;
+}
+
+/**
+ * Deletes an assignment.
+ */
+export async function deleteAssignment(id: string): Promise<boolean> {
+  const { error } = await supabase.from('assignments').delete().eq('id', id);
+  if (error) {
+    console.error('Error deleting assignment:', error);
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Fetches all submissions for an assignment (faculty view).
+ */
+export async function fetchSubmissionsForAssignment(assignmentId: string): Promise<AssignmentSubmission[]> {
+  const { data, error } = await supabase
+    .from('assignment_submissions')
+    .select('*')
+    .eq('assignment_id', assignmentId)
+    .order('submitted_at', { ascending: false });
+  if (error) {
+    console.error('Error fetching submissions:', error);
+    return [];
+  }
+
+  // Enrich with student names
+  const submissions = (data || []) as AssignmentSubmission[];
+  if (submissions.length > 0) {
+    const studentIds = [...new Set(submissions.map(s => s.student_id))];
+    const { data: students } = await supabase
+      .from('users')
+      .select('id, name, email')
+      .in('id', studentIds);
+    
+    if (students) {
+      const studentMap = new Map(students.map(s => [s.id, s]));
+      submissions.forEach(sub => {
+        const student = studentMap.get(sub.student_id);
+        if (student) {
+          sub.student_name = student.name;
+          sub.student_email = student.email;
+        }
+      });
+    }
+  }
+
+  return submissions;
+}
+
+/**
+ * Fetches a student's submission for a specific assignment.
+ */
+export async function fetchStudentSubmission(assignmentId: string, studentId: string): Promise<AssignmentSubmission | null> {
+  const { data, error } = await supabase
+    .from('assignment_submissions')
+    .select('*')
+    .eq('assignment_id', assignmentId)
+    .eq('student_id', studentId)
+    .single();
+  if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found
+    console.error('Error fetching student submission:', error);
+    return null;
+  }
+  return (data as AssignmentSubmission) || null;
+}
+
+/**
+ * Creates or updates a submission (upsert on assignment_id + student_id).
+ */
+export async function upsertSubmission(submission: {
+  assignment_id: string;
+  student_id: string;
+  submission_type: string;
+  text_content?: string;
+  file_url?: string;
+  file_name?: string;
+  max_marks?: number;
+  status?: string;
+}): Promise<AssignmentSubmission | null> {
+  const { data, error } = await supabase
+    .from('assignment_submissions')
+    .upsert(
+      {
+        ...submission,
+        status: submission.status || 'pending',
+        submitted_at: new Date().toISOString(),
+      },
+      { onConflict: 'assignment_id,student_id' }
+    )
+    .select()
+    .single();
+  if (error) {
+    console.error('Error upserting submission:', error);
+    return null;
+  }
+  return data as AssignmentSubmission;
+}
+
+/**
+ * Updates a submission with AI evaluation results.
+ */
+export async function updateSubmissionEvaluation(
+  submissionId: string,
+  score: number,
+  feedback: string
+): Promise<boolean> {
+  const { error } = await supabase
+    .from('assignment_submissions')
+    .update({
+      score,
+      feedback,
+      status: 'evaluated',
+      evaluated_at: new Date().toISOString(),
+    })
+    .eq('id', submissionId);
+  if (error) {
+    console.error('Error updating submission evaluation:', error);
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Updates submission status (e.g., to 'evaluating' or 'error').
+ */
+export async function updateSubmissionStatus(
+  submissionId: string,
+  status: string
+): Promise<boolean> {
+  const { error } = await supabase
+    .from('assignment_submissions')
+    .update({ status })
+    .eq('id', submissionId);
+  if (error) {
+    console.error('Error updating submission status:', error);
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Uploads a file to Supabase Storage and returns the public URL.
+ */
+export async function uploadAssignmentFile(
+  file: File,
+  assignmentId: string,
+  studentId: string
+): Promise<string | null> {
+  const ext = file.name.split('.').pop();
+  const path = `${assignmentId}/${studentId}/${Date.now()}.${ext}`;
+  
+  const { error } = await supabase.storage
+    .from('assignments')
+    .upload(path, file, { upsert: true });
+  
+  if (error) {
+    console.error('Error uploading file:', error);
+    return null;
+  }
+  
+  const { data: urlData } = supabase.storage
+    .from('assignments')
+    .getPublicUrl(path);
+  
+  return urlData.publicUrl;
 }
