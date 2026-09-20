@@ -50,22 +50,6 @@ export function AssignSubjectsModal({ isOpen, onClose, facultyId, facultyName, i
       const added = newSelectedArray.filter(id => !initiallyAssigned.has(id));
       const removed = (initialAssignedSubjectIds || []).filter(id => !selectedIds.has(id));
 
-      // 1. Update the subjects table (assign new subjects to this faculty)
-      if (added.length > 0) {
-        const { error: errAdded } = await supabase.from('subjects')
-          .update({ faculty_id: facultyId })
-          .in('id', added);
-        if (errAdded) throw errAdded;
-      }
-
-      // 2. Update the subjects table (unassign removed subjects)
-      if (removed.length > 0) {
-        const { error: errRemoved } = await supabase.from('subjects')
-          .update({ faculty_id: null })
-          .in('id', removed);
-        if (errRemoved) throw errRemoved;
-      }
-
       // 3. Update the users table (teaching_subjects array)
       const { error: errUser } = await supabase.from('users')
         .update({ teaching_subjects: newSelectedArray })
@@ -105,8 +89,6 @@ export function AssignSubjectsModal({ isOpen, onClose, facultyId, facultyName, i
             <div className="space-y-2">
               {allSubjects.map(sub => {
                 const isSelected = selectedIds.has(sub.id);
-                // Highlight if it belongs to someone else
-                const isAssignedToOther = sub.faculty_id && sub.faculty_id !== facultyId;
                 
                 return (
                   <div 
@@ -125,11 +107,6 @@ export function AssignSubjectsModal({ isOpen, onClose, facultyId, facultyName, i
                       <p className="text-sm font-medium text-text truncate">{sub.name}</p>
                       <p className="text-xs text-text-muted truncate">{sub.code}</p>
                     </div>
-                    {isAssignedToOther && !isSelected && (
-                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-error/10 text-error whitespace-nowrap">
-                        Assigned to someone else
-                      </span>
-                    )}
                   </div>
                 );
               })}

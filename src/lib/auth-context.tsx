@@ -83,6 +83,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       enrolledSubjects: profile.enrolled_subjects,
       facultyId: profile.faculty_id,
       designation: profile.designation,
+      subjects: profile.teaching_subjects || [],
     } as unknown as User;
 
     setUser(mappedUser);

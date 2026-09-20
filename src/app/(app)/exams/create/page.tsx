@@ -8,8 +8,9 @@ import { PageHeader } from '@/components/ui/page-header';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ArrowLeft, ArrowRight, Check, Plus, Trash2, GripVertical } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
-import type { QuestionType, Difficulty, ExamSettings } from '@/types';
+import type { QuestionType, Difficulty, ExamSettings, Faculty } from '@/types';
 import AiButton from '@/components/animata/button/ai-button';
+import { AiQuestionDialog } from '@/components/admin/AiQuestionDialog';
 
 import { supabase } from '@/lib/supabase';
 
@@ -31,7 +32,14 @@ export default function CreateExamPage() {
       
       let subjectQuery = supabase.from('subjects').select('*');
       if (user.role === 'faculty') {
-        subjectQuery = subjectQuery.eq('faculty_id', user.id);
+        const facultyUser = user as Faculty;
+        const teachingSubjects = facultyUser.subjects || [];
+        if (teachingSubjects.length > 0) {
+          subjectQuery = subjectQuery.in('id', teachingSubjects);
+        } else {
+          // If no subjects assigned, return none
+          subjectQuery = subjectQuery.eq('id', 'NONE');
+        }
       }
       const { data: subData } = await subjectQuery;
       
@@ -63,6 +71,7 @@ export default function CreateExamPage() {
   // Step 2 — Questions
   const [selectedQuestionIds, setSelectedQuestionIds] = useState<string[]>([]);
   const [showQuestionPicker, setShowQuestionPicker] = useState(false);
+  const [showAiDialog, setShowAiDialog] = useState(false);
 
   // Step 3 — Settings
   const [settings, setSettings] = useState<ExamSettings>({
@@ -312,8 +321,20 @@ export default function CreateExamPage() {
             </button>
           </div>
           <div className="flex justify-end mb-2">
-            <AiButton />
+            <AiButton onClick={() => setShowAiDialog(true)} />
           </div>
+
+          <AiQuestionDialog 
+            isOpen={showAiDialog}
+            onClose={() => setShowAiDialog(false)}
+            subjects={subjects}
+            user={user}
+            onSave={(savedQuestions) => {
+              setAllQuestions(prev => [...savedQuestions, ...prev]);
+              setSelectedQuestionIds(prev => [...prev, ...savedQuestions.map(q => q.id)]);
+              setShowAiDialog(false);
+            }}
+          />
 
           {selectedQs.length === 0 ? (
             <div className="bg-surface border border-border rounded-lg py-12 text-center text-sm text-text-secondary">

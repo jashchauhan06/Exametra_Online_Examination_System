@@ -23,6 +23,21 @@ export default function SettingsPage() {
   const student = user as Student;
   const facultyUser = user as Faculty;
 
+  const [teachingSubjects, setTeachingSubjects] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    if (user.role === 'faculty' && facultyUser.subjects?.length > 0) {
+      import('@/lib/supabase').then(({ supabase }) => {
+        supabase.from('subjects')
+          .select('id, name')
+          .in('id', facultyUser.subjects)
+          .then(({ data }) => {
+            if (data) setTeachingSubjects(data);
+          });
+      });
+    }
+  }, [user.role, facultyUser.subjects]);
+
   const handleChangePassword = (e: React.FormEvent) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
@@ -119,10 +134,18 @@ export default function SettingsPage() {
                   </div>
                 )}
                 {user.role === 'faculty' && (
-                  <div>
-                    <div className="text-[12px] font-medium text-[#71717A] mb-1">Designation</div>
-                    <div className="text-[14px] font-medium text-[#18181B]">{facultyUser.designation}</div>
-                  </div>
+                  <>
+                    <div>
+                      <div className="text-[12px] font-medium text-[#71717A] mb-1">Designation</div>
+                      <div className="text-[14px] font-medium text-[#18181B]">{facultyUser.designation}</div>
+                    </div>
+                    <div>
+                      <div className="text-[12px] font-medium text-[#71717A] mb-1">Teaching Subjects</div>
+                      <div className="text-[14px] font-medium text-[#18181B]">
+                        {teachingSubjects.length > 0 ? teachingSubjects.map(s => s.name).join(', ') : <span className="text-[#A1A1AA] italic">None Assigned</span>}
+                      </div>
+                    </div>
+                  </>
                 )}
               </div>
             </div>

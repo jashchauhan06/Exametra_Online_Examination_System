@@ -122,24 +122,30 @@ export default function FacultyManagePage() {
                 <td className="px-4 py-3 text-text-secondary">{f.faculty_id}</td>
                 <td className="px-4 py-3 text-text-secondary">{f.department}</td>
                 <td className="px-4 py-3 text-text-secondary">
-                  {(f.teaching_subjects || []).map((sid: string) => subjects.find(s => s.id === sid)?.name).filter(Boolean).join(', ')}
+                  {(f.teaching_subjects || []).map((sid: string) => subjects.find(s => s.id === sid)?.name).filter(Boolean).join(', ') || <span className="text-text-muted italic">None</span>}
                 </td>
                 <td className="px-4 py-3">
                   <StatusBadge variant={f.is_active ? 'active' : 'inactive'} />
                 </td>
-                <td className="px-4 py-3 text-right space-x-4">
-                  <button
-                    onClick={() => setAssignSubjectData({ id: f.id, name: f.name, assignedIds: f.teaching_subjects || [] })}
-                    className="text-[13px] font-medium text-primary hover:text-primary-hover"
-                  >
-                    Assign Subjects
-                  </button>
-                  <button
-                    onClick={() => setConfirmAction({ id: f.id, name: f.name, action: f.is_active ? 'disable' : 'enable' })}
-                    className={`text-[13px] font-medium ${f.is_active ? 'text-error hover:text-red-700' : 'text-primary hover:text-primary-hover'}`}
-                  >
-                    {f.is_active ? 'Disable' : 'Enable'}
-                  </button>
+                <td className="px-4 py-3">
+                  <div className="flex items-center justify-end gap-3">
+                    <button
+                      onClick={() => setAssignSubjectData({ id: f.id, name: f.name, assignedIds: f.teaching_subjects || [] })}
+                      className="px-3 py-1.5 text-[13px] font-medium text-primary bg-primary/5 hover:bg-primary/10 border border-primary/20 hover:border-primary/40 rounded transition-colors whitespace-nowrap"
+                    >
+                      Assign Subjects
+                    </button>
+                    <button
+                      onClick={() => setConfirmAction({ id: f.id, name: f.name, action: f.is_active ? 'disable' : 'enable' })}
+                      className={`px-3 py-1.5 text-[13px] font-medium border rounded transition-colors whitespace-nowrap ${
+                        f.is_active 
+                          ? 'text-error bg-error/5 hover:bg-error/10 border-error/20 hover:border-error/40' 
+                          : 'text-success bg-success/5 hover:bg-success/10 border-success/20 hover:border-success/40'
+                      }`}
+                    >
+                      {f.is_active ? 'Disable' : 'Enable'}
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

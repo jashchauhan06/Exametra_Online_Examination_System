@@ -195,6 +195,25 @@
   z-index: 4;
 }
 
+/* 
+ * FIX FOR GLITCHY GSAP ANIMATIONS:
+ * When clicking a link, the route changes and onMouseLeave might not fire or complete,
+ * leaving the .hover-circle scaled up and text hidden on the new active item.
+ * We force the active item to ignore the hover circle and reset text styles.
+ */
+.pill.is-active .hover-circle {
+  display: none !important;
+}
+
+.pill.is-active .pill-label {
+  transform: none !important;
+  color: var(--pill-text, #000) !important;
+}
+
+.pill.is-active .pill-label-hover {
+  display: none !important;
+}
+
 .desktop-only {
   display: block;
 }
