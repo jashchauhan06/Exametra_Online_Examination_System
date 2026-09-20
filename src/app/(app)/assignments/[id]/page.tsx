@@ -85,6 +85,12 @@ export default function AssignmentDetailPage() {
     if (updated) setAssignment(updated);
   };
 
+  const handleReopenAssignment = async () => {
+    if (!assignment) return;
+    const updated = await updateAssignment(assignment.id, { status: 'active' });
+    if (updated) setAssignment(updated);
+  };
+
   if (loading) {
     return (
       <div className="max-w-5xl space-y-6">
@@ -144,7 +150,7 @@ export default function AssignmentDetailPage() {
           </div>
         </div>
 
-        {user?.role === 'faculty' && (
+        {(user?.role === 'faculty' || user?.role === 'admin') && (
           <div className="flex items-center gap-2">
             {assignment.status === 'active' && (
               <button onClick={handleCloseAssignment}
@@ -154,6 +160,16 @@ export default function AssignmentDetailPage() {
                 onMouseLeave={(e) => { e.currentTarget.style.background = '#F4F4F5'; }}
               >
                 Close Assignment
+              </button>
+            )}
+            {assignment.status === 'closed' && (
+              <button onClick={handleReopenAssignment}
+                className="px-3 py-2 rounded-lg text-xs font-medium text-[#10B981] transition-colors"
+                style={{ background: 'rgba(16, 185, 129, 0.08)' }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(16, 185, 129, 0.15)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(16, 185, 129, 0.08)'; }}
+              >
+                Reopen Assignment
               </button>
             )}
             <button onClick={handleDelete} disabled={deleting}

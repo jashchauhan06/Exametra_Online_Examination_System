@@ -25,15 +25,15 @@ export default function AssignmentsPage() {
         setSubjects(subs);
 
         let data: Assignment[];
-        if (user!.role === 'faculty') {
-          data = await fetchAssignments(user!.id);
+        if (user!.role === 'faculty' || user!.role === 'admin') {
+          data = await fetchAssignments(user!.role === 'faculty' ? user!.id : undefined);
         } else {
           data = await fetchAssignments();
         }
         setAssignments(data);
 
-        // For faculty, fetch submission counts
-        if (user!.role === 'faculty') {
+        // For faculty and admin, fetch submission counts
+        if (user!.role === 'faculty' || user!.role === 'admin') {
           const counts: Record<string, number> = {};
           for (const a of data) {
             const submissions = await fetchSubmissionsForAssignment(a.id);
@@ -107,7 +107,7 @@ export default function AssignmentsPage() {
               : 'View and submit assignments for automatic grading'}
           </p>
         </div>
-        {user?.role === 'faculty' && (
+        {(user?.role === 'faculty' || user?.role === 'admin') && (
           <Link
             href="/assignments/create"
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200"

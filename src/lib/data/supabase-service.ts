@@ -185,7 +185,7 @@ export async function fetchAssignments(facultyId?: string): Promise<Assignment[]
   if (facultyId) {
     query = query.eq('faculty_id', facultyId);
   } else {
-    query = query.eq('status', 'active');
+    query = query.in('status', ['active', 'closed']);
   }
   const { data, error } = await query;
   if (error) {

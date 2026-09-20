@@ -93,6 +93,19 @@ export default function CreateAssignmentPage() {
             });
           }
         }
+
+        // Send notifications to faculty and students
+        fetch('/api/notifications/assignment-created', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            assignmentId: result.id,
+            title: newAssignmentData.title,
+            facultyId: newAssignmentData.faculty_id,
+            deadline: newAssignmentData.deadline
+          })
+        }).catch(err => console.error('Failed to broadcast notifications:', err));
+
         router.push('/assignments');
       } else {
         alert('Failed to create assignment. Please try again.');

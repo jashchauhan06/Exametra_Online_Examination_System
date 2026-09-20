@@ -163,6 +163,19 @@ export function SubmissionForm({ assignment, existingSubmission, onSubmissionUpd
       setSubmission(savedSubmission);
       onSubmissionUpdate(savedSubmission);
 
+      // Notify faculty of submission
+      fetch('/api/notifications/assignment-submitted', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          assignmentId: assignment.id,
+          title: assignment.title,
+          facultyId: assignment.faculty_id,
+          studentName: user.name,
+          studentId: user.id
+        })
+      }).catch(err => console.error('Failed to notify faculty:', err));
+
       // 3. Trigger AI evaluation
       try {
         let evalBody: any = {
