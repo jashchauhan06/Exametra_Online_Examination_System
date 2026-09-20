@@ -70,8 +70,13 @@ function createWindow() {
 
   // Load the running Next.js app with retry logic
   const loadApp = () => {
-    mainWindow.loadURL('http://localhost:3000').catch((err) => {
-      console.log('Waiting for Next.js to start, retrying in 2s...');
+    const isDev = !app.isPackaged;
+    const url = isDev 
+      ? 'http://localhost:3000'
+      : 'https://exametra-online-examination-system.vercel.app';
+      
+    mainWindow.loadURL(url).catch((err) => {
+      console.log(`Waiting for app to start at ${url}, retrying in 2s...`);
       setTimeout(loadApp, 2000);
     });
   };

@@ -1,13 +1,33 @@
 {
-  "name": "app",
-  "version": "0.1.0",
+  "name": "exametra-desktop",
+  "version": "1.0.0",
   "private": true,
+  "main": "main.js",
+  "author": "Exametra",
+  "description": "Exametra Secure Lockdown Browser",
   "scripts": {
     "dev": "concurrently \"next dev\" \"npm run lockdown\"",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "lockdown": "electron main.js"
+    "lockdown": "electron main.js",
+    "build-installer": "node scripts/build-setup.js",
+    "package-exe": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.exametra.app",
+    "productName": "Exametra",
+    "asar": false,
+    "win": {
+      "target": "nsis"
+    },
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "main.js",
+      "package.json"
+    ]
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
@@ -35,6 +55,7 @@
     "@types/react-dom": "^19",
     "concurrently": "^10.0.5",
     "electron": "^44.0.0",
+    "electron-builder": "^26.15.3",
     "eslint": "^9",
     "eslint-config-next": "16.2.12",
     "tailwindcss": "^4",

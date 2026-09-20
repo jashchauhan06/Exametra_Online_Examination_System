@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# electron & distribution builds
+/dist-electron/
+/dist/
+*.exe
+*.zip
+*.asar
+/public/*.exe
+/public/*.zip
+SetupStub*.exe
