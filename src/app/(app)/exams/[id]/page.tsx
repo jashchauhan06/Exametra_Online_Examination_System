@@ -30,6 +30,13 @@ export default function ExamDetailPage() {
   const [loading, setLoading] = useState(true);
   const [resettingStudent, setResettingStudent] = useState<string | null>(null);
   const [timeUntilStart, setTimeUntilStart] = useState<number | null>(null);
+  const [isElectron, setIsElectron] = useState<boolean | null>(null);
+
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsElectron(/electron/i.test(navigator.userAgent));
+    }
+  }, []);
 
   React.useEffect(() => {
     if (!exam || exam.status !== 'upcoming') return;
@@ -290,6 +297,22 @@ export default function ExamDetailPage() {
         <div className="bg-surface border border-border rounded-lg px-5 py-4">
           {existingAttempt && existingAttempt.status !== 'in-progress' ? (
             <p className="text-sm text-text-secondary">You have already attempted this exam.</p>
+          ) : isElectron === false ? (
+            <div className="flex flex-col items-center justify-center py-6 text-center">
+              <AlertTriangle size={32} className="text-warning mb-3" />
+              <p className="text-sm text-text-secondary max-w-md mb-4">
+                This exam can only be taken using the secure Exametra Desktop App. 
+                Please launch or download the application to proceed.
+              </p>
+              <a 
+                href="/Exametra-Setup.exe" 
+                download
+                className="btn-solid-primary flex items-center gap-2 text-sm"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download for Windows
+              </a>
+            </div>
           ) : (
             <>
               <label className="flex items-start gap-2.5 cursor-pointer mb-4">
