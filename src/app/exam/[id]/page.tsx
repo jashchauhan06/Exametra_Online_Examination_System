@@ -26,6 +26,7 @@ export default function ExamTakePage() {
   const [subject, setSubject] = useState<any>(null);
   const [questions, setQuestions] = useState<any[]>([]);
   const [loadingData, setLoadingData] = useState(true);
+  const [isElectron, setIsElectron] = useState<boolean | null>(null);
 
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
@@ -56,6 +57,12 @@ export default function ExamTakePage() {
     examRef.current = exam;
     userRef.current = user;
   }, [exam, user]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsElectron(/electron/i.test(navigator.userAgent));
+    }
+  }, []);
 
   const triggerViolation = React.useCallback((voiceMessage: string) => {
     const now = Date.now();
@@ -948,6 +955,25 @@ export default function ExamTakePage() {
     'marked': 'bg-warning-light text-warning border-[#FDE68A]',
     'not-visited': 'bg-surface text-text-secondary border-border',
   };
+
+  if (isElectron === false) {
+    return (
+      <div className="min-h-screen bg-bg flex flex-col items-center justify-center p-6 text-center select-none">
+        <AlertTriangle size={64} className="text-warning mb-6" />
+        <h1 className="text-2xl font-bold text-text mb-3">Secure App Required</h1>
+        <p className="text-text-secondary max-w-md mb-8">
+          This exam can only be taken using the secure Exametra Desktop App. 
+          Please launch the application on your computer to proceed with the test.
+        </p>
+        <button 
+          onClick={() => router.replace('/dashboard')}
+          className="btn-solid-primary"
+        >
+          Return to Dashboard
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-bg flex flex-col select-none" style={{ WebkitUserSelect: 'none', userSelect: 'none' }} onContextMenu={(e) => e.preventDefault()}>
