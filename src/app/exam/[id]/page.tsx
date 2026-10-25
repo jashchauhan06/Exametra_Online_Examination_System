@@ -1029,7 +1029,15 @@ export default function ExamTakePage() {
   }
 
   return (
-    <div className="min-h-screen bg-bg flex flex-col select-none" style={{ WebkitUserSelect: 'none', userSelect: 'none' }} onContextMenu={(e) => e.preventDefault()}>
+    <div
+      className={`min-h-screen bg-bg flex flex-col ${isCopyPasteAllowed ? '' : 'select-none'}`}
+      style={isCopyPasteAllowed ? {} : { WebkitUserSelect: 'none', userSelect: 'none' }}
+      onContextMenu={(e) => {
+        if (!isCopyPasteAllowed) {
+          e.preventDefault();
+        }
+      }}
+    >
       {/* Header */}
       <header className="h-14 bg-surface border-b border-border flex items-center justify-between px-6 flex-shrink-0 z-10">
         <div>
@@ -1063,7 +1071,9 @@ export default function ExamTakePage() {
           <div className="max-w-2xl mx-auto">
             {/* Question Header */}
             <div className="relative flex items-center justify-between mb-6">
-              <canvas className="absolute inset-0 w-full h-full z-10 opacity-0 cursor-default" aria-hidden="true" />
+              {!isCopyPasteAllowed && (
+                <canvas className="absolute inset-0 w-full h-full z-10 opacity-0 cursor-default" aria-hidden="true" />
+              )}
               <span className="text-sm font-semibold text-text">
                 Question {currentQ + 1} of {questions.length}
               </span>
@@ -1078,8 +1088,10 @@ export default function ExamTakePage() {
             </div>
 
             {/* Question Text */}
-            <div className="relative text-[15px] text-text leading-relaxed mb-6 select-none">
-              <canvas className="absolute inset-0 w-full h-full z-10 opacity-0 cursor-default" aria-hidden="true" />
+            <div className={`relative text-[15px] text-text leading-relaxed mb-6 ${isCopyPasteAllowed ? 'select-text' : 'select-none'}`}>
+              {!isCopyPasteAllowed && (
+                <canvas className="absolute inset-0 w-full h-full z-10 opacity-0 cursor-default" aria-hidden="true" />
+              )}
               {currentQuestion.text}
             </div>
 
@@ -1161,13 +1173,15 @@ export default function ExamTakePage() {
                   <button
                     key={option.id}
                     onClick={() => handleSelectOption(currentQuestion.id, option.id, isMultiSelect)}
-                    className={`relative w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg border transition-all select-none ${
+                    className={`relative w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg border transition-all ${isCopyPasteAllowed ? 'select-text' : 'select-none'} ${
                       isSelected
                         ? 'border-primary bg-primary-light'
                         : 'border-border bg-surface hover:border-border-strong'
                     }`}
                   >
-                    <canvas className="absolute inset-0 w-full h-full z-10 opacity-0 cursor-pointer" aria-hidden="true" />
+                    {!isCopyPasteAllowed && (
+                      <canvas className="absolute inset-0 w-full h-full z-10 opacity-0 cursor-pointer" aria-hidden="true" />
+                    )}
                     <div className={`w-5 h-5 flex-shrink-0 flex items-center justify-center rounded-full border-2 text-xs font-medium ${
                       isSelected
                         ? 'border-primary bg-primary text-white'
