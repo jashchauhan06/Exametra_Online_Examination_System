@@ -691,8 +691,17 @@ export default function ExamTakePage() {
     const percentage = Math.max(0, Math.round((obtainedMarks / exam.total_marks) * 100));
     const status = obtainedMarks >= (exam.passing_marks || 0) ? 'passed' : 'failed';
     
-    // Save result (upsert to handle retries — unique constraint on attempt_id)
-    const { data: resData, error: resError } = await insforge.from('results').upsert({
+    // Save result (check existing attempt result first or insert)
+    let resData: any = null;
+    let resError: any = null;
+
+    const { data: existingResults } = await insforge
+      .from('results')
+      .select('id')
+      .eq('attempt_id', attemptId)
+      .limit(1);
+
+    const resultPayload = {
       attempt_id: attemptId,
       exam_id: exam.id,
       student_id: user.id,
@@ -707,7 +716,26 @@ export default function ExamTakePage() {
       question_results: questionResults,
       is_violation: isForcedViolation,
       violation_reason: violationReason
-    }, { onConflict: 'attempt_id' }).select().single();
+    };
+
+    if (existingResults && existingResults.length > 0) {
+      const updateRes = await insforge
+        .from('results')
+        .update(resultPayload)
+        .eq('id', existingResults[0].id)
+        .select()
+        .single();
+      resData = updateRes.data;
+      resError = updateRes.error;
+    } else {
+      const insertRes = await insforge
+        .from('results')
+        .insert([resultPayload])
+        .select()
+        .single();
+      resData = insertRes.data;
+      resError = insertRes.error;
+    }
 
     if (resError) console.error('Result save error:', resError);
     
