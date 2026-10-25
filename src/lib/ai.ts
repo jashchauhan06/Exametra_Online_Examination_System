@@ -32,17 +32,17 @@ export function extractJsonFromResponse<T = any>(text: string): T {
  * or falls back to Google Gemini if GEMINI_API_KEY is configured.
  */
 export async function callAI(options: AIMessageOptions): Promise<string> {
-  const openRouterKey = process.env.OPENROUTER_API_KEY;
+  const openRouterKey = process.env.OPENROUTER_API_KEY || (process.env as any)['export OPENROUTER_API_KEY'];
   const geminiKey = process.env.GEMINI_API_KEY;
 
   if (!openRouterKey && !geminiKey) {
     throw new Error('Neither OPENROUTER_API_KEY nor GEMINI_API_KEY is configured.');
   }
 
-  // ── 1. Preferred: OpenRouter (DeepSeek V4.1 Flash 1017) ──
+  // ── 1. Preferred: OpenRouter (google/gemma-4-26b-a4b-it:free) ──
   if (openRouterKey) {
     try {
-      const model = process.env.OPENROUTER_MODEL || 'deepseek/deepseek-v4.1-flash-1017';
+      const model = process.env.OPENROUTER_MODEL || 'google/gemma-4-26b-a4b-it:free';
       
       const messages: any[] = [];
       if (options.systemPrompt) {
