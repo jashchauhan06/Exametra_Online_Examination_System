@@ -71,13 +71,16 @@ export default function NotificationsPage() {
   const unreadCount = notifications.filter(n => !n.isRead).length;
 
   const handleMarkRead = async (id: string) => {
-    // Optimistically update notifications list and immediately update header badge
+    let remainingUnread = 0;
+    // Optimistically update notifications list
     setNotifications(prev => {
       const next = prev.map(n => n.id === id ? { ...n, isRead: true } : n);
-      const remainingUnread = next.filter(n => !n.isRead).length;
-      window.dispatchEvent(new CustomEvent('notifications_read', { detail: { count: remainingUnread } }));
+      remainingUnread = next.filter(n => !n.isRead).length;
       return next;
     });
+
+    // Notify header badge outside of reducer render cycle
+    window.dispatchEvent(new CustomEvent('notifications_read', { detail: { count: remainingUnread } }));
 
     try {
       await fetch('/api/notifications/mark-read', {
@@ -91,8 +94,10 @@ export default function NotificationsPage() {
   };
 
   const handleMarkAllRead = async () => {
-    // Optimistically update notifications list and immediately zero out header badge
+    // Optimistically update notifications list
     setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+
+    // Notify header badge outside of reducer render cycle
     window.dispatchEvent(new CustomEvent('notifications_read', { detail: { count: 0 } }));
 
     try {
