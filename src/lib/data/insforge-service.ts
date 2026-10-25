@@ -105,7 +105,7 @@ export async function fetchFacultyDashboardData(facultyId: string) {
   }
 
   return {
-    exams: exams || [],
+    exams: dynamicExams,
     studentCount: studentCount || 0,
     analytics: analyticsData
   };
