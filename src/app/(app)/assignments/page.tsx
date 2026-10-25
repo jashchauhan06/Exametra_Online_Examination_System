@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
-import { fetchAssignments, fetchSubjects, fetchSubmissionsForAssignment } from '@/lib/data/supabase-service';
+import { fetchAssignments, fetchSubjects, fetchSubmissionsForAssignment } from '@/lib/data/insforge-service';
 import type { Assignment } from '@/types';
 import { Plus, Clock, FileText, Users, CheckCircle, AlertCircle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';

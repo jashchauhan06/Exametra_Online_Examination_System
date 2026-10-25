@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Clock, Save, AlertTriangle } from 'lucide-react';
 import { getDynamicExamStatus } from '@/lib/utils/exam-status';
-import { supabase } from '@/lib/supabase';
+import { insforge } from '@/lib/insforge';
 import type { StudentAnswer, QuestionNavStatus, CodingLanguage, TestCaseResult, CodingSubmission } from '@/types';
 import dynamic from 'next/dynamic';
 const CodeEditor = dynamic(() => import('@/components/coding/CodeEditor'), { ssr: false });
@@ -178,7 +178,7 @@ export default function ExamTakePage() {
     if (isLoading || !user) return;
 
     async function loadData() {
-      const { data: examData } = await supabase.from('exams').select('*').eq('id', examId).single();
+      const { data: examData } = await insforge.from('exams').select('*').eq('id', examId).single();
       if (!examData) {
         router.replace('/exams');
         return;
@@ -193,18 +193,18 @@ export default function ExamTakePage() {
 
       setExam(examData);
 
-      const { data: subData } = await supabase.from('subjects').select('*').eq('id', examData.subject_id).single();
+      const { data: subData } = await insforge.from('subjects').select('*').eq('id', examData.subject_id).single();
       setSubject(subData);
 
       // Load questions
       const qIds = examData.question_ids || [];
       if (qIds.length > 0) {
-        const { data: qData } = await supabase.from('questions').select('*').in('id', qIds);
+        const { data: qData } = await insforge.from('questions').select('*').in('id', qIds);
         setQuestions(qData || []);
       }
 
       // Check existing attempt
-      const { data: existing } = await supabase.from('exam_attempts')
+      const { data: existing } = await insforge.from('exam_attempts')
         .select('*')
         .eq('exam_id', examId)
         .eq('student_id', user!.id)
@@ -219,7 +219,7 @@ export default function ExamTakePage() {
 
       let currentAttemptId = existing?.id;
       if (!existing && !attemptId) {
-        const { data: newAtt } = await supabase.from('exam_attempts').insert({
+        const { data: newAtt } = await insforge.from('exam_attempts').insert({
           exam_id: examId,
           student_id: user!.id,
           status: 'in-progress'
@@ -677,7 +677,7 @@ export default function ExamTakePage() {
     const status = obtainedMarks >= (exam.passing_marks || 0) ? 'passed' : 'failed';
     
     // Save result (upsert to handle retries — unique constraint on attempt_id)
-    const { data: resData, error: resError } = await supabase.from('results').upsert({
+    const { data: resData, error: resError } = await insforge.from('results').upsert({
       attempt_id: attemptId,
       exam_id: exam.id,
       student_id: user.id,
@@ -697,7 +697,7 @@ export default function ExamTakePage() {
     if (resError) console.error('Result save error:', resError);
     
     // Update attempt
-    const { error: attError } = await supabase.from('exam_attempts').update({
+    const { error: attError } = await insforge.from('exam_attempts').update({
       status: 'submitted',
       submitted_at: new Date().toISOString(),
       answers: JSON.parse(JSON.stringify(studentAnswers)),

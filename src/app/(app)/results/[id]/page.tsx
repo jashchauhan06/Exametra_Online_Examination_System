@@ -12,7 +12,7 @@ import { PageHeader } from '@/components/ui/page-header';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { MetricStrip, MetricItem } from '@/components/ui/stat-card';
-import { supabase } from '@/lib/supabase';
+import { insforge } from '@/lib/insforge';
 
 export default function ResultDetailPage() {
   const params = useParams();
@@ -27,23 +27,23 @@ export default function ResultDetailPage() {
       setLoading(true);
       const resultId = params.id as string;
       
-      const { data: resultData } = await supabase.from('results').select('*').eq('id', resultId).single();
+      const { data: resultData } = await insforge.from('results').select('*').eq('id', resultId).single();
       
       if (resultData) {
         setResult(resultData);
         
         // Fetch Exam
-        const { data: examData } = await supabase.from('exams').select('*').eq('id', resultData.exam_id).single();
+        const { data: examData } = await insforge.from('exams').select('*').eq('id', resultData.exam_id).single();
         if (examData) {
           setExam(examData);
-          const { data: subjectData } = await supabase.from('subjects').select('*').eq('id', examData.subject_id).single();
+          const { data: subjectData } = await insforge.from('subjects').select('*').eq('id', examData.subject_id).single();
           setSubject(subjectData);
         }
         
         // Fetch Questions
         if (resultData.question_results && resultData.question_results.length > 0) {
           const qIds = resultData.question_results.map((qr: any) => qr.questionId);
-          const { data: questionsData } = await supabase.from('questions').select('*').in('id', qIds);
+          const { data: questionsData } = await insforge.from('questions').select('*').in('id', qIds);
           setQuestions(questionsData || []);
         }
       }

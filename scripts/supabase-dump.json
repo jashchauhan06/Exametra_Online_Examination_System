@@ -1,0 +1,4416 @@
+{
+  "users": [
+    {
+      "id": "92694f9d-0000-0000-0000-000000000000",
+      "email": "aarav.sharma@sit.edu.in",
+      "name": "Aarav Sharma",
+      "role": "student",
+      "avatar": null,
+      "department": "Computer Science",
+      "created_at": "2026-08-25T18:25:47.60405+00:00",
+      "is_active": true,
+      "student_id": "SIT23CS001",
+      "semester": 3,
+      "enrolled_subjects": null,
+      "faculty_id": null,
+      "designation": null,
+      "teaching_subjects": null
+    },
+    {
+      "id": "92694f9e-0000-0000-0000-000000000000",
+      "email": "priya.patel@sit.edu.in",
+      "name": "Priya Patel",
+      "role": "student",
+      "avatar": null,
+      "department": "Computer Science",
+      "created_at": "2026-08-25T18:25:47.60405+00:00",
+      "is_active": true,
+      "student_id": "SIT23CS002",
+      "semester": 3,
+      "enrolled_subjects": null,
+      "faculty_id": null,
+      "designation": null,
+      "teaching_subjects": null
+    },
+    {
+      "id": "92694f9f-0000-0000-0000-000000000000",
+      "email": "rohan.kumar@sit.edu.in",
+      "name": "Rohan Kumar",
+      "role": "student",
+      "avatar": null,
+      "department": "Computer Science",
+      "created_at": "2026-08-25T18:25:47.60405+00:00",
+      "is_active": true,
+      "student_id": "SIT23CS003",
+      "semester": 3,
+      "enrolled_subjects": null,
+      "faculty_id": null,
+      "designation": null,
+      "teaching_subjects": null
+    },
+    {
+      "id": "92694fa0-0000-0000-0000-000000000000",
+      "email": "ananya.gupta@sit.edu.in",
+      "name": "Ananya Gupta",
+      "role": "student",
+      "avatar": null,
+      "department": "Computer Science",
+      "created_at": "2026-08-25T18:25:47.60405+00:00",
+      "is_active": true,
+      "student_id": "SIT23CS004",
+      "semester": 3,
+      "enrolled_subjects": null,
+      "faculty_id": null,
+      "designation": null,
+      "teaching_subjects": null
+    },
+    {
+      "id": "92694fa1-0000-0000-0000-000000000000",
+      "email": "vikram.singh@sit.edu.in",
+      "name": "Vikram Singh",
+      "role": "student",
+      "avatar": null,
+      "department": "Computer Science",
+      "created_at": "2026-08-25T18:25:47.60405+00:00",
+      "is_active": true,
+      "student_id": "SIT23CS005",
+      "semester": 3,
+      "enrolled_subjects": null,
+      "faculty_id": null,
+      "designation": null,
+      "teaching_subjects": null
+    },
+    {
+      "id": "92694fa2-0000-0000-0000-000000000000",
+      "email": "meera.reddy@sit.edu.in",
+      "name": "Meera Reddy",
+      "role": "student",
+      "avatar": null,
+      "department": "Computer Science",
+      "created_at": "2026-08-25T18:25:47.60405+00:00",
+      "is_active": true,
+      "student_id": "SIT23CS006",
+      "semester": 3,
+      "enrolled_subjects": null,
+      "faculty_id": null,
+      "designation": null,
+      "teaching_subjects": null
+    },
+    {
+      "id": "92694fa3-0000-0000-0000-000000000000",
+      "email": "arjun.nair@sit.edu.in",
+      "name": "Arjun Nair",
+      "role": "student",
+      "avatar": null,
+      "department": "Information Technology",
+      "created_at": "2026-08-25T18:25:47.60405+00:00",
+      "is_active": true,
+      "student_id": "SIT23IT001",
+      "semester": 3,
+      "enrolled_subjects": null,
+      "faculty_id": null,
+      "designation": null,
+      "teaching_subjects": null
+    },
+    {
+      "id": "92694fa4-0000-0000-0000-000000000000",
+      "email": "kavya.joshi@sit.edu.in",
+      "name": "Kavya Joshi",
+      "role": "student",
+      "avatar": null,
+      "department": "Computer Science",
+      "created_at": "2026-08-25T18:25:47.60405+00:00",
+      "is_active": true,
+      "student_id": "SIT23CS007",
+      "semester": 3,
+      "enrolled_subjects": null,
+      "faculty_id": null,
+      "designation": null,
+      "teaching_subjects": null
+    },
+    {
+      "id": "7b26624a-0000-0000-0000-000000000000",
+      "email": "rajesh.kumar@sit.edu.in",
+      "name": "Prof. Rajesh Kumar",
+      "role": "faculty",
+      "avatar": null,
+      "department": "Computer Science",
+      "created_at": "2026-08-25T18:25:47.60405+00:00",
+      "is_active": true,
+      "student_id": null,
+      "semester": null,
+      "enrolled_subjects": null,
+      "faculty_id": "FAC002",
+      "designation": "Professor",
+      "teaching_subjects": null
+    },
+    {
+      "id": "7b26624b-0000-0000-0000-000000000000",
+      "email": "sunita.verma@sit.edu.in",
+      "name": "Dr. Sunita Verma",
+      "role": "faculty",
+      "avatar": null,
+      "department": "Computer Science",
+      "created_at": "2026-08-25T18:25:47.60405+00:00",
+      "is_active": true,
+      "student_id": null,
+      "semester": null,
+      "enrolled_subjects": null,
+      "faculty_id": "FAC003",
+      "designation": "Assistant Professor",
+      "teaching_subjects": null
+    },
+    {
+      "id": "72ccf967-0000-0000-0000-000000000000",
+      "email": "admin@sit.edu.in",
+      "name": "System Administrator",
+      "role": "admin",
+      "avatar": null,
+      "department": "Administration",
+      "created_at": "2026-08-25T18:25:47.60405+00:00",
+      "is_active": true,
+      "student_id": null,
+      "semester": null,
+      "enrolled_subjects": null,
+      "faculty_id": null,
+      "designation": null,
+      "teaching_subjects": null
+    },
+    {
+      "id": "7b266249-0000-0000-0000-000000000000",
+      "email": "priya.mehta@sit.edu.in",
+      "name": "Dr. Priya Mehta",
+      "role": "faculty",
+      "avatar": null,
+      "department": "Computer Science",
+      "created_at": "2026-08-25T18:25:47.60405+00:00",
+      "is_active": true,
+      "student_id": null,
+      "semester": null,
+      "enrolled_subjects": null,
+      "faculty_id": "FAC001",
+      "designation": "Associate Professor",
+      "teaching_subjects": [
+        "926ec413-0000-0000-0000-000000000000",
+        "926ec412-0000-0000-0000-000000000000"
+      ]
+    }
+  ],
+  "subjects": [
+    {
+      "id": "926ec414-0000-0000-0000-000000000000",
+      "code": "CS204",
+      "name": "Operating Systems",
+      "department": "Computer Science",
+      "semester": 3,
+      "faculty_id": null
+    },
+    {
+      "id": "926ec415-0000-0000-0000-000000000000",
+      "code": "CS205",
+      "name": "Web Technology",
+      "department": "Computer Science",
+      "semester": 3,
+      "faculty_id": null
+    },
+    {
+      "id": "926ec411-0000-0000-0000-000000000000",
+      "code": "CS201",
+      "name": "Data Structures",
+      "department": "Computer Science",
+      "semester": 3,
+      "faculty_id": "7b266249-0000-0000-0000-000000000000"
+    },
+    {
+      "id": "926ec412-0000-0000-0000-000000000000",
+      "code": "CS202",
+      "name": "Database Management Systems",
+      "department": "Computer Science",
+      "semester": 3,
+      "faculty_id": "7b266249-0000-0000-0000-000000000000"
+    },
+    {
+      "id": "926ec413-0000-0000-0000-000000000000",
+      "code": "CS203",
+      "name": "Computer Networks",
+      "department": "Computer Science",
+      "semester": 3,
+      "faculty_id": "7b266249-0000-0000-0000-000000000000"
+    }
+  ],
+  "exams": [
+    {
+      "id": "c925a4b3-ca39-4073-a6b8-398b32fd6b0b",
+      "title": "TEST",
+      "description": "SUBJECTIVE",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "faculty_id": "7b266249-0000-0000-0000-000000000000",
+      "date": "2026-09-20",
+      "start_time": "13:59:00",
+      "duration": 60,
+      "total_marks": 12,
+      "passing_marks": 10,
+      "total_questions": 5,
+      "attempts_allowed": 1,
+      "status": "upcoming",
+      "instructions": [
+        "The exam contains 5 questions.",
+        "Duration is 60 minutes.",
+        "Total marks: 12.",
+        "Answers are automatically saved.",
+        "The exam will automatically submit when time expires."
+      ],
+      "settings": {
+        "shuffleOptions": false,
+        "shuffleQuestions": true,
+        "allowAnswerReview": true,
+        "autoSubmitOnTimeEnd": true,
+        "enableNegativeMarking": false,
+        "showResultImmediately": true,
+        "negativeMarkPercentage": 25
+      },
+      "question_ids": [
+        "c0a09f1c-72da-4d76-9880-3806e86b78c4",
+        "b60d8817-25d2-4f4e-b075-10e969ed0839",
+        "8f558850-e089-4392-938d-aba0e93854bf",
+        "621c8371-2401-4944-9c60-0af7e6b455ef",
+        "5d0b5cd8-e0ec-45c5-968b-d8949283b0bf"
+      ],
+      "created_at": "2026-09-20T08:56:32.052639+00:00",
+      "updated_at": "2026-09-20T08:56:32.052639+00:00"
+    },
+    {
+      "id": "6798eb3d-b936-48ff-b215-058faf15a447",
+      "title": "TEST 2",
+      "description": "",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "faculty_id": "7b266249-0000-0000-0000-000000000000",
+      "date": "2026-09-20",
+      "start_time": "15:19:00",
+      "duration": 60,
+      "total_marks": 12,
+      "passing_marks": 5,
+      "total_questions": 5,
+      "attempts_allowed": 1,
+      "status": "upcoming",
+      "instructions": [
+        "The exam contains 5 questions.",
+        "Duration is 60 minutes.",
+        "Total marks: 12.",
+        "Answers are automatically saved.",
+        "The exam will automatically submit when time expires."
+      ],
+      "settings": {
+        "shuffleOptions": false,
+        "shuffleQuestions": true,
+        "allowAnswerReview": true,
+        "autoSubmitOnTimeEnd": true,
+        "enableNegativeMarking": false,
+        "showResultImmediately": true,
+        "negativeMarkPercentage": 25
+      },
+      "question_ids": [
+        "c0a09f1c-72da-4d76-9880-3806e86b78c4",
+        "b60d8817-25d2-4f4e-b075-10e969ed0839",
+        "8f558850-e089-4392-938d-aba0e93854bf",
+        "621c8371-2401-4944-9c60-0af7e6b455ef",
+        "5d0b5cd8-e0ec-45c5-968b-d8949283b0bf"
+      ],
+      "created_at": "2026-09-20T09:49:49.790041+00:00",
+      "updated_at": "2026-09-20T09:49:49.790041+00:00"
+    },
+    {
+      "id": "2c2eded8-560d-4876-b980-810241b6aeed",
+      "title": "new",
+      "description": "",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "faculty_id": "7b266249-0000-0000-0000-000000000000",
+      "date": "2026-08-31",
+      "start_time": "10:17:00",
+      "duration": 60,
+      "total_marks": 17,
+      "passing_marks": 7,
+      "total_questions": 10,
+      "attempts_allowed": 1,
+      "status": "upcoming",
+      "instructions": [
+        "The exam contains 10 questions.",
+        "Duration is 60 minutes.",
+        "Total marks: 17.",
+        "Answers are automatically saved.",
+        "The exam will automatically submit when time expires."
+      ],
+      "settings": {
+        "shuffleOptions": true,
+        "shuffleQuestions": true,
+        "allowAnswerReview": true,
+        "autoSubmitOnTimeEnd": true,
+        "enableNegativeMarking": false,
+        "showResultImmediately": true,
+        "negativeMarkPercentage": 25
+      },
+      "question_ids": [
+        "00259024-0000-0000-0000-000000000000",
+        "00259023-0000-0000-0000-000000000000",
+        "00259022-0000-0000-0000-000000000000",
+        "00259021-0000-0000-0000-000000000000",
+        "00259020-0000-0000-0000-000000000000",
+        "0025901f-0000-0000-0000-000000000000",
+        "00259009-0000-0000-0000-000000000000",
+        "00259008-0000-0000-0000-000000000000",
+        "00259007-0000-0000-0000-000000000000",
+        "00259006-0000-0000-0000-000000000000"
+      ],
+      "created_at": "2026-08-31T04:47:42.156893+00:00",
+      "updated_at": "2026-08-31T04:47:42.156893+00:00"
+    },
+    {
+      "id": "ce6113a6-04bb-4048-8811-84d95ae025dc",
+      "title": "test",
+      "description": "",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "faculty_id": "7b266249-0000-0000-0000-000000000000",
+      "date": "2026-09-23",
+      "start_time": "14:32:00",
+      "duration": 60,
+      "total_marks": 30,
+      "passing_marks": 10,
+      "total_questions": 4,
+      "attempts_allowed": 1,
+      "status": "upcoming",
+      "instructions": [
+        "The exam contains 4 questions.",
+        "Duration is 60 minutes.",
+        "Total marks: 30.",
+        "Answers are automatically saved.",
+        "The exam will automatically submit when time expires."
+      ],
+      "settings": {
+        "shuffleOptions": false,
+        "shuffleQuestions": true,
+        "allowAnswerReview": true,
+        "autoSubmitOnTimeEnd": true,
+        "enableNegativeMarking": false,
+        "showResultImmediately": true,
+        "negativeMarkPercentage": 25
+      },
+      "question_ids": [
+        "9a43c90e-4f27-41c5-98ef-81020e6752c3",
+        "96629a2c-ced2-4249-8c0b-7e72e164fbf4",
+        "50a1c9c4-6b07-4371-93c9-82eb833b8b3f",
+        "212b4765-1237-4926-8df2-f91b4d154fc7"
+      ],
+      "created_at": "2026-09-23T09:03:39.502297+00:00",
+      "updated_at": "2026-09-23T09:03:39.502297+00:00"
+    },
+    {
+      "id": "93c0fba4-69d3-4333-8945-efec63bae96c",
+      "title": "Week 1 TEST",
+      "description": "",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "faculty_id": "7b266249-0000-0000-0000-000000000000",
+      "date": "2026-10-05",
+      "start_time": "10:51:00",
+      "duration": 60,
+      "total_marks": 22,
+      "passing_marks": 9,
+      "total_questions": 6,
+      "attempts_allowed": 1,
+      "status": "upcoming",
+      "instructions": [
+        "The exam contains 6 questions.",
+        "Duration is 60 minutes.",
+        "Total marks: 22.",
+        "Answers are automatically saved.",
+        "The exam will automatically submit when time expires."
+      ],
+      "settings": {
+        "shuffleOptions": false,
+        "shuffleQuestions": true,
+        "allowAnswerReview": true,
+        "autoSubmitOnTimeEnd": true,
+        "enableNegativeMarking": false,
+        "showResultImmediately": true,
+        "negativeMarkPercentage": 25
+      },
+      "question_ids": [
+        "c0a09f1c-72da-4d76-9880-3806e86b78c4",
+        "b60d8817-25d2-4f4e-b075-10e969ed0839",
+        "8f558850-e089-4392-938d-aba0e93854bf",
+        "621c8371-2401-4944-9c60-0af7e6b455ef",
+        "5d0b5cd8-e0ec-45c5-968b-d8949283b0bf",
+        "9a43c90e-4f27-41c5-98ef-81020e6752c3"
+      ],
+      "created_at": "2026-10-05T05:22:44.085103+00:00",
+      "updated_at": "2026-10-05T05:22:44.085103+00:00"
+    }
+  ],
+  "questions": [
+    {
+      "id": "212b4765-1237-4926-8df2-f91b4d154fc7",
+      "text": "Write a function to return the sum of two numbers. The input will be two space-separated integers on a single line.",
+      "type": "coding",
+      "options": [],
+      "marks": 5,
+      "difficulty": "easy",
+      "topic": "Basic Arithmetic",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-26T18:50:55.767484+00:00",
+      "coding_languages": [
+        "c",
+        "cpp",
+        "python",
+        "javascript",
+        "java"
+      ],
+      "starter_code": {
+        "python": "def solve():\n    # Read input from stdin\n    # Example: a, b = map(int, input().split())\n    pass\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, output: process.stdout });\n\nrl.on('line', (line) => {\n    // Split the line, convert to numbers, and print the sum\n    \n});"
+      },
+      "test_cases": [
+        {
+          "id": "tc1",
+          "input": "5 3",
+          "points": 2,
+          "is_hidden": false,
+          "expected_output": "8"
+        },
+        {
+          "id": "tc2",
+          "input": "-2 10",
+          "points": 1,
+          "is_hidden": false,
+          "expected_output": "8"
+        },
+        {
+          "id": "tc3",
+          "input": "100 200",
+          "points": 2,
+          "is_hidden": true,
+          "expected_output": "300"
+        }
+      ],
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "9a43c90e-4f27-41c5-98ef-81020e6752c3",
+      "text": "Write a program to reverse a given string. The input will be a single line containing a string.",
+      "type": "coding",
+      "options": [],
+      "marks": 10,
+      "difficulty": "medium",
+      "topic": "Strings",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-26T18:50:55.767484+00:00",
+      "coding_languages": [
+        "c",
+        "cpp",
+        "python",
+        "javascript",
+        "java"
+      ],
+      "starter_code": {
+        "python": "def solve():\n    s = input()\n    # Reverse and print the string\n    pass\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, output: process.stdout });\n\nrl.on('line', (line) => {\n    // Reverse the string and print it\n    \n});"
+      },
+      "test_cases": [
+        {
+          "id": "tc4",
+          "input": "hello",
+          "points": 5,
+          "is_hidden": false,
+          "expected_output": "olleh"
+        },
+        {
+          "id": "tc5",
+          "input": "Exametra",
+          "points": 5,
+          "is_hidden": false,
+          "expected_output": "artemaxE"
+        },
+        {
+          "id": "tc6",
+          "input": "12345",
+          "points": 5,
+          "is_hidden": true,
+          "expected_output": "54321"
+        }
+      ],
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "8f558850-e089-4392-938d-aba0e93854bf",
+      "text": "What is a Star topology? Describe its main advantage and main disadvantage.",
+      "type": "subjective",
+      "options": [],
+      "marks": 3,
+      "difficulty": "easy",
+      "topic": "All Topologies",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-09-20T08:50:38.556521+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": "A star topology is a network structure where all individual nodes or devices are connected directly to a central device, such as a hub or a switch. Main advantage: Easy to add or remove devices without disrupting the network, and the failure of one node or cable does not affect other nodes. Main disadvantage: High dependency on the central device; if the central hub or switch fails, the entire network becomes unavailable.",
+      "rubric": "1 mark for defining Star topology and mentioning the central device. 1 mark for correctly stating a valid advantage. 1 mark for correctly stating a valid disadvantage."
+    },
+    {
+      "id": "621c8371-2401-4944-9c60-0af7e6b455ef",
+      "text": "Explain the structure of a Bus topology and describe how data travels along the network.",
+      "type": "subjective",
+      "options": [],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "All Topologies",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-09-20T08:50:38.556521+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": "In a bus topology, all network devices are connected to a single central cable called the backbone or bus. Data is transmitted along the bus as electronic signals. As data travels, each connected device checks the destination address; if the address matches the device, it processes the data, otherwise it ignores it. Terminators at both ends of the cable absorb signals to prevent reflection.",
+      "rubric": "1 mark for describing the central backbone cable structure. 1 mark for explaining how data travels and is filtered by destination addresses/terminated."
+    },
+    {
+      "id": "c0a09f1c-72da-4d76-9880-3806e86b78c4",
+      "text": "Compare Mesh topology and Ring topology with respect to redundancy and cabling requirements.",
+      "type": "subjective",
+      "options": [],
+      "marks": 3,
+      "difficulty": "easy",
+      "topic": "All Topologies",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-09-20T08:50:38.556521+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": "Redundancy: Mesh topology offers very high redundancy because devices have multiple dedicated links, allowing alternate paths if a link fails. Ring topology has low redundancy because data travels sequentially, so a single break can disable the loop (unless a dual ring is used). Cabling Requirements: Mesh topology requires a very large amount of cabling due to point-to-point connections between nodes. Ring topology requires much less cabling, as each node only connects to its two immediate neighbors.",
+      "rubric": "1.5 marks for accurately comparing redundancy between Mesh and Ring. 1.5 marks for accurately comparing cabling requirements between Mesh and Ring."
+    },
+    {
+      "id": "b60d8817-25d2-4f4e-b075-10e969ed0839",
+      "text": "What is a Hybrid topology? Provide one practical example of how it is implemented.",
+      "type": "subjective",
+      "options": [],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "All Topologies",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-09-20T08:50:38.556521+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": "A hybrid topology is a network architecture created by combining two or more different standard network topologies (such as Star, Bus, or Ring) into a single network. A common practical example is a Star-Bus topology, where individual departments in a building use star networks connected to a central bus backbone line.",
+      "rubric": "1 mark for defining Hybrid topology as a combination of two or more distinct topologies. 1 mark for giving a valid, accurate practical example."
+    },
+    {
+      "id": "5d0b5cd8-e0ec-45c5-968b-d8949283b0bf",
+      "text": "Why is a Mesh topology considered highly fault-tolerant, and what is its primary drawback?",
+      "type": "subjective",
+      "options": [],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "All Topologies",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-09-20T08:50:38.556521+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": "Mesh topology is highly fault-tolerant because every node is connected via redundant point-to-point links to other nodes. If one link fails, network traffic can be seamlessly rerouted through alternative paths without causing downtime. Its primary drawback is the high cost and extreme complexity associated with installing and managing the extensive amount of cabling and I/O ports.",
+      "rubric": "1 mark for explaining why it is fault-tolerant (redundant paths/rerouting). 1 mark for stating the primary drawback (high cost/cabling complexity)."
+    },
+    {
+      "id": "8915a611-d6e1-4b84-81f3-8aab56d3119c",
+      "text": "In Python's DB-API 2.0 standard specification, which method of a cursor object is used to safely execute a database command using parameter binding to prevent SQL injection?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "cursor.execute(sql, parameters)",
+          "isCorrect": true
+        },
+        {
+          "text": "cursor.run(sql, parameters)",
+          "isCorrect": false
+        },
+        {
+          "text": "cursor.query(sql, parameters)",
+          "isCorrect": false
+        },
+        {
+          "text": "cursor.bind_and_execute(sql, parameters)",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "medium",
+      "topic": "Generate question related to python programing",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-10-05T05:28:29.998644+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "d2c9c1f8-a8b3-4e2a-a9f7-704c776ee23a",
+      "text": "When using Python's sqlite3 module, what happens by default when you issue Data Manipulation Language (DML) statements like INSERT or UPDATE without calling connection.commit() before closing the connection?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "The changes are automatically committed upon calling connection.close().",
+          "isCorrect": false
+        },
+        {
+          "text": "The uncommitted transaction is implicitly rolled back and changes are not saved.",
+          "isCorrect": true
+        },
+        {
+          "text": "An OperationalError exception is raised during connection.close().",
+          "isCorrect": false
+        },
+        {
+          "text": "The database remains permanently locked until the script is executed again.",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Generate question related to python programing",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-10-05T05:28:29.998644+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "96629a2c-ced2-4249-8c0b-7e72e164fbf4",
+      "text": "Write a function to return the sum of two numbers. The input will be two space-separated integers on a single line.",
+      "type": "coding",
+      "options": [],
+      "marks": 5,
+      "difficulty": "easy",
+      "topic": "Basic Arithmetic",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-26T18:51:53.946548+00:00",
+      "coding_languages": [
+        "c",
+        "cpp",
+        "python",
+        "javascript",
+        "java"
+      ],
+      "starter_code": {
+        "python": "def solve():\n    # Read input from stdin\n    # Example: a, b = map(int, input().split())\n    pass\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, output: process.stdout });\n\nrl.on('line', (line) => {\n    // Split the line, convert to numbers, and print the sum\n    \n});"
+      },
+      "test_cases": [
+        {
+          "id": "tc1",
+          "input": "5 3",
+          "points": 2,
+          "is_hidden": false,
+          "expected_output": "8"
+        },
+        {
+          "id": "tc2",
+          "input": "-2 10",
+          "points": 1,
+          "is_hidden": false,
+          "expected_output": "8"
+        },
+        {
+          "id": "tc3",
+          "input": "100 200",
+          "points": 2,
+          "is_hidden": true,
+          "expected_output": "300"
+        }
+      ],
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "50a1c9c4-6b07-4371-93c9-82eb833b8b3f",
+      "text": "Write a program to reverse a given string. The input will be a single line containing a string.",
+      "type": "coding",
+      "options": [],
+      "marks": 10,
+      "difficulty": "medium",
+      "topic": "Strings",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-26T18:51:53.946548+00:00",
+      "coding_languages": [
+        "c",
+        "cpp",
+        "python",
+        "javascript",
+        "java"
+      ],
+      "starter_code": {
+        "python": "def solve():\n    s = input()\n    # Reverse and print the string\n    pass\n\nif __name__ == '__main__':\n    solve()",
+        "javascript": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, output: process.stdout });\n\nrl.on('line', (line) => {\n    // Reverse the string and print it\n    \n});"
+      },
+      "test_cases": [
+        {
+          "id": "tc4",
+          "input": "hello",
+          "points": 5,
+          "is_hidden": false,
+          "expected_output": "olleh"
+        },
+        {
+          "id": "tc5",
+          "input": "Exametra",
+          "points": 5,
+          "is_hidden": false,
+          "expected_output": "artemaxE"
+        },
+        {
+          "id": "tc6",
+          "input": "12345",
+          "points": 5,
+          "is_hidden": true,
+          "expected_output": "54321"
+        }
+      ],
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "2054aeb3-f6e3-40ea-990c-c1eb714f6f86",
+      "text": "What is the default behavior of the fetchmany(size) method on a Python DB-API 2.0 compliant cursor if the size argument is omitted?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "It fetches all remaining rows in the result set.",
+          "isCorrect": false
+        },
+        {
+          "text": "It fetches the number of rows specified by the cursor.arraysize attribute.",
+          "isCorrect": true
+        },
+        {
+          "text": "It raises a TypeError because the size parameter is strictly mandatory.",
+          "isCorrect": false
+        },
+        {
+          "text": "It fetches exactly one row, behaving identically to fetchone().",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Generate question related to python programing",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-10-05T05:28:29.998644+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "8dacceb4-b434-4566-b108-86bd04d4c2cc",
+      "text": "When executing parameterized SQL queries using the psycopg2 driver for PostgreSQL in Python, which placeholder style must be used for parameter substitution?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "%s positional placeholder",
+          "isCorrect": true
+        },
+        {
+          "text": "? positional placeholder",
+          "isCorrect": false
+        },
+        {
+          "text": ":1, :2 numbered placeholder",
+          "isCorrect": false
+        },
+        {
+          "text": "$1, $2 dollar-sign placeholder",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "medium",
+      "topic": "Generate question related to python programing",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-10-05T05:28:29.998644+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "37db1fba-b23d-4420-be8e-2669c367ae81",
+      "text": "In SQLAlchemy ORM, which method on a Query object returns the first result or None if the query returns no rows, without raising an exception if multiple rows exist?",
+      "type": "mcq",
+      "options": [
+        {
+          "text": "query.first()",
+          "isCorrect": true
+        },
+        {
+          "text": "query.one()",
+          "isCorrect": false
+        },
+        {
+          "text": "query.one_or_none()",
+          "isCorrect": false
+        },
+        {
+          "text": "query.scalar()",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Generate question related to python programing",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-10-05T05:28:29.998644+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259023-0000-0000-0000-000000000000",
+      "text": "A view in SQL stores data physically on disk.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q114_A",
+          "text": "True",
+          "isCorrect": false
+        },
+        {
+          "id": "Q114_B",
+          "text": "False",
+          "isCorrect": true
+        }
+      ],
+      "marks": 1,
+      "difficulty": "medium",
+      "topic": "Views",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259024-0000-0000-0000-000000000000",
+      "text": "Which aggregate function returns the number of rows in a result set?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q115_A",
+          "text": "SUM()",
+          "isCorrect": false
+        },
+        {
+          "id": "Q115_B",
+          "text": "AVG()",
+          "isCorrect": false
+        },
+        {
+          "id": "Q115_C",
+          "text": "COUNT()",
+          "isCorrect": true
+        },
+        {
+          "id": "Q115_D",
+          "text": "MAX()",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "SQL Basics",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "002593c2-0000-0000-0000-000000000000",
+      "text": "Which layer of the OSI model is responsible for routing?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q201_A",
+          "text": "Data Link Layer",
+          "isCorrect": false
+        },
+        {
+          "id": "Q201_B",
+          "text": "Network Layer",
+          "isCorrect": true
+        },
+        {
+          "id": "Q201_C",
+          "text": "Transport Layer",
+          "isCorrect": false
+        },
+        {
+          "id": "Q201_D",
+          "text": "Session Layer",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "OSI Model",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c40-0000-0000-0000-000000000000",
+      "text": "Which data structure follows the FIFO (First In, First Out) principle?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q001_A",
+          "text": "Stack",
+          "isCorrect": false
+        },
+        {
+          "id": "Q001_B",
+          "text": "Queue",
+          "isCorrect": true
+        },
+        {
+          "id": "Q001_C",
+          "text": "Tree",
+          "isCorrect": false
+        },
+        {
+          "id": "Q001_D",
+          "text": "Graph",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "Queue",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c41-0000-0000-0000-000000000000",
+      "text": "What is the time complexity of searching for an element in a balanced Binary Search Tree?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q002_A",
+          "text": "O(n)",
+          "isCorrect": false
+        },
+        {
+          "id": "Q002_B",
+          "text": "O(log n)",
+          "isCorrect": true
+        },
+        {
+          "id": "Q002_C",
+          "text": "O(n log n)",
+          "isCorrect": false
+        },
+        {
+          "id": "Q002_D",
+          "text": "O(1)",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Trees",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c42-0000-0000-0000-000000000000",
+      "text": "A stack can be used to check balanced parentheses in an expression.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q003_A",
+          "text": "True",
+          "isCorrect": true
+        },
+        {
+          "id": "Q003_B",
+          "text": "False",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "easy",
+      "topic": "Stack",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c45-0000-0000-0000-000000000000",
+      "text": "Which of the following are applications of a stack? (Select all that apply)",
+      "type": "multi-select",
+      "options": [
+        {
+          "id": "Q006_A",
+          "text": "Function call management",
+          "isCorrect": true
+        },
+        {
+          "id": "Q006_B",
+          "text": "Expression evaluation",
+          "isCorrect": true
+        },
+        {
+          "id": "Q006_C",
+          "text": "BFS traversal",
+          "isCorrect": false
+        },
+        {
+          "id": "Q006_D",
+          "text": "Undo/Redo operations",
+          "isCorrect": true
+        }
+      ],
+      "marks": 3,
+      "difficulty": "medium",
+      "topic": "Stack",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c47-0000-0000-0000-000000000000",
+      "text": "A complete binary tree with n nodes has a height of approximately log₂(n).",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q008_A",
+          "text": "True",
+          "isCorrect": true
+        },
+        {
+          "id": "Q008_B",
+          "text": "False",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "medium",
+      "topic": "Trees",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c48-0000-0000-0000-000000000000",
+      "text": "Which traversal of a Binary Search Tree gives elements in sorted order?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q009_A",
+          "text": "Preorder",
+          "isCorrect": false
+        },
+        {
+          "id": "Q009_B",
+          "text": "Inorder",
+          "isCorrect": true
+        },
+        {
+          "id": "Q009_C",
+          "text": "Postorder",
+          "isCorrect": false
+        },
+        {
+          "id": "Q009_D",
+          "text": "Level order",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "Trees",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c5e-0000-0000-0000-000000000000",
+      "text": "What data structure is used in Breadth-First Search (BFS)?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q010_A",
+          "text": "Stack",
+          "isCorrect": false
+        },
+        {
+          "id": "Q010_B",
+          "text": "Queue",
+          "isCorrect": true
+        },
+        {
+          "id": "Q010_C",
+          "text": "Priority Queue",
+          "isCorrect": false
+        },
+        {
+          "id": "Q010_D",
+          "text": "Deque",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "Graph",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c5f-0000-0000-0000-000000000000",
+      "text": "Which sorting algorithm has the best average-case time complexity?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q011_A",
+          "text": "Bubble Sort — O(n²)",
+          "isCorrect": false
+        },
+        {
+          "id": "Q011_B",
+          "text": "Merge Sort — O(n log n)",
+          "isCorrect": true
+        },
+        {
+          "id": "Q011_C",
+          "text": "Selection Sort — O(n²)",
+          "isCorrect": false
+        },
+        {
+          "id": "Q011_D",
+          "text": "Insertion Sort — O(n²)",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Sorting",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c60-0000-0000-0000-000000000000",
+      "text": "What is the maximum number of nodes at level k of a binary tree?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q012_A",
+          "text": "2k",
+          "isCorrect": false
+        },
+        {
+          "id": "Q012_B",
+          "text": "2^k",
+          "isCorrect": true
+        },
+        {
+          "id": "Q012_C",
+          "text": "k²",
+          "isCorrect": false
+        },
+        {
+          "id": "Q012_D",
+          "text": "2^(k+1) - 1",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Trees",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c62-0000-0000-0000-000000000000",
+      "text": "Which of the following are valid collision resolution techniques in hashing? (Select all that apply)",
+      "type": "multi-select",
+      "options": [
+        {
+          "id": "Q014_A",
+          "text": "Chaining",
+          "isCorrect": true
+        },
+        {
+          "id": "Q014_B",
+          "text": "Linear Probing",
+          "isCorrect": true
+        },
+        {
+          "id": "Q014_C",
+          "text": "Binary Search",
+          "isCorrect": false
+        },
+        {
+          "id": "Q014_D",
+          "text": "Double Hashing",
+          "isCorrect": true
+        }
+      ],
+      "marks": 3,
+      "difficulty": "hard",
+      "topic": "Hashing",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c63-0000-0000-0000-000000000000",
+      "text": "What is the space complexity of Merge Sort?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q015_A",
+          "text": "O(1)",
+          "isCorrect": false
+        },
+        {
+          "id": "Q015_B",
+          "text": "O(log n)",
+          "isCorrect": false
+        },
+        {
+          "id": "Q015_C",
+          "text": "O(n)",
+          "isCorrect": true
+        },
+        {
+          "id": "Q015_D",
+          "text": "O(n²)",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "hard",
+      "topic": "Sorting",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c64-0000-0000-0000-000000000000",
+      "text": "In a max-heap, the value of each node is greater than or equal to the values of its children.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q016_A",
+          "text": "True",
+          "isCorrect": true
+        },
+        {
+          "id": "Q016_B",
+          "text": "False",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "easy",
+      "topic": "Heap",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c65-0000-0000-0000-000000000000",
+      "text": "What is the time complexity of building a heap from an unsorted array?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q017_A",
+          "text": "O(n log n)",
+          "isCorrect": false
+        },
+        {
+          "id": "Q017_B",
+          "text": "O(n²)",
+          "isCorrect": false
+        },
+        {
+          "id": "Q017_C",
+          "text": "O(n)",
+          "isCorrect": true
+        },
+        {
+          "id": "Q017_D",
+          "text": "O(log n)",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "hard",
+      "topic": "Heap",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c66-0000-0000-0000-000000000000",
+      "text": "Dijkstra's algorithm is used to find the shortest path in a graph with non-negative edge weights.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q018_A",
+          "text": "True",
+          "isCorrect": true
+        },
+        {
+          "id": "Q018_B",
+          "text": "False",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "medium",
+      "topic": "Graph",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c67-0000-0000-0000-000000000000",
+      "text": "Which data structure is most appropriate for implementing a priority queue?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q019_A",
+          "text": "Array",
+          "isCorrect": false
+        },
+        {
+          "id": "Q019_B",
+          "text": "Linked List",
+          "isCorrect": false
+        },
+        {
+          "id": "Q019_C",
+          "text": "Heap",
+          "isCorrect": true
+        },
+        {
+          "id": "Q019_D",
+          "text": "Stack",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Heap",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c7d-0000-0000-0000-000000000000",
+      "text": "An adjacency matrix representation of a graph with V vertices requires O(V²) space.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q020_A",
+          "text": "True",
+          "isCorrect": true
+        },
+        {
+          "id": "Q020_B",
+          "text": "False",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "easy",
+      "topic": "Graph",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259001-0000-0000-0000-000000000000",
+      "text": "What does SQL stand for?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q101_A",
+          "text": "Structured Query Language",
+          "isCorrect": true
+        },
+        {
+          "id": "Q101_B",
+          "text": "Sequential Query Language",
+          "isCorrect": false
+        },
+        {
+          "id": "Q101_C",
+          "text": "Standard Query Logic",
+          "isCorrect": false
+        },
+        {
+          "id": "Q101_D",
+          "text": "Simple Query Language",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "SQL Basics",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259002-0000-0000-0000-000000000000",
+      "text": "Which normal form removes partial dependencies?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q102_A",
+          "text": "1NF",
+          "isCorrect": false
+        },
+        {
+          "id": "Q102_B",
+          "text": "2NF",
+          "isCorrect": true
+        },
+        {
+          "id": "Q102_C",
+          "text": "3NF",
+          "isCorrect": false
+        },
+        {
+          "id": "Q102_D",
+          "text": "BCNF",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Normalization",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259003-0000-0000-0000-000000000000",
+      "text": "A primary key can contain NULL values.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q103_A",
+          "text": "True",
+          "isCorrect": false
+        },
+        {
+          "id": "Q103_B",
+          "text": "False",
+          "isCorrect": true
+        }
+      ],
+      "marks": 1,
+      "difficulty": "easy",
+      "topic": "Keys",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259004-0000-0000-0000-000000000000",
+      "text": "Which SQL clause is used to filter grouped results?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q104_A",
+          "text": "WHERE",
+          "isCorrect": false
+        },
+        {
+          "id": "Q104_B",
+          "text": "GROUP BY",
+          "isCorrect": false
+        },
+        {
+          "id": "Q104_C",
+          "text": "HAVING",
+          "isCorrect": true
+        },
+        {
+          "id": "Q104_D",
+          "text": "ORDER BY",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "SQL Basics",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259005-0000-0000-0000-000000000000",
+      "text": "Which of the following are properties of a transaction (ACID)? (Select all that apply)",
+      "type": "multi-select",
+      "options": [
+        {
+          "id": "Q105_A",
+          "text": "Atomicity",
+          "isCorrect": true
+        },
+        {
+          "id": "Q105_B",
+          "text": "Consistency",
+          "isCorrect": true
+        },
+        {
+          "id": "Q105_C",
+          "text": "Isolation",
+          "isCorrect": true
+        },
+        {
+          "id": "Q105_D",
+          "text": "Durability",
+          "isCorrect": true
+        }
+      ],
+      "marks": 3,
+      "difficulty": "medium",
+      "topic": "Transactions",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259006-0000-0000-0000-000000000000",
+      "text": "A foreign key in a table refers to the primary key of another table.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q106_A",
+          "text": "True",
+          "isCorrect": true
+        },
+        {
+          "id": "Q106_B",
+          "text": "False",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "easy",
+      "topic": "Keys",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259007-0000-0000-0000-000000000000",
+      "text": "Which type of JOIN returns all rows from both tables, including unmatched rows?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q107_A",
+          "text": "INNER JOIN",
+          "isCorrect": false
+        },
+        {
+          "id": "Q107_B",
+          "text": "LEFT JOIN",
+          "isCorrect": false
+        },
+        {
+          "id": "Q107_C",
+          "text": "RIGHT JOIN",
+          "isCorrect": false
+        },
+        {
+          "id": "Q107_D",
+          "text": "FULL OUTER JOIN",
+          "isCorrect": true
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Joins",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259008-0000-0000-0000-000000000000",
+      "text": "Which of the following are types of database indexes? (Select all that apply)",
+      "type": "multi-select",
+      "options": [
+        {
+          "id": "Q108_A",
+          "text": "B-Tree Index",
+          "isCorrect": true
+        },
+        {
+          "id": "Q108_B",
+          "text": "Hash Index",
+          "isCorrect": true
+        },
+        {
+          "id": "Q108_C",
+          "text": "Stack Index",
+          "isCorrect": false
+        },
+        {
+          "id": "Q108_D",
+          "text": "Bitmap Index",
+          "isCorrect": true
+        }
+      ],
+      "marks": 3,
+      "difficulty": "hard",
+      "topic": "Indexing",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259009-0000-0000-0000-000000000000",
+      "text": "What is a deadlock in database systems?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q109_A",
+          "text": "A transaction that takes too long",
+          "isCorrect": false
+        },
+        {
+          "id": "Q109_B",
+          "text": "Two or more transactions waiting for each other to release locks",
+          "isCorrect": true
+        },
+        {
+          "id": "Q109_C",
+          "text": "A database crash",
+          "isCorrect": false
+        },
+        {
+          "id": "Q109_D",
+          "text": "An index becoming corrupted",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Transactions",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "0025901f-0000-0000-0000-000000000000",
+      "text": "The TRUNCATE command in SQL can be rolled back.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q110_A",
+          "text": "True",
+          "isCorrect": false
+        },
+        {
+          "id": "Q110_B",
+          "text": "False",
+          "isCorrect": true
+        }
+      ],
+      "marks": 1,
+      "difficulty": "hard",
+      "topic": "SQL Basics",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259021-0000-0000-0000-000000000000",
+      "text": "In the relational model, a relation is essentially a table.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q112_A",
+          "text": "True",
+          "isCorrect": true
+        },
+        {
+          "id": "Q112_B",
+          "text": "False",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "easy",
+      "topic": "Relational Model",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259022-0000-0000-0000-000000000000",
+      "text": "Which command is used to create a new table in SQL?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q113_A",
+          "text": "INSERT TABLE",
+          "isCorrect": false
+        },
+        {
+          "id": "Q113_B",
+          "text": "CREATE TABLE",
+          "isCorrect": true
+        },
+        {
+          "id": "Q113_C",
+          "text": "NEW TABLE",
+          "isCorrect": false
+        },
+        {
+          "id": "Q113_D",
+          "text": "ADD TABLE",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "DDL",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "002593c3-0000-0000-0000-000000000000",
+      "text": "TCP is a connectionless protocol.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q202_A",
+          "text": "True",
+          "isCorrect": false
+        },
+        {
+          "id": "Q202_B",
+          "text": "False",
+          "isCorrect": true
+        }
+      ],
+      "marks": 1,
+      "difficulty": "easy",
+      "topic": "TCP/IP",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "002593c4-0000-0000-0000-000000000000",
+      "text": "What is the default port number for HTTP?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q203_A",
+          "text": "21",
+          "isCorrect": false
+        },
+        {
+          "id": "Q203_B",
+          "text": "25",
+          "isCorrect": false
+        },
+        {
+          "id": "Q203_C",
+          "text": "80",
+          "isCorrect": true
+        },
+        {
+          "id": "Q203_D",
+          "text": "443",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "Application Layer",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "002593c5-0000-0000-0000-000000000000",
+      "text": "Which protocol is used to resolve IP addresses to MAC addresses?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q204_A",
+          "text": "DNS",
+          "isCorrect": false
+        },
+        {
+          "id": "Q204_B",
+          "text": "ARP",
+          "isCorrect": true
+        },
+        {
+          "id": "Q204_C",
+          "text": "DHCP",
+          "isCorrect": false
+        },
+        {
+          "id": "Q204_D",
+          "text": "RARP",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Network Layer",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "002593c6-0000-0000-0000-000000000000",
+      "text": "Which of the following are transport layer protocols? (Select all that apply)",
+      "type": "multi-select",
+      "options": [
+        {
+          "id": "Q205_A",
+          "text": "TCP",
+          "isCorrect": true
+        },
+        {
+          "id": "Q205_B",
+          "text": "UDP",
+          "isCorrect": true
+        },
+        {
+          "id": "Q205_C",
+          "text": "IP",
+          "isCorrect": false
+        },
+        {
+          "id": "Q205_D",
+          "text": "HTTP",
+          "isCorrect": false
+        }
+      ],
+      "marks": 3,
+      "difficulty": "easy",
+      "topic": "Transport Layer",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "002593c7-0000-0000-0000-000000000000",
+      "text": "A subnet mask is used to identify the network and host portions of an IP address.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q206_A",
+          "text": "True",
+          "isCorrect": true
+        },
+        {
+          "id": "Q206_B",
+          "text": "False",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "easy",
+      "topic": "IP Addressing",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "002593c8-0000-0000-0000-000000000000",
+      "text": "What is the maximum data rate of Fast Ethernet?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q207_A",
+          "text": "10 Mbps",
+          "isCorrect": false
+        },
+        {
+          "id": "Q207_B",
+          "text": "100 Mbps",
+          "isCorrect": true
+        },
+        {
+          "id": "Q207_C",
+          "text": "1 Gbps",
+          "isCorrect": false
+        },
+        {
+          "id": "Q207_D",
+          "text": "10 Gbps",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Data Link Layer",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "002593c9-0000-0000-0000-000000000000",
+      "text": "DNS translates domain names to IP addresses.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q208_A",
+          "text": "True",
+          "isCorrect": true
+        },
+        {
+          "id": "Q208_B",
+          "text": "False",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "easy",
+      "topic": "Application Layer",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "002593ca-0000-0000-0000-000000000000",
+      "text": "Which device operates at the Data Link Layer?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q209_A",
+          "text": "Hub",
+          "isCorrect": false
+        },
+        {
+          "id": "Q209_B",
+          "text": "Repeater",
+          "isCorrect": false
+        },
+        {
+          "id": "Q209_C",
+          "text": "Switch",
+          "isCorrect": true
+        },
+        {
+          "id": "Q209_D",
+          "text": "Router",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Network Devices",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "002593e0-0000-0000-0000-000000000000",
+      "text": "What is the size of an IPv4 address?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q210_A",
+          "text": "16 bits",
+          "isCorrect": false
+        },
+        {
+          "id": "Q210_B",
+          "text": "32 bits",
+          "isCorrect": true
+        },
+        {
+          "id": "Q210_C",
+          "text": "64 bits",
+          "isCorrect": false
+        },
+        {
+          "id": "Q210_D",
+          "text": "128 bits",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "IP Addressing",
+      "subject_id": "926ec413-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259783-0000-0000-0000-000000000000",
+      "text": "Which scheduling algorithm gives the minimum average waiting time?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q301_A",
+          "text": "FCFS",
+          "isCorrect": false
+        },
+        {
+          "id": "Q301_B",
+          "text": "SJF (Shortest Job First)",
+          "isCorrect": true
+        },
+        {
+          "id": "Q301_C",
+          "text": "Round Robin",
+          "isCorrect": false
+        },
+        {
+          "id": "Q301_D",
+          "text": "Priority Scheduling",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Scheduling",
+      "subject_id": "926ec414-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259784-0000-0000-0000-000000000000",
+      "text": "A semaphore is a synchronization mechanism used in operating systems.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q302_A",
+          "text": "True",
+          "isCorrect": true
+        },
+        {
+          "id": "Q302_B",
+          "text": "False",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "easy",
+      "topic": "Synchronization",
+      "subject_id": "926ec414-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259785-0000-0000-0000-000000000000",
+      "text": "What is thrashing in an operating system?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q303_A",
+          "text": "A type of CPU scheduling",
+          "isCorrect": false
+        },
+        {
+          "id": "Q303_B",
+          "text": "Excessive paging activity causing low CPU utilization",
+          "isCorrect": true
+        },
+        {
+          "id": "Q303_C",
+          "text": "A deadlock resolution technique",
+          "isCorrect": false
+        },
+        {
+          "id": "Q303_D",
+          "text": "A disk scheduling algorithm",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "hard",
+      "topic": "Memory Management",
+      "subject_id": "926ec414-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259786-0000-0000-0000-000000000000",
+      "text": "Which page replacement algorithm is known as the optimal algorithm?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q304_A",
+          "text": "FIFO",
+          "isCorrect": false
+        },
+        {
+          "id": "Q304_B",
+          "text": "LRU",
+          "isCorrect": false
+        },
+        {
+          "id": "Q304_C",
+          "text": "Optimal (OPT)",
+          "isCorrect": true
+        },
+        {
+          "id": "Q304_D",
+          "text": "Clock",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Memory Management",
+      "subject_id": "926ec414-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259787-0000-0000-0000-000000000000",
+      "text": "Which of the following are necessary conditions for deadlock? (Select all that apply)",
+      "type": "multi-select",
+      "options": [
+        {
+          "id": "Q305_A",
+          "text": "Mutual Exclusion",
+          "isCorrect": true
+        },
+        {
+          "id": "Q305_B",
+          "text": "Hold and Wait",
+          "isCorrect": true
+        },
+        {
+          "id": "Q305_C",
+          "text": "Preemption",
+          "isCorrect": false
+        },
+        {
+          "id": "Q305_D",
+          "text": "Circular Wait",
+          "isCorrect": true
+        }
+      ],
+      "marks": 3,
+      "difficulty": "hard",
+      "topic": "Deadlock",
+      "subject_id": "926ec414-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259788-0000-0000-0000-000000000000",
+      "text": "Virtual memory allows a process to execute even if it is not completely in main memory.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q306_A",
+          "text": "True",
+          "isCorrect": true
+        },
+        {
+          "id": "Q306_B",
+          "text": "False",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "easy",
+      "topic": "Memory Management",
+      "subject_id": "926ec414-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c43-0000-0000-0000-000000000000",
+      "text": "Which of the following is NOT a linear data structure?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q004_A",
+          "text": "Array",
+          "isCorrect": false
+        },
+        {
+          "id": "Q004_B",
+          "text": "Linked List",
+          "isCorrect": false
+        },
+        {
+          "id": "Q004_C",
+          "text": "Tree",
+          "isCorrect": true
+        },
+        {
+          "id": "Q004_D",
+          "text": "Queue",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "Basics",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c44-0000-0000-0000-000000000000",
+      "text": "What is the worst-case time complexity of QuickSort?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q005_A",
+          "text": "O(n log n)",
+          "isCorrect": false
+        },
+        {
+          "id": "Q005_B",
+          "text": "O(n)",
+          "isCorrect": false
+        },
+        {
+          "id": "Q005_C",
+          "text": "O(n²)",
+          "isCorrect": true
+        },
+        {
+          "id": "Q005_D",
+          "text": "O(log n)",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "Sorting",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c46-0000-0000-0000-000000000000",
+      "text": "In a singly linked list, what is the time complexity of inserting an element at the beginning?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q007_A",
+          "text": "O(1)",
+          "isCorrect": true
+        },
+        {
+          "id": "Q007_B",
+          "text": "O(n)",
+          "isCorrect": false
+        },
+        {
+          "id": "Q007_C",
+          "text": "O(log n)",
+          "isCorrect": false
+        },
+        {
+          "id": "Q007_D",
+          "text": "O(n²)",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "Linked List",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259020-0000-0000-0000-000000000000",
+      "text": "What does the DISTINCT keyword do in SQL?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q111_A",
+          "text": "Sorts the results",
+          "isCorrect": false
+        },
+        {
+          "id": "Q111_B",
+          "text": "Removes duplicate rows",
+          "isCorrect": true
+        },
+        {
+          "id": "Q111_C",
+          "text": "Limits the number of rows",
+          "isCorrect": false
+        },
+        {
+          "id": "Q111_D",
+          "text": "Groups the results",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "SQL Basics",
+      "subject_id": "926ec412-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00258c61-0000-0000-0000-000000000000",
+      "text": "A hash table provides O(1) average-case time for search operations.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q013_A",
+          "text": "True",
+          "isCorrect": true
+        },
+        {
+          "id": "Q013_B",
+          "text": "False",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "easy",
+      "topic": "Hashing",
+      "subject_id": "926ec411-0000-0000-0000-000000000000",
+      "created_by": "7b266249-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "00259789-0000-0000-0000-000000000000",
+      "text": "What is the purpose of a Translation Lookaside Buffer (TLB)?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q307_A",
+          "text": "To store frequently used data",
+          "isCorrect": false
+        },
+        {
+          "id": "Q307_B",
+          "text": "To speed up virtual-to-physical address translation",
+          "isCorrect": true
+        },
+        {
+          "id": "Q307_C",
+          "text": "To manage disk I/O",
+          "isCorrect": false
+        },
+        {
+          "id": "Q307_D",
+          "text": "To schedule processes",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "hard",
+      "topic": "Memory Management",
+      "subject_id": "926ec414-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "0025978a-0000-0000-0000-000000000000",
+      "text": "A context switch involves saving and restoring the state of a process.",
+      "type": "true-false",
+      "options": [
+        {
+          "id": "Q308_A",
+          "text": "True",
+          "isCorrect": true
+        },
+        {
+          "id": "Q308_B",
+          "text": "False",
+          "isCorrect": false
+        }
+      ],
+      "marks": 1,
+      "difficulty": "easy",
+      "topic": "Process Management",
+      "subject_id": "926ec414-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "0025978b-0000-0000-0000-000000000000",
+      "text": "Which disk scheduling algorithm services requests in the order they arrive?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q309_A",
+          "text": "FCFS",
+          "isCorrect": true
+        },
+        {
+          "id": "Q309_B",
+          "text": "SSTF",
+          "isCorrect": false
+        },
+        {
+          "id": "Q309_C",
+          "text": "SCAN",
+          "isCorrect": false
+        },
+        {
+          "id": "Q309_D",
+          "text": "C-SCAN",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "easy",
+      "topic": "Disk Scheduling",
+      "subject_id": "926ec414-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    },
+    {
+      "id": "002597a1-0000-0000-0000-000000000000",
+      "text": "What is the role of a kernel in an operating system?",
+      "type": "mcq",
+      "options": [
+        {
+          "id": "Q310_A",
+          "text": "Managing user interface only",
+          "isCorrect": false
+        },
+        {
+          "id": "Q310_B",
+          "text": "Core component managing system resources and hardware",
+          "isCorrect": true
+        },
+        {
+          "id": "Q310_C",
+          "text": "Compiling programs",
+          "isCorrect": false
+        },
+        {
+          "id": "Q310_D",
+          "text": "Managing network connections only",
+          "isCorrect": false
+        }
+      ],
+      "marks": 2,
+      "difficulty": "medium",
+      "topic": "OS Basics",
+      "subject_id": "926ec414-0000-0000-0000-000000000000",
+      "created_by": "7b26624a-0000-0000-0000-000000000000",
+      "explanation": null,
+      "created_at": "2026-08-25T18:11:46.379181+00:00",
+      "coding_languages": null,
+      "starter_code": null,
+      "test_cases": null,
+      "time_limit_ms": 2000,
+      "memory_limit_kb": 128000,
+      "expected_answer": null,
+      "rubric": null
+    }
+  ],
+  "exam_attempts": [
+    {
+      "id": "1b904ebf-9036-4ecb-9d0b-b683cdac66b6",
+      "exam_id": "2c2eded8-560d-4876-b980-810241b6aeed",
+      "student_id": "92694f9d-0000-0000-0000-000000000000",
+      "started_at": "2026-08-31T04:49:20.087958+00:00",
+      "submitted_at": "2026-08-31T04:49:46.153+00:00",
+      "status": "submitted",
+      "answers": [
+        {
+          "timeTaken": 0,
+          "questionId": "00259006-0000-0000-0000-000000000000",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "00259007-0000-0000-0000-000000000000",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "00259008-0000-0000-0000-000000000000",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "00259009-0000-0000-0000-000000000000",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "0025901f-0000-0000-0000-000000000000",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "00259020-0000-0000-0000-000000000000",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "00259021-0000-0000-0000-000000000000",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "00259022-0000-0000-0000-000000000000",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "00259023-0000-0000-0000-000000000000",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "00259024-0000-0000-0000-000000000000",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        }
+      ],
+      "tab_switch_count": 0,
+      "time_spent": 27,
+      "is_violation": true,
+      "violation_reason": "Exceeded maximum warnings (2) for exiting exam environment"
+    },
+    {
+      "id": "e03e0636-c5e2-4eb7-9132-ae86257b3fea",
+      "exam_id": "c925a4b3-ca39-4073-a6b8-398b32fd6b0b",
+      "student_id": "92694f9d-0000-0000-0000-000000000000",
+      "started_at": "2026-09-20T08:56:58.301525+00:00",
+      "submitted_at": "2026-09-20T08:59:03.838+00:00",
+      "status": "submitted",
+      "answers": [
+        {
+          "timeTaken": 0,
+          "questionId": "5d0b5cd8-e0ec-45c5-968b-d8949283b0bf",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "621c8371-2401-4944-9c60-0af7e6b455ef",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "answeredAt": "2026-09-20T08:59:00.110Z",
+          "questionId": "8f558850-e089-4392-938d-aba0e93854bf",
+          "isMarkedForReview": false,
+          "selectedOptionIds": [
+            "Star Topology is a network where all devices are connected to a central hub or switch.\nadvantage: easy to manage and troubleshoot.\ndisadvantage: if the central hub fails, the entire network stops working."
+          ]
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "b60d8817-25d2-4f4e-b075-10e969ed0839",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "c0a09f1c-72da-4d76-9880-3806e86b78c4",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        }
+      ],
+      "tab_switch_count": 0,
+      "time_spent": 123,
+      "is_violation": false,
+      "violation_reason": null
+    },
+    {
+      "id": "3d56d4dd-e60f-4fae-a09c-82f6f183daaa",
+      "exam_id": "6798eb3d-b936-48ff-b215-058faf15a447",
+      "student_id": "92694f9d-0000-0000-0000-000000000000",
+      "started_at": "2026-09-20T09:51:36.320912+00:00",
+      "submitted_at": "2026-09-20T10:18:03.173+00:00",
+      "status": "submitted",
+      "answers": [
+        {
+          "timeTaken": 0,
+          "questionId": "5d0b5cd8-e0ec-45c5-968b-d8949283b0bf",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "621c8371-2401-4944-9c60-0af7e6b455ef",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "8f558850-e089-4392-938d-aba0e93854bf",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "b60d8817-25d2-4f4e-b075-10e969ed0839",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        },
+        {
+          "timeTaken": 0,
+          "questionId": "c0a09f1c-72da-4d76-9880-3806e86b78c4",
+          "isMarkedForReview": false,
+          "selectedOptionIds": []
+        }
+      ],
+      "tab_switch_count": 0,
+      "time_spent": 43,
+      "is_violation": true,
+      "violation_reason": "Exceeded maximum warnings (2) for exiting exam environment"
+    }
+  ],
+  "results": [
+    {
+      "id": "bba72065-cb8a-4cfd-9b70-5ab1d8121aaf",
+      "attempt_id": "1b904ebf-9036-4ecb-9d0b-b683cdac66b6",
+      "exam_id": "2c2eded8-560d-4876-b980-810241b6aeed",
+      "student_id": "92694f9d-0000-0000-0000-000000000000",
+      "total_marks": 17,
+      "obtained_marks": 0,
+      "percentage": 0,
+      "status": "failed",
+      "correct_count": 0,
+      "incorrect_count": 0,
+      "unanswered_count": 10,
+      "time_spent": 27,
+      "question_results": [
+        {
+          "isCorrect": false,
+          "questionId": "00259006-0000-0000-0000-000000000000",
+          "marksAwarded": 0,
+          "correctAnswer": [
+            "Q106_A"
+          ],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "isCorrect": false,
+          "questionId": "00259007-0000-0000-0000-000000000000",
+          "marksAwarded": 0,
+          "correctAnswer": [
+            "Q107_D"
+          ],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "isCorrect": false,
+          "questionId": "00259008-0000-0000-0000-000000000000",
+          "marksAwarded": 0,
+          "correctAnswer": [
+            "Q108_A",
+            "Q108_B",
+            "Q108_D"
+          ],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "isCorrect": false,
+          "questionId": "00259009-0000-0000-0000-000000000000",
+          "marksAwarded": 0,
+          "correctAnswer": [
+            "Q109_B"
+          ],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "isCorrect": false,
+          "questionId": "0025901f-0000-0000-0000-000000000000",
+          "marksAwarded": 0,
+          "correctAnswer": [
+            "Q110_B"
+          ],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "isCorrect": false,
+          "questionId": "00259020-0000-0000-0000-000000000000",
+          "marksAwarded": 0,
+          "correctAnswer": [
+            "Q111_B"
+          ],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "isCorrect": false,
+          "questionId": "00259021-0000-0000-0000-000000000000",
+          "marksAwarded": 0,
+          "correctAnswer": [
+            "Q112_A"
+          ],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "isCorrect": false,
+          "questionId": "00259022-0000-0000-0000-000000000000",
+          "marksAwarded": 0,
+          "correctAnswer": [
+            "Q113_B"
+          ],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "isCorrect": false,
+          "questionId": "00259023-0000-0000-0000-000000000000",
+          "marksAwarded": 0,
+          "correctAnswer": [
+            "Q114_B"
+          ],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "isCorrect": false,
+          "questionId": "00259024-0000-0000-0000-000000000000",
+          "marksAwarded": 0,
+          "correctAnswer": [
+            "Q115_C"
+          ],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        }
+      ],
+      "evaluated_at": "2026-08-31T04:49:45.468271+00:00",
+      "is_violation": true,
+      "violation_reason": "Exceeded maximum warnings (2) for exiting exam environment"
+    },
+    {
+      "id": "81c17f3f-ea2c-4a72-ba52-82039339cd44",
+      "attempt_id": "e03e0636-c5e2-4eb7-9132-ae86257b3fea",
+      "exam_id": "c925a4b3-ca39-4073-a6b8-398b32fd6b0b",
+      "student_id": "92694f9d-0000-0000-0000-000000000000",
+      "total_marks": 12,
+      "obtained_marks": 3,
+      "percentage": 25,
+      "status": "failed",
+      "correct_count": 1,
+      "incorrect_count": 0,
+      "unanswered_count": 4,
+      "time_spent": 123,
+      "question_results": [
+        {
+          "feedback": "No answer provided.",
+          "isCorrect": false,
+          "questionId": "5d0b5cd8-e0ec-45c5-968b-d8949283b0bf",
+          "marksAwarded": 0,
+          "correctAnswer": [],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "feedback": "No answer provided.",
+          "isCorrect": false,
+          "questionId": "621c8371-2401-4944-9c60-0af7e6b455ef",
+          "marksAwarded": 0,
+          "correctAnswer": [],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "feedback": "Excellent answer. You provided an accurate definition of a Star topology mentioning the central device (hub/switch), and correctly identified both a valid main advantage (easy to manage and troubleshoot) and the main disadvantage (central hub failure disrupts the entire network). Full marks awarded.",
+          "isCorrect": true,
+          "questionId": "8f558850-e089-4392-938d-aba0e93854bf",
+          "marksAwarded": 3,
+          "correctAnswer": [],
+          "marksDeducted": 0,
+          "studentAnswer": [
+            "Star Topology is a network where all devices are connected to a central hub or switch.\nadvantage: easy to manage and troubleshoot.\ndisadvantage: if the central hub fails, the entire network stops working."
+          ]
+        },
+        {
+          "feedback": "No answer provided.",
+          "isCorrect": false,
+          "questionId": "b60d8817-25d2-4f4e-b075-10e969ed0839",
+          "marksAwarded": 0,
+          "correctAnswer": [],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "feedback": "No answer provided.",
+          "isCorrect": false,
+          "questionId": "c0a09f1c-72da-4d76-9880-3806e86b78c4",
+          "marksAwarded": 0,
+          "correctAnswer": [],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        }
+      ],
+      "evaluated_at": "2026-09-20T08:59:03.754314+00:00",
+      "is_violation": false,
+      "violation_reason": null
+    },
+    {
+      "id": "556b6dcc-67fe-4917-b8ab-2f5fa83ccfcd",
+      "attempt_id": "3d56d4dd-e60f-4fae-a09c-82f6f183daaa",
+      "exam_id": "6798eb3d-b936-48ff-b215-058faf15a447",
+      "student_id": "92694f9d-0000-0000-0000-000000000000",
+      "total_marks": 12,
+      "obtained_marks": 0,
+      "percentage": 0,
+      "status": "failed",
+      "correct_count": 0,
+      "incorrect_count": 0,
+      "unanswered_count": 5,
+      "time_spent": 43,
+      "question_results": [
+        {
+          "feedback": "No answer provided.",
+          "isCorrect": false,
+          "questionId": "5d0b5cd8-e0ec-45c5-968b-d8949283b0bf",
+          "marksAwarded": 0,
+          "correctAnswer": [],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "feedback": "No answer provided.",
+          "isCorrect": false,
+          "questionId": "621c8371-2401-4944-9c60-0af7e6b455ef",
+          "marksAwarded": 0,
+          "correctAnswer": [],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "feedback": "No answer provided.",
+          "isCorrect": false,
+          "questionId": "8f558850-e089-4392-938d-aba0e93854bf",
+          "marksAwarded": 0,
+          "correctAnswer": [],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "feedback": "No answer provided.",
+          "isCorrect": false,
+          "questionId": "b60d8817-25d2-4f4e-b075-10e969ed0839",
+          "marksAwarded": 0,
+          "correctAnswer": [],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        },
+        {
+          "feedback": "No answer provided.",
+          "isCorrect": false,
+          "questionId": "c0a09f1c-72da-4d76-9880-3806e86b78c4",
+          "marksAwarded": 0,
+          "correctAnswer": [],
+          "marksDeducted": 0,
+          "studentAnswer": []
+        }
+      ],
+      "evaluated_at": "2026-09-20T10:18:02.37996+00:00",
+      "is_violation": true,
+      "violation_reason": "Exceeded maximum warnings (2) for exiting exam environment"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "899a2a9f-0000-0000-0000-000000000000",
+      "user_id": "92694f9d-0000-0000-0000-000000000000",
+      "type": "result-published",
+      "title": "Result Published",
+      "message": "Your result for Database Systems Quiz has been published. You scored 84%.",
+      "is_read": true,
+      "link": "/results/RES001",
+      "created_at": "2026-07-22T14:25:00+00:00"
+    },
+    {
+      "id": "899a2aa2-0000-0000-0000-000000000000",
+      "user_id": "92694f9d-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "Operating Systems Midterm has been scheduled for August 12, 2026.",
+      "is_read": true,
+      "link": "/exams/EXAM004",
+      "created_at": "2026-07-24T15:00:00+00:00"
+    },
+    {
+      "id": "899a2aa3-0000-0000-0000-000000000000",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "system",
+      "title": "Quiz Completed",
+      "message": "Database Systems Quiz has been completed by 6 students. View results.",
+      "is_read": true,
+      "link": "/results/manage",
+      "created_at": "2026-07-22T14:40:00+00:00"
+    },
+    {
+      "id": "899a2a9e-0000-0000-0000-000000000000",
+      "user_id": "92694f9d-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "Data Structures Midterm has been scheduled for July 29, 2026 at 10:00 AM.",
+      "is_read": true,
+      "link": "/exams/EXAM001",
+      "created_at": "2026-07-25T10:00:00+00:00"
+    },
+    {
+      "id": "899a2aa0-0000-0000-0000-000000000000",
+      "user_id": "92694f9d-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "Computer Networks Unit Test has been scheduled for August 5, 2026 at 11:00 AM.",
+      "is_read": true,
+      "link": "/exams/EXAM003",
+      "created_at": "2026-07-26T09:00:00+00:00"
+    },
+    {
+      "id": "899a2aa1-0000-0000-0000-000000000000",
+      "user_id": "92694f9d-0000-0000-0000-000000000000",
+      "type": "exam-starting-soon",
+      "title": "Exam Starting Soon",
+      "message": "Data Structures Midterm starts in 2 days. Make sure you are prepared.",
+      "is_read": true,
+      "link": "/exams/EXAM001",
+      "created_at": "2026-07-27T08:00:00+00:00"
+    },
+    {
+      "id": "b58337e9-85aa-4b49-b97b-ceae32e778b2",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "exam-violation",
+      "title": "Test Violation",
+      "message": "Test message",
+      "is_read": true,
+      "link": null,
+      "created_at": "2026-08-30T16:54:42.7419+00:00"
+    },
+    {
+      "id": "6fc903ce-5220-4076-a442-f4c55f24fb0c",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "exam-violation",
+      "title": "Exam Violation: Aarav Sharma",
+      "message": "Student navigated away or lost focus during exam \"new\": Your test will end if you go out",
+      "is_read": true,
+      "link": null,
+      "created_at": "2026-08-30T16:56:03.733477+00:00"
+    },
+    {
+      "id": "a4a47b49-4a39-4a79-8dfe-0e003bd40350",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "exam-violation",
+      "title": "Exam Violation: Aarav Sharma",
+      "message": "Student navigated away or lost focus during exam \"new\": Your test will end if you go out",
+      "is_read": true,
+      "link": null,
+      "created_at": "2026-08-30T16:56:05.447319+00:00"
+    },
+    {
+      "id": "c636c367-614d-4daa-82b2-112e57b2b6de",
+      "user_id": "92694f9e-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test2\" has been scheduled for 2026-08-30.",
+      "is_read": false,
+      "link": "/exams/c08acded-ccff-4c6e-9040-61b6abf06e9c",
+      "created_at": "2026-08-30T16:59:27.532996+00:00"
+    },
+    {
+      "id": "3ea92662-2fbd-43b8-bec0-beb20977bde0",
+      "user_id": "92694f9f-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test2\" has been scheduled for 2026-08-30.",
+      "is_read": false,
+      "link": "/exams/c08acded-ccff-4c6e-9040-61b6abf06e9c",
+      "created_at": "2026-08-30T16:59:27.532996+00:00"
+    },
+    {
+      "id": "7ef74933-190e-4645-8efd-a024d0666547",
+      "user_id": "92694fa0-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test2\" has been scheduled for 2026-08-30.",
+      "is_read": false,
+      "link": "/exams/c08acded-ccff-4c6e-9040-61b6abf06e9c",
+      "created_at": "2026-08-30T16:59:27.532996+00:00"
+    },
+    {
+      "id": "af42a0eb-fdd4-4323-98d1-4a18d1fd75c7",
+      "user_id": "92694fa1-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test2\" has been scheduled for 2026-08-30.",
+      "is_read": false,
+      "link": "/exams/c08acded-ccff-4c6e-9040-61b6abf06e9c",
+      "created_at": "2026-08-30T16:59:27.532996+00:00"
+    },
+    {
+      "id": "9276df06-0c41-43a0-be0e-477646541573",
+      "user_id": "92694fa2-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test2\" has been scheduled for 2026-08-30.",
+      "is_read": false,
+      "link": "/exams/c08acded-ccff-4c6e-9040-61b6abf06e9c",
+      "created_at": "2026-08-30T16:59:27.532996+00:00"
+    },
+    {
+      "id": "547d6a89-d28c-45c2-9cf6-0c39d9ad6918",
+      "user_id": "92694fa3-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test2\" has been scheduled for 2026-08-30.",
+      "is_read": false,
+      "link": "/exams/c08acded-ccff-4c6e-9040-61b6abf06e9c",
+      "created_at": "2026-08-30T16:59:27.532996+00:00"
+    },
+    {
+      "id": "19cef74e-4e10-4d67-8e26-d8a9898e5b1a",
+      "user_id": "92694fa4-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test2\" has been scheduled for 2026-08-30.",
+      "is_read": false,
+      "link": "/exams/c08acded-ccff-4c6e-9040-61b6abf06e9c",
+      "created_at": "2026-08-30T16:59:27.532996+00:00"
+    },
+    {
+      "id": "94c74535-4b6b-46d3-ba88-1d0ec73a9db0",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "system",
+      "title": "Exam Created Successfully",
+      "message": "Your exam \"test2\" has been scheduled for 2026-08-30.",
+      "is_read": true,
+      "link": "/exams",
+      "created_at": "2026-08-30T16:59:27.532996+00:00"
+    },
+    {
+      "id": "ebf19575-5ac4-4777-ad51-00b77b5a53ec",
+      "user_id": "92694f9d-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test2\" has been scheduled for 2026-08-30.",
+      "is_read": true,
+      "link": "/exams/c08acded-ccff-4c6e-9040-61b6abf06e9c",
+      "created_at": "2026-08-30T16:59:27.532996+00:00"
+    },
+    {
+      "id": "ccefdb7d-6afd-4537-8576-c63d3b683f31",
+      "user_id": "92694f9e-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"new\" has been scheduled for 2026-08-31.",
+      "is_read": false,
+      "link": "/exams/2c2eded8-560d-4876-b980-810241b6aeed",
+      "created_at": "2026-08-31T04:47:43.530732+00:00"
+    },
+    {
+      "id": "6dae82b1-437d-4320-aa75-a58492c114dc",
+      "user_id": "92694f9f-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"new\" has been scheduled for 2026-08-31.",
+      "is_read": false,
+      "link": "/exams/2c2eded8-560d-4876-b980-810241b6aeed",
+      "created_at": "2026-08-31T04:47:43.530732+00:00"
+    },
+    {
+      "id": "c393f446-e87c-488c-80c1-84e2322ca8ed",
+      "user_id": "92694fa0-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"new\" has been scheduled for 2026-08-31.",
+      "is_read": false,
+      "link": "/exams/2c2eded8-560d-4876-b980-810241b6aeed",
+      "created_at": "2026-08-31T04:47:43.530732+00:00"
+    },
+    {
+      "id": "8a895161-fa4c-42cb-bf02-03f3f92fe3a2",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "system",
+      "title": "Exam Created Successfully",
+      "message": "Your exam \"new\" has been scheduled for 2026-08-31.",
+      "is_read": true,
+      "link": "/exams",
+      "created_at": "2026-08-31T04:47:43.530732+00:00"
+    },
+    {
+      "id": "4e8b07a1-d2db-4cd5-98e5-7294d2bf324d",
+      "user_id": "92694f9d-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"new\" has been scheduled for 2026-08-31.",
+      "is_read": true,
+      "link": "/exams/2c2eded8-560d-4876-b980-810241b6aeed",
+      "created_at": "2026-08-31T04:47:43.530732+00:00"
+    },
+    {
+      "id": "6e30c520-2bbe-4228-ac41-efcf3dc28754",
+      "user_id": "92694fa1-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"new\" has been scheduled for 2026-08-31.",
+      "is_read": false,
+      "link": "/exams/2c2eded8-560d-4876-b980-810241b6aeed",
+      "created_at": "2026-08-31T04:47:43.530732+00:00"
+    },
+    {
+      "id": "750dcd6c-dfa0-41b6-8b16-0c9ca85d50d7",
+      "user_id": "92694fa2-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"new\" has been scheduled for 2026-08-31.",
+      "is_read": false,
+      "link": "/exams/2c2eded8-560d-4876-b980-810241b6aeed",
+      "created_at": "2026-08-31T04:47:43.530732+00:00"
+    },
+    {
+      "id": "b51a0a2c-4c4a-43d0-ac1b-00af2da532a8",
+      "user_id": "92694fa3-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"new\" has been scheduled for 2026-08-31.",
+      "is_read": false,
+      "link": "/exams/2c2eded8-560d-4876-b980-810241b6aeed",
+      "created_at": "2026-08-31T04:47:43.530732+00:00"
+    },
+    {
+      "id": "d7b3f9c0-99bf-469e-9204-acb2dacb73ca",
+      "user_id": "92694fa4-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"new\" has been scheduled for 2026-08-31.",
+      "is_read": false,
+      "link": "/exams/2c2eded8-560d-4876-b980-810241b6aeed",
+      "created_at": "2026-08-31T04:47:43.530732+00:00"
+    },
+    {
+      "id": "fe5ba137-6299-4b2f-8ec4-290de6e4a252",
+      "user_id": "92694f9e-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/c925a4b3-ca39-4073-a6b8-398b32fd6b0b",
+      "created_at": "2026-09-20T08:56:33.47565+00:00"
+    },
+    {
+      "id": "8d8d5c69-c675-4615-b92c-6885acc7ef40",
+      "user_id": "92694f9f-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/c925a4b3-ca39-4073-a6b8-398b32fd6b0b",
+      "created_at": "2026-09-20T08:56:33.47565+00:00"
+    },
+    {
+      "id": "02d544e0-e5fd-4ea5-91dd-06a5d9fce7c7",
+      "user_id": "92694fa0-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/c925a4b3-ca39-4073-a6b8-398b32fd6b0b",
+      "created_at": "2026-09-20T08:56:33.47565+00:00"
+    },
+    {
+      "id": "bb58892e-9c36-4a26-95d8-0e0d58170c91",
+      "user_id": "92694fa1-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/c925a4b3-ca39-4073-a6b8-398b32fd6b0b",
+      "created_at": "2026-09-20T08:56:33.47565+00:00"
+    },
+    {
+      "id": "247db97f-5526-4441-a6c1-6fddcb29c450",
+      "user_id": "92694fa2-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/c925a4b3-ca39-4073-a6b8-398b32fd6b0b",
+      "created_at": "2026-09-20T08:56:33.47565+00:00"
+    },
+    {
+      "id": "c1444bd4-1461-43bd-99ba-21b54a560ba8",
+      "user_id": "92694fa3-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/c925a4b3-ca39-4073-a6b8-398b32fd6b0b",
+      "created_at": "2026-09-20T08:56:33.47565+00:00"
+    },
+    {
+      "id": "06ef3c0b-4049-4e7e-8704-af8df75a144f",
+      "user_id": "92694fa4-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/c925a4b3-ca39-4073-a6b8-398b32fd6b0b",
+      "created_at": "2026-09-20T08:56:33.47565+00:00"
+    },
+    {
+      "id": "65c5472e-61e0-44dc-8ace-d7b5a3c86aba",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "system",
+      "title": "Exam Created Successfully",
+      "message": "Your exam \"TEST\" has been scheduled for 2026-09-20.",
+      "is_read": true,
+      "link": "/exams",
+      "created_at": "2026-09-20T08:56:33.47565+00:00"
+    },
+    {
+      "id": "6d2e85dd-6a90-4890-ba0b-322ad6da18b6",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "exam-violation",
+      "title": "Exam Violation: Aarav Sharma",
+      "message": "Student navigated away or lost focus during exam \"new\": Your test will end if you go out",
+      "is_read": true,
+      "link": null,
+      "created_at": "2026-08-31T04:49:38.021+00:00"
+    },
+    {
+      "id": "d9d856c6-767b-438d-acd6-248fe9324e49",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "exam-violation",
+      "title": "Exam Violation: Aarav Sharma",
+      "message": "Student navigated away or lost focus during exam \"new\": Your test will end if you go out",
+      "is_read": true,
+      "link": null,
+      "created_at": "2026-08-31T04:49:46.075747+00:00"
+    },
+    {
+      "id": "86a2c79e-8fa4-478c-be1d-bd3b9342aad8",
+      "user_id": "92694f9d-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST\" has been scheduled for 2026-09-20.",
+      "is_read": true,
+      "link": "/exams/c925a4b3-ca39-4073-a6b8-398b32fd6b0b",
+      "created_at": "2026-09-20T08:56:33.47565+00:00"
+    },
+    {
+      "id": "1904e506-c3f2-4cfb-bb0e-0c34047a67cc",
+      "user_id": "92694f9e-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST 2\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/6798eb3d-b936-48ff-b215-058faf15a447",
+      "created_at": "2026-09-20T09:49:51.164467+00:00"
+    },
+    {
+      "id": "4c4b92fd-94f7-4436-944c-17fe6ec232ce",
+      "user_id": "92694f9f-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST 2\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/6798eb3d-b936-48ff-b215-058faf15a447",
+      "created_at": "2026-09-20T09:49:51.164467+00:00"
+    },
+    {
+      "id": "54e95af6-8a5d-4513-b9f6-40f2f8263b92",
+      "user_id": "92694fa0-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST 2\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/6798eb3d-b936-48ff-b215-058faf15a447",
+      "created_at": "2026-09-20T09:49:51.164467+00:00"
+    },
+    {
+      "id": "1ec05dd2-b027-490d-a8fc-84490bb08a4a",
+      "user_id": "92694fa1-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST 2\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/6798eb3d-b936-48ff-b215-058faf15a447",
+      "created_at": "2026-09-20T09:49:51.164467+00:00"
+    },
+    {
+      "id": "63044c53-c7ab-4bd4-bd10-65275616cfda",
+      "user_id": "92694fa2-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST 2\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/6798eb3d-b936-48ff-b215-058faf15a447",
+      "created_at": "2026-09-20T09:49:51.164467+00:00"
+    },
+    {
+      "id": "76627b33-5299-4975-b840-17b2e3c290b1",
+      "user_id": "92694fa3-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST 2\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/6798eb3d-b936-48ff-b215-058faf15a447",
+      "created_at": "2026-09-20T09:49:51.164467+00:00"
+    },
+    {
+      "id": "be4ba738-21d2-455f-a0df-07b0875eb9b2",
+      "user_id": "92694fa4-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST 2\" has been scheduled for 2026-09-20.",
+      "is_read": false,
+      "link": "/exams/6798eb3d-b936-48ff-b215-058faf15a447",
+      "created_at": "2026-09-20T09:49:51.164467+00:00"
+    },
+    {
+      "id": "f2de2b4c-e625-4f0f-bcdc-abf37a5cfb16",
+      "user_id": "92694f9d-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"TEST 2\" has been scheduled for 2026-09-20.",
+      "is_read": true,
+      "link": "/exams/6798eb3d-b936-48ff-b215-058faf15a447",
+      "created_at": "2026-09-20T09:49:51.164467+00:00"
+    },
+    {
+      "id": "e8647249-8d64-4898-9669-5f06b91c04b1",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "system",
+      "title": "Exam Created Successfully",
+      "message": "Your exam \"TEST 2\" has been scheduled for 2026-09-20.",
+      "is_read": true,
+      "link": "/exams",
+      "created_at": "2026-09-20T09:49:51.164467+00:00"
+    },
+    {
+      "id": "05014d70-6271-44d7-ae02-05a9ad9a8e05",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "exam-violation",
+      "title": "Exam Violation: Aarav Sharma",
+      "message": "Student navigated away or lost focus during exam \"TEST 2\": Your test will end if you go out",
+      "is_read": true,
+      "link": null,
+      "created_at": "2026-09-20T09:54:40.310922+00:00"
+    },
+    {
+      "id": "2b1b078d-9281-453d-bfa8-d891d30a286e",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "exam-violation",
+      "title": "Exam Violation: Aarav Sharma",
+      "message": "Student navigated away or lost focus during exam \"TEST 2\": Your test will end if you go out",
+      "is_read": true,
+      "link": null,
+      "created_at": "2026-09-20T09:54:43.393518+00:00"
+    },
+    {
+      "id": "51a9fc8d-2b11-4b51-9edc-24952b00086e",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "exam-violation",
+      "title": "Exam Violation: Aarav Sharma",
+      "message": "Student navigated away or lost focus during exam \"TEST 2\": Your test will end if you go out",
+      "is_read": true,
+      "link": null,
+      "created_at": "2026-09-20T10:18:01.093295+00:00"
+    },
+    {
+      "id": "c3298a75-f26f-48a6-a4f9-66040a5b8986",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "exam-violation",
+      "title": "Exam Violation: Aarav Sharma",
+      "message": "Student navigated away or lost focus during exam \"TEST 2\": Your test will end if you go out",
+      "is_read": true,
+      "link": null,
+      "created_at": "2026-09-20T10:18:02.546803+00:00"
+    },
+    {
+      "id": "634b1636-2f96-482f-a7e5-607e2ea652d6",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "system",
+      "title": "New Assignment Submission",
+      "message": "Aarav Sharma has submitted their response for \"Data Structures Lab Assignment 1\".",
+      "is_read": true,
+      "link": "/assignments/3910182a-a1bc-45af-afa9-7179d9f67c3c",
+      "created_at": "2026-09-20T13:58:00.578381+00:00"
+    },
+    {
+      "id": "7b5d5c21-0313-4f86-8c0e-6f007b1c15d1",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "system",
+      "title": "Exam Created Successfully",
+      "message": "Your exam \"test\" has been scheduled for 2026-09-23.",
+      "is_read": false,
+      "link": "/exams",
+      "created_at": "2026-09-23T09:03:41.968709+00:00"
+    },
+    {
+      "id": "cc66fabd-31d7-4c9a-ae5c-bb90d6ca7563",
+      "user_id": "92694f9e-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test\" has been scheduled for 2026-09-23.",
+      "is_read": false,
+      "link": "/exams/ce6113a6-04bb-4048-8811-84d95ae025dc",
+      "created_at": "2026-09-23T09:03:41.968709+00:00"
+    },
+    {
+      "id": "2ec673f8-f34c-497d-a0e6-3c9a5627ae3b",
+      "user_id": "92694f9f-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test\" has been scheduled for 2026-09-23.",
+      "is_read": false,
+      "link": "/exams/ce6113a6-04bb-4048-8811-84d95ae025dc",
+      "created_at": "2026-09-23T09:03:41.968709+00:00"
+    },
+    {
+      "id": "22eeb8a4-481d-4382-a3c1-b42e184b7252",
+      "user_id": "92694fa0-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test\" has been scheduled for 2026-09-23.",
+      "is_read": false,
+      "link": "/exams/ce6113a6-04bb-4048-8811-84d95ae025dc",
+      "created_at": "2026-09-23T09:03:41.968709+00:00"
+    },
+    {
+      "id": "c7d4833b-a20f-4152-9d8d-f4ff313f3c6e",
+      "user_id": "92694fa1-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test\" has been scheduled for 2026-09-23.",
+      "is_read": false,
+      "link": "/exams/ce6113a6-04bb-4048-8811-84d95ae025dc",
+      "created_at": "2026-09-23T09:03:41.968709+00:00"
+    },
+    {
+      "id": "00e3ec9a-1c7e-4125-82af-31480f05fe98",
+      "user_id": "92694fa2-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test\" has been scheduled for 2026-09-23.",
+      "is_read": false,
+      "link": "/exams/ce6113a6-04bb-4048-8811-84d95ae025dc",
+      "created_at": "2026-09-23T09:03:41.968709+00:00"
+    },
+    {
+      "id": "9d37196e-8e29-4653-a085-ba63bdda7304",
+      "user_id": "92694fa3-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test\" has been scheduled for 2026-09-23.",
+      "is_read": false,
+      "link": "/exams/ce6113a6-04bb-4048-8811-84d95ae025dc",
+      "created_at": "2026-09-23T09:03:41.968709+00:00"
+    },
+    {
+      "id": "23ae0a13-ec45-4c20-8472-1d91c5c2db6e",
+      "user_id": "92694fa4-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test\" has been scheduled for 2026-09-23.",
+      "is_read": false,
+      "link": "/exams/ce6113a6-04bb-4048-8811-84d95ae025dc",
+      "created_at": "2026-09-23T09:03:41.968709+00:00"
+    },
+    {
+      "id": "dd09cffe-9d11-4d79-a1f4-629533dde713",
+      "user_id": "92694f9d-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"test\" has been scheduled for 2026-09-23.",
+      "is_read": true,
+      "link": "/exams/ce6113a6-04bb-4048-8811-84d95ae025dc",
+      "created_at": "2026-09-23T09:03:41.968709+00:00"
+    },
+    {
+      "id": "ab9dda31-5ae4-4234-8706-57044827dce1",
+      "user_id": "7b266249-0000-0000-0000-000000000000",
+      "type": "system",
+      "title": "Exam Created Successfully",
+      "message": "Your exam \"Week 1 TEST\" has been scheduled for 2026-10-05.",
+      "is_read": false,
+      "link": "/exams",
+      "created_at": "2026-10-05T05:22:45.488364+00:00"
+    },
+    {
+      "id": "dd3e8dc0-cc27-4317-8a5d-729806fa8427",
+      "user_id": "92694f9d-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"Week 1 TEST\" has been scheduled for 2026-10-05.",
+      "is_read": false,
+      "link": "/exams/93c0fba4-69d3-4333-8945-efec63bae96c",
+      "created_at": "2026-10-05T05:22:45.488364+00:00"
+    },
+    {
+      "id": "e7c7d160-fd39-451d-a76a-c85dadefab69",
+      "user_id": "92694f9e-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"Week 1 TEST\" has been scheduled for 2026-10-05.",
+      "is_read": false,
+      "link": "/exams/93c0fba4-69d3-4333-8945-efec63bae96c",
+      "created_at": "2026-10-05T05:22:45.488364+00:00"
+    },
+    {
+      "id": "b63852ca-538f-4e76-bbaf-9fc5d36279fc",
+      "user_id": "92694f9f-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"Week 1 TEST\" has been scheduled for 2026-10-05.",
+      "is_read": false,
+      "link": "/exams/93c0fba4-69d3-4333-8945-efec63bae96c",
+      "created_at": "2026-10-05T05:22:45.488364+00:00"
+    },
+    {
+      "id": "5149356e-3723-4918-8c35-66e0766e6cb3",
+      "user_id": "92694fa0-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"Week 1 TEST\" has been scheduled for 2026-10-05.",
+      "is_read": false,
+      "link": "/exams/93c0fba4-69d3-4333-8945-efec63bae96c",
+      "created_at": "2026-10-05T05:22:45.488364+00:00"
+    },
+    {
+      "id": "236931ea-b190-46fc-a694-66dd402db13c",
+      "user_id": "92694fa1-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"Week 1 TEST\" has been scheduled for 2026-10-05.",
+      "is_read": false,
+      "link": "/exams/93c0fba4-69d3-4333-8945-efec63bae96c",
+      "created_at": "2026-10-05T05:22:45.488364+00:00"
+    },
+    {
+      "id": "97b2c736-0caf-46fd-bbf9-f5852edbc7ef",
+      "user_id": "92694fa2-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"Week 1 TEST\" has been scheduled for 2026-10-05.",
+      "is_read": false,
+      "link": "/exams/93c0fba4-69d3-4333-8945-efec63bae96c",
+      "created_at": "2026-10-05T05:22:45.488364+00:00"
+    },
+    {
+      "id": "5fffe7e2-f06a-41dc-b7d5-41b746f26c90",
+      "user_id": "92694fa3-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"Week 1 TEST\" has been scheduled for 2026-10-05.",
+      "is_read": false,
+      "link": "/exams/93c0fba4-69d3-4333-8945-efec63bae96c",
+      "created_at": "2026-10-05T05:22:45.488364+00:00"
+    },
+    {
+      "id": "7b84dc12-d82d-4fc1-9d1b-c5df6572c7c8",
+      "user_id": "92694fa4-0000-0000-0000-000000000000",
+      "type": "exam-scheduled",
+      "title": "New Exam Scheduled",
+      "message": "A new exam \"Week 1 TEST\" has been scheduled for 2026-10-05.",
+      "is_read": false,
+      "link": "/exams/93c0fba4-69d3-4333-8945-efec63bae96c",
+      "created_at": "2026-10-05T05:22:45.488364+00:00"
+    }
+  ],
+  "activity_logs": [],
+  "auth_users": [
+    {
+      "id": "72ccf967-0000-0000-0000-000000000000",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "admin@sit.edu.in",
+      "email_confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "phone": "",
+      "confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "last_sign_in_at": "2026-09-20T13:55:25.979124Z",
+      "app_metadata": {
+        "provider": "email",
+        "providers": [
+          "email"
+        ]
+      },
+      "user_metadata": {
+        "name": "System Administrator"
+      },
+      "identities": null,
+      "created_at": "2026-08-25T18:13:46.343638Z",
+      "updated_at": "2026-09-20T13:55:25.996467Z",
+      "is_anonymous": false
+    },
+    {
+      "id": "92694f9e-0000-0000-0000-000000000000",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "priya.patel@sit.edu.in",
+      "email_confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "phone": "",
+      "confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "app_metadata": {
+        "provider": "email",
+        "providers": [
+          "email"
+        ]
+      },
+      "user_metadata": {
+        "name": "Priya Patel"
+      },
+      "identities": null,
+      "created_at": "2026-08-25T18:13:46.343638Z",
+      "updated_at": "2026-08-25T18:13:46.343638Z",
+      "is_anonymous": false
+    },
+    {
+      "id": "92694f9f-0000-0000-0000-000000000000",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "rohan.kumar@sit.edu.in",
+      "email_confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "phone": "",
+      "confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "app_metadata": {
+        "provider": "email",
+        "providers": [
+          "email"
+        ]
+      },
+      "user_metadata": {
+        "name": "Rohan Kumar"
+      },
+      "identities": null,
+      "created_at": "2026-08-25T18:13:46.343638Z",
+      "updated_at": "2026-08-25T18:13:46.343638Z",
+      "is_anonymous": false
+    },
+    {
+      "id": "92694fa0-0000-0000-0000-000000000000",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "ananya.gupta@sit.edu.in",
+      "email_confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "phone": "",
+      "confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "app_metadata": {
+        "provider": "email",
+        "providers": [
+          "email"
+        ]
+      },
+      "user_metadata": {
+        "name": "Ananya Gupta"
+      },
+      "identities": null,
+      "created_at": "2026-08-25T18:13:46.343638Z",
+      "updated_at": "2026-08-25T18:13:46.343638Z",
+      "is_anonymous": false
+    },
+    {
+      "id": "92694fa1-0000-0000-0000-000000000000",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "vikram.singh@sit.edu.in",
+      "email_confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "phone": "",
+      "confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "app_metadata": {
+        "provider": "email",
+        "providers": [
+          "email"
+        ]
+      },
+      "user_metadata": {
+        "name": "Vikram Singh"
+      },
+      "identities": null,
+      "created_at": "2026-08-25T18:13:46.343638Z",
+      "updated_at": "2026-08-25T18:13:46.343638Z",
+      "is_anonymous": false
+    },
+    {
+      "id": "92694fa2-0000-0000-0000-000000000000",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "meera.reddy@sit.edu.in",
+      "email_confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "phone": "",
+      "confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "app_metadata": {
+        "provider": "email",
+        "providers": [
+          "email"
+        ]
+      },
+      "user_metadata": {
+        "name": "Meera Reddy"
+      },
+      "identities": null,
+      "created_at": "2026-08-25T18:13:46.343638Z",
+      "updated_at": "2026-08-25T18:13:46.343638Z",
+      "is_anonymous": false
+    },
+    {
+      "id": "92694fa3-0000-0000-0000-000000000000",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "arjun.nair@sit.edu.in",
+      "email_confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "phone": "",
+      "confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "app_metadata": {
+        "provider": "email",
+        "providers": [
+          "email"
+        ]
+      },
+      "user_metadata": {
+        "name": "Arjun Nair"
+      },
+      "identities": null,
+      "created_at": "2026-08-25T18:13:46.343638Z",
+      "updated_at": "2026-08-25T18:13:46.343638Z",
+      "is_anonymous": false
+    },
+    {
+      "id": "92694fa4-0000-0000-0000-000000000000",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "kavya.joshi@sit.edu.in",
+      "email_confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "phone": "",
+      "confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "app_metadata": {
+        "provider": "email",
+        "providers": [
+          "email"
+        ]
+      },
+      "user_metadata": {
+        "name": "Kavya Joshi"
+      },
+      "identities": null,
+      "created_at": "2026-08-25T18:13:46.343638Z",
+      "updated_at": "2026-08-25T18:13:46.343638Z",
+      "is_anonymous": false
+    },
+    {
+      "id": "7b26624a-0000-0000-0000-000000000000",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "rajesh.kumar@sit.edu.in",
+      "email_confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "phone": "",
+      "confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "app_metadata": {
+        "provider": "email",
+        "providers": [
+          "email"
+        ]
+      },
+      "user_metadata": {
+        "name": "Prof. Rajesh Kumar"
+      },
+      "identities": null,
+      "created_at": "2026-08-25T18:13:46.343638Z",
+      "updated_at": "2026-08-25T18:13:46.343638Z",
+      "is_anonymous": false
+    },
+    {
+      "id": "7b26624b-0000-0000-0000-000000000000",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "sunita.verma@sit.edu.in",
+      "email_confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "phone": "",
+      "confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "app_metadata": {
+        "provider": "email",
+        "providers": [
+          "email"
+        ]
+      },
+      "user_metadata": {
+        "name": "Dr. Sunita Verma"
+      },
+      "identities": null,
+      "created_at": "2026-08-25T18:13:46.343638Z",
+      "updated_at": "2026-08-25T18:13:46.343638Z",
+      "is_anonymous": false
+    },
+    {
+      "id": "7b266249-0000-0000-0000-000000000000",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "priya.mehta@sit.edu.in",
+      "email_confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "phone": "",
+      "confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "last_sign_in_at": "2026-10-05T05:23:20.180589Z",
+      "app_metadata": {
+        "provider": "email",
+        "providers": [
+          "email"
+        ]
+      },
+      "user_metadata": {
+        "name": "Dr. Priya Mehta"
+      },
+      "identities": null,
+      "created_at": "2026-08-25T18:13:46.343638Z",
+      "updated_at": "2026-10-05T05:23:20.234488Z",
+      "is_anonymous": false
+    },
+    {
+      "id": "92694f9d-0000-0000-0000-000000000000",
+      "aud": "authenticated",
+      "role": "authenticated",
+      "email": "aarav.sharma@sit.edu.in",
+      "email_confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "phone": "",
+      "confirmed_at": "2026-08-25T18:25:47.60405Z",
+      "last_sign_in_at": "2026-10-05T05:26:07.145007Z",
+      "app_metadata": {
+        "provider": "email",
+        "providers": [
+          "email"
+        ]
+      },
+      "user_metadata": {
+        "name": "Aarav Sharma"
+      },
+      "identities": null,
+      "created_at": "2026-08-25T18:13:46.343638Z",
+      "updated_at": "2026-10-05T05:26:07.162088Z",
+      "is_anonymous": false
+    }
+  ]
+}

@@ -4,8 +4,8 @@ import React, { useState, useMemo } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { PageHeader } from '@/components/ui/page-header';
 import { EmptyState } from '@/components/ui/empty-state';
-import { fetchExams } from '@/lib/data/supabase-service';
-import { supabase } from '@/lib/supabase';
+import { fetchExams } from '@/lib/data/insforge-service';
+import { insforge } from '@/lib/insforge';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell,
@@ -41,7 +41,7 @@ function AnalyticsPageContent() {
         return;
       }
       
-      const { data: resData } = await supabase.from('results').select('*').eq('exam_id', selectedExam);
+      const { data: resData } = await insforge.from('results').select('*').eq('exam_id', selectedExam);
       const res = resData || [];
       
       if (res.length === 0) {
@@ -98,7 +98,7 @@ function AnalyticsPageContent() {
     { name: 'Failed', value: analytics.failCount },
   ] : [];
 
-  // Average score by exam (temporarily removed during Supabase migration)
+  // Average score by exam
   const avgByExam: any[] = [];
 
   return (

@@ -8,7 +8,7 @@ import { StatusBadge } from '@/components/ui/status-badge';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Search, Plus, Filter, FileText, Calendar, Clock, MapPin } from 'lucide-react';
-import { fetchExams, fetchSubjects } from '@/lib/data/supabase-service';
+import { fetchExams, fetchSubjects } from '@/lib/data/insforge-service';
 
 const tabs = [
   { label: 'All Examinations', value: 'all' },

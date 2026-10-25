@@ -1,15 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder';
-
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-  }
-});
+import { insforgeAdmin } from '@/lib/insforge';
 
 export async function POST(request: Request) {
   try {
@@ -20,7 +10,7 @@ export async function POST(request: Request) {
     }
 
     // Fetch all students to notify them
-    const { data: students, error: studentError } = await supabaseAdmin
+    const { data: students, error: studentError } = await insforgeAdmin
       .from('users')
       .select('id')
       .eq('role', 'student');
@@ -38,7 +28,7 @@ export async function POST(request: Request) {
       message: `Your exam "${examTitle}" has been scheduled for ${date}.`,
       type: 'system',
       is_read: false,
-      link: '/exams'
+      link: '/exams',
     });
 
     // Notifications for Students
@@ -50,12 +40,12 @@ export async function POST(request: Request) {
           message: `A new exam "${examTitle}" has been scheduled for ${date}.`,
           type: 'exam-scheduled',
           is_read: false,
-          link: `/exams/${examId || ''}`
+          link: `/exams/${examId || ''}`,
         });
       });
     }
 
-    const { error: insertError } = await supabaseAdmin
+    const { error: insertError } = await insforgeAdmin
       .from('notifications')
       .insert(notifications);
 

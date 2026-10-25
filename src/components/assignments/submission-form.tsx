@@ -8,7 +8,7 @@ import {
   uploadAssignmentFile,
   updateSubmissionEvaluation,
   updateSubmissionStatus,
-} from '@/lib/data/supabase-service';
+} from '@/lib/data/insforge-service';
 import { EvaluationResult } from './evaluation-result';
 import { FileText, Image as ImageIcon, Type, Upload, X, CheckCircle } from 'lucide-react';
 
@@ -121,7 +121,7 @@ export function SubmissionForm({ assignment, existingSubmission, onSubmissionUpd
           setSubmitting(false);
           return;
         }
-        // Upload file to Supabase Storage
+        // Upload file to InsForge Storage
         const url = await uploadAssignmentFile(selectedFile, assignment.id, user.id);
         if (!url) {
           alert('Failed to upload file. Please try again.');

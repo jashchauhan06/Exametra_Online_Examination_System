@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { insforge } from '@/lib/insforge';
 import './Auth.css';
 
 export default function ResetPassword() {
@@ -14,20 +14,28 @@ export default function ResetPassword() {
   const [isReady, setIsReady] = useState(false);
   const router = useRouter();
 
-  // Wait for Supabase to process the recovery token from the URL
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: any) => {
-      if (event === 'PASSWORD_RECOVERY') {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token') || urlParams.get('otp');
+      if (token) {
+        setIsReady(true);
+      }
+    }
+
+    const unsubscribe = insforge.auth.onAuthStateChange((event: any) => {
+      if (event?.session || event === 'PASSWORD_RECOVERY') {
         setIsReady(true);
       }
     });
 
-    // Also check if already in a recovery session
-    supabase.auth.getSession().then(({ data: { session } }: any) => {
-      if (session) setIsReady(true);
+    insforge.auth.getCurrentUser().then(({ data }: any) => {
+      if (data?.user) setIsReady(true);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      if (typeof unsubscribe === 'function') unsubscribe();
+    };
   }, []);
 
   const handleReset = async (e: React.FormEvent) => {
@@ -47,19 +55,27 @@ export default function ResetPassword() {
 
     setIsLoading(true);
 
-    const { error: updateError } = await supabase.auth.updateUser({
-      password: newPassword,
-    });
+    const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+    const token = urlParams?.get('token') || urlParams?.get('otp') || '';
+
+    let updateError: any = null;
+    if (token) {
+      const res = await insforge.auth.resetPassword({ newPassword, otp: token });
+      updateError = res.error;
+    } else {
+      const res = await insforge.auth.resetPassword({ newPassword, otp: '' });
+      updateError = res.error;
+    }
 
     setIsLoading(false);
 
     if (updateError) {
-      setError(updateError.message);
+      setError(updateError.message || 'Failed to reset password');
       return;
     }
 
     setMessage('Password updated successfully! Redirecting to login...');
-    await supabase.auth.signOut();
+    await insforge.auth.signOut();
     setTimeout(() => router.push('/login'), 2500);
   };
 

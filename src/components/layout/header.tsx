@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Bell } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { insforge } from '@/lib/insforge';
 import type { Notification as AppNotification } from '@/types';
 
 const pathLabels: Record<string, string> = {
@@ -30,13 +30,17 @@ export function Header() {
     if (!user) return;
 
     const loadUnread = async () => {
-      const { data, count } = await supabase
-        .from('notifications')
-        .select('*', { count: 'exact', head: true })
-        .eq('user_id', user.id)
-        .eq('is_read', false);
-      
-      setUnreadCount(count || 0);
+      try {
+        const { count } = await insforge
+          .from('notifications')
+          .select('*', { count: 'exact', head: true })
+          .eq('user_id', user.id)
+          .eq('is_read', false);
+        
+        setUnreadCount(count || 0);
+      } catch (err) {
+        console.error('Failed to load unread notifications:', err);
+      }
     };
 
     loadUnread();
@@ -45,22 +49,12 @@ export function Header() {
     const handleLocalUpdate = () => loadUnread();
     window.addEventListener('notifications_read', handleLocalUpdate);
     
-    // Set up realtime subscription for notifications
-    const channel = supabase
-      .channel('notifications_header_channel')
-      .on('postgres_changes', { 
-        event: '*', 
-        schema: 'public', 
-        table: 'notifications',
-        filter: `user_id=eq.${user.id}`
-      }, () => {
-        loadUnread();
-      })
-      .subscribe();
+    // Periodic refresh
+    const interval = setInterval(loadUnread, 15000);
 
     return () => {
       window.removeEventListener('notifications_read', handleLocalUpdate);
-      supabase.removeChannel(channel);
+      clearInterval(interval);
     };
   }, [user]);
 

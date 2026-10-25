@@ -9,7 +9,7 @@ import { StatusBadge } from '@/components/ui/status-badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { ArrowLeft, Calendar, Clock, FileText, User, Award, Target, CheckCircle2, RotateCcw, Shield, AlertTriangle, Trash2 } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { insforge } from '@/lib/insforge';
 import { getDynamicExamStatus } from '@/lib/utils/exam-status';
 
 export default function ExamDetailPage() {
@@ -73,21 +73,21 @@ export default function ExamDetailPage() {
     async function loadExam() {
       setLoading(true);
       const examId = params.id as string;
-      const { data: examData } = await supabase.from('exams').select('*').eq('id', examId).single();
+      const { data: examData } = await insforge.from('exams').select('*').eq('id', examId).single();
       
       if (examData) {
         examData.status = getDynamicExamStatus(examData);
         setExam(examData);
-        const { data: subData } = await supabase.from('subjects').select('*').eq('id', examData.subject_id).single();
+        const { data: subData } = await insforge.from('subjects').select('*').eq('id', examData.subject_id).single();
         setSubject(subData);
         
         if (examData.faculty_id) {
-          const { data: facData } = await supabase.from('users').select('*').eq('id', examData.faculty_id).single();
+          const { data: facData } = await insforge.from('users').select('*').eq('id', examData.faculty_id).single();
           setFaculty(facData);
         }
 
         if (user?.role === 'student') {
-          const { data: attData } = await supabase.from('exam_attempts')
+          const { data: attData } = await insforge.from('exam_attempts')
             .select('*')
             .eq('exam_id', examId)
             .eq('student_id', user.id)
@@ -100,7 +100,7 @@ export default function ExamDetailPage() {
 
         // Faculty/admin: load all student attempts for this exam
         if (user?.role === 'faculty' || user?.role === 'admin') {
-          const { data: attData } = await supabase.from('exam_attempts')
+          const { data: attData } = await insforge.from('exam_attempts')
             .select('*')
             .eq('exam_id', examId)
             .order('started_at', { ascending: false });
@@ -110,14 +110,14 @@ export default function ExamDetailPage() {
           // Load student profiles for the attempts
           if (attData && attData.length > 0) {
             const studentIds = [...new Set(attData.map(a => a.student_id))];
-            const { data: students } = await supabase.from('users').select('*').in('id', studentIds);
+            const { data: students } = await insforge.from('users').select('*').in('id', studentIds);
             const studentMap: Record<string, any> = {};
             (students || []).forEach(s => { studentMap[s.id] = s; });
             setAttemptStudents(studentMap);
 
             // Load results for these attempts
             const attemptIds = attData.map(a => a.id);
-            const { data: results } = await supabase.from('results').select('*').in('attempt_id', attemptIds);
+            const { data: results } = await insforge.from('results').select('*').in('attempt_id', attemptIds);
             const resultMap: Record<string, any> = {};
             (results || []).forEach(r => { resultMap[r.attempt_id] = r; });
             setAttemptResults(resultMap);
@@ -138,11 +138,11 @@ export default function ExamDetailPage() {
     // Delete only the result (grade) — keep the attempt record
     const studentAttempts = allAttempts.filter(a => a.student_id === studentId);
     for (const att of studentAttempts) {
-      await supabase.from('results').delete().eq('attempt_id', att.id);
+      await insforge.from('results').delete().eq('attempt_id', att.id);
     }
     
     // Reset the attempt status back to 'in-progress' so student can continue
-    await supabase.from('exam_attempts').update({
+    await insforge.from('exam_attempts').update({
       status: 'in-progress',
       submitted_at: null,
       is_violation: false,
@@ -168,7 +168,7 @@ export default function ExamDetailPage() {
 
   const handleDeleteExam = async () => {
     if (!exam) return;
-    const { error } = await supabase.from('exams').delete().eq('id', exam.id);
+    const { error } = await insforge.from('exams').delete().eq('id', exam.id);
     if (error) {
       addToast('Failed to delete exam.', 'error');
     } else {

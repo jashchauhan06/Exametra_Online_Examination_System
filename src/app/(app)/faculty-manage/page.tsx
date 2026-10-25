@@ -7,11 +7,11 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { useToast } from '@/components/ui/toast';
 import { Search, UserPlus } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { insforge } from '@/lib/insforge';
 import { useAuth } from '@/lib/auth-context';
 import { CreateUserModal } from '@/components/admin/CreateUserModal';
 import { AssignSubjectsModal } from '@/components/admin/AssignSubjectsModal';
-import { fetchSubjects } from '@/lib/data/supabase-service';
+import { fetchSubjects } from '@/lib/data/insforge-service';
 
 export default function FacultyManagePage() {
   const { user } = useAuth();
@@ -30,7 +30,7 @@ export default function FacultyManagePage() {
     async function loadData() {
       setLoading(true);
       const [facRes, subRes] = await Promise.all([
-        supabase.from('users').select('*').eq('role', 'faculty'),
+        insforge.from('users').select('*').eq('role', 'faculty'),
         fetchSubjects()
       ]);
       setFacultyList(facRes.data || []);
@@ -48,7 +48,7 @@ export default function FacultyManagePage() {
   const handleToggleStatus = async () => {
     if (!confirmAction) return;
     const isActive = confirmAction.action === 'enable';
-    const { error } = await supabase.from('users').update({ is_active: isActive }).eq('id', confirmAction.id);
+    const { error } = await insforge.from('users').update({ is_active: isActive }).eq('id', confirmAction.id);
     
     if (error) {
       addToast('Failed to update faculty status.', 'error');

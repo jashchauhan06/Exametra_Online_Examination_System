@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, UserPlus, AlertTriangle } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { insforge } from '@/lib/insforge';
 
 interface CreateUserModalProps {
   isOpen: boolean;
@@ -60,13 +60,14 @@ export function CreateUserModal({ isOpen, onClose, onSuccess }: CreateUserModalP
     setLoading(true);
     
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: authData } = await insforge.auth.getCurrentUser();
+      const token = authData?.user?.id || '';
       
       const res = await fetch('/api/admin/create-user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': session ? `Bearer ${session.access_token}` : ''
+          'Authorization': token ? `Bearer ${token}` : ''
         },
         body: JSON.stringify({ name, email, password, role, department })
       });

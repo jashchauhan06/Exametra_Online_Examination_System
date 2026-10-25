@@ -1,19 +1,20 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@insforge/sdk';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const insforgeUrl = process.env.NEXT_PUBLIC_INSFORGE_URL || 'https://kbia4qk4.us-east.insforge.app';
+const insforgeAnonKey = process.env.NEXT_PUBLIC_INSFORGE_ANON_KEY || 'anon_1e12622464e5a267950bec5a052a0c8aaf1e58dee257f6f8b4d20836d60b3b92';
 
-const supabase = createClient(supabaseUrl!, supabaseServiceKey!, {
-  auth: { autoRefreshToken: false, persistSession: false }
+const insforge = createClient({
+  baseUrl: insforgeUrl,
+  anonKey: insforgeAnonKey,
 });
 
 async function checkPublicUsers() {
-  const { data, error } = await supabase.from('users').select('*');
+  const { data, error } = await insforge.database.from('users').select('*');
   if (error) {
     console.error('Error fetching public.users:', error.message);
   } else {
-    console.log(`Found ${data.length} users in public.users`);
-    if (data.length > 0) {
+    console.log(`Found ${data?.length} users in public.users`);
+    if (data && data.length > 0) {
       console.log('Sample user:', data[0]);
     }
   }

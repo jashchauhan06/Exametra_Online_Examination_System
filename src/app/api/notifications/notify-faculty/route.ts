@@ -1,15 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder';
-
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-  }
-});
+import { insforgeAdmin } from '@/lib/insforge';
 
 export async function POST(request: Request) {
   try {
@@ -19,15 +9,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing parameters' }, { status: 400 });
     }
 
-    const { error } = await supabaseAdmin
+    const { error } = await insforgeAdmin
       .from('notifications')
-      .insert({
+      .insert([{
         user_id: facultyId,
         title,
         message,
         type: type || 'exam-violation',
-        is_read: false
-      });
+        is_read: false,
+      }]);
       
     if (error) throw error;
     

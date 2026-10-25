@@ -12,7 +12,7 @@ import type { QuestionType, Difficulty, ExamSettings, Faculty } from '@/types';
 import AiButton from '@/components/animata/button/ai-button';
 import { AiQuestionDialog } from '@/components/admin/AiQuestionDialog';
 
-import { supabase } from '@/lib/supabase';
+import { insforge } from '@/lib/insforge';
 
 const steps = ['Details', 'Questions', 'Settings', 'Review'];
 
@@ -30,7 +30,7 @@ export default function CreateExamPage() {
       if (!user) return;
       setIsLoadingData(true);
       
-      let subjectQuery = supabase.from('subjects').select('*');
+      let subjectQuery = insforge.from('subjects').select('*');
       if (user.role === 'faculty') {
         const facultyUser = user as Faculty;
         const teachingSubjects = facultyUser.subjects || [];
@@ -45,13 +45,13 @@ export default function CreateExamPage() {
       
       // Fallback: If faculty has no subjects assigned yet in the DB, show all for demo
       if (user.role === 'faculty' && (!subData || subData.length === 0)) {
-        const { data: allSub } = await supabase.from('subjects').select('*');
+        const { data: allSub } = await insforge.from('subjects').select('*');
         setSubjects(allSub || []);
       } else {
         setSubjects(subData || []);
       }
       
-      const { data: qData } = await supabase.from('questions').select('*');
+      const { data: qData } = await insforge.from('questions').select('*');
       setAllQuestions(qData || []);
       
       setIsLoadingData(false);
@@ -154,7 +154,7 @@ export default function CreateExamPage() {
       return;
     }
 
-    const { data: newExam, error } = await supabase.from('exams').insert({
+    const { data: newExam, error } = await insforge.from('exams').insert({
       title: details.title,
       description: details.description,
       subject_id: details.subjectId,

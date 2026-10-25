@@ -1,15 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder';
-
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-  }
-});
+import { insforgeAdmin } from '@/lib/insforge';
 
 export async function POST(request: Request) {
   try {
@@ -28,7 +18,7 @@ export async function POST(request: Request) {
       link: `/assignments/${assignmentId}`
     }];
 
-    const { error: insertError } = await supabaseAdmin
+    const { error: insertError } = await insforgeAdmin
       .from('notifications')
       .insert(notifications);
 

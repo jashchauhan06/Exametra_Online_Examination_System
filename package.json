@@ -32,8 +32,8 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "@hookform/resolvers": "^5.5.7",
+    "@insforge/sdk": "^1.5.2",
     "@monaco-editor/react": "^4.7.0",
-    "@supabase/supabase-js": "^2.112.4",
     "@tailwindcss/typography": "^0.5.20",
     "@tsparticles/engine": "^4.3.2",
     "@tsparticles/react": "^4.3.2",

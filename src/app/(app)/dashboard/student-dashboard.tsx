@@ -8,7 +8,7 @@ import { StatusBadge } from '@/components/ui/status-badge';
 import { EmptyState } from '@/components/ui/empty-state';
 import {
   fetchStudentUpcomingExams, fetchStudentCompletedExams, fetchStudentResults, fetchSubjects
-} from '@/lib/data/supabase-service';
+} from '@/lib/data/insforge-service';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { Exam, Result } from '@/types';
 import {

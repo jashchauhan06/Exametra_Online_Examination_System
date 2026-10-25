@@ -28,8 +28,8 @@ export default function SettingsPage() {
 
   React.useEffect(() => {
     if (user.role === 'faculty' && facultyUser.subjects?.length > 0) {
-      import('@/lib/supabase').then(({ supabase }) => {
-        supabase.from('subjects')
+      import('@/lib/insforge').then(({ insforge }) => {
+        insforge.from('subjects')
           .select('id, name')
           .in('id', facultyUser.subjects)
           .then(({ data }) => {

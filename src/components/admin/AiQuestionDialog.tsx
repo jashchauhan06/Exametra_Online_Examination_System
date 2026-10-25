@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Trash2 } from 'lucide-react';
 import { useToast } from '@/components/ui/toast';
-import { supabase } from '@/lib/supabase';
+import { insforge } from '@/lib/insforge';
 
 interface AiQuestionDialogProps {
   isOpen: boolean;
@@ -71,7 +71,7 @@ export function AiQuestionDialog({ isOpen, onClose, subjects, user, onSave }: Ai
       return base;
     });
     
-    const { data, error } = await supabase.from('questions').insert(inserts).select();
+    const { data, error } = await insforge.from('questions').insert(inserts).select();
     if (error) {
       addToast('Failed to save AI questions.', 'error');
       console.error(error);

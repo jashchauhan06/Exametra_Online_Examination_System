@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Check } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { insforge } from '@/lib/insforge';
 import { useToast } from '@/components/ui/toast';
-import { fetchSubjects } from '@/lib/data/supabase-service';
+import { fetchSubjects } from '@/lib/data/insforge-service';
 
 interface AssignSubjectsModalProps {
   isOpen: boolean;
@@ -51,7 +51,7 @@ export function AssignSubjectsModal({ isOpen, onClose, facultyId, facultyName, i
       const removed = (initialAssignedSubjectIds || []).filter(id => !selectedIds.has(id));
 
       // 3. Update the users table (teaching_subjects array)
-      const { error: errUser } = await supabase.from('users')
+      const { error: errUser } = await insforge.from('users')
         .update({ teaching_subjects: newSelectedArray })
         .eq('id', facultyId);
       

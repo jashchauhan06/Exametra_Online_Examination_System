@@ -9,8 +9,8 @@ import { EmptyState } from '@/components/ui/empty-state';
 import { BarChart3, Filter } from 'lucide-react';
 import {
   fetchStudentResults, fetchExams
-} from '@/lib/data/supabase-service';
-import { supabase } from '@/lib/supabase';
+} from '@/lib/data/insforge-service';
+import { insforge } from '@/lib/insforge';
 import { MetricStrip, MetricItem } from '@/components/ui/stat-card';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -35,7 +35,7 @@ function StudentResults({ userId }: { userId: string }) {
       
       const uniqueExamIds = [...new Set(res.map((r: any) => r.exam_id || r.examId))];
       if (uniqueExamIds.length > 0) {
-        const { data: examsData } = await supabase.from('exams').select('*').in('id', uniqueExamIds);
+        const { data: examsData } = await insforge.from('exams').select('*').in('id', uniqueExamIds);
         if (examsData) {
           const map: Record<string, any> = {};
           examsData.forEach(e => map[e.id] = e);
@@ -131,7 +131,7 @@ function FacultyResults({ userId, userRole }: { userId: string; userRole: string
       const data = await fetchExams(userRole === 'admin' ? undefined : userId);
       setExams(data);
       
-      const { data: students } = await supabase.from('users').select('*').eq('role', 'student');
+      const { data: students } = await insforge.from('users').select('*').eq('role', 'student');
       setAllStudents(students || []);
       setLoadingExams(false);
     }
@@ -146,7 +146,7 @@ function FacultyResults({ userId, userRole }: { userId: string; userRole: string
         return;
       }
       setLoadingResults(true);
-      const { data: resData } = await supabase.from('results').select('*').eq('exam_id', selectedExam);
+      const { data: resData } = await insforge.from('results').select('*').eq('exam_id', selectedExam);
       const res = resData || [];
       setExamResults(res);
       

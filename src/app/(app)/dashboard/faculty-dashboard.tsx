@@ -8,7 +8,7 @@ import { MetricStrip, MetricItem } from '@/components/ui/stat-card';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
-import { fetchFacultyDashboardData, fetchSubjects } from '@/lib/data/supabase-service';
+import { fetchFacultyDashboardData, fetchSubjects } from '@/lib/data/insforge-service';
 import type { Exam } from '@/types';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell

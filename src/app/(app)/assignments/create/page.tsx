@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
-import { createAssignment, fetchSubjects } from '@/lib/data/supabase-service';
+import { createAssignment, fetchSubjects } from '@/lib/data/insforge-service';
 import type { SubmissionType } from '@/types';
 import { ArrowLeft, Save, FileText, Image as ImageIcon, Type } from 'lucide-react';
 import Link from 'next/link';
@@ -84,7 +84,7 @@ export default function CreateAssignmentPage() {
 
       if (result) {
         if (attachmentFile) {
-          const { uploadTeacherAttachment, updateAssignment } = await import('@/lib/data/supabase-service');
+          const { uploadTeacherAttachment, updateAssignment } = await import('@/lib/data/insforge-service');
           const uploadRes = await uploadTeacherAttachment(attachmentFile, result.id);
           if (uploadRes) {
             await updateAssignment(result.id, { 

@@ -9,8 +9,8 @@ import { EmptyState } from '@/components/ui/empty-state';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { useToast } from '@/components/ui/toast';
 import { Search, Plus, BookOpen, Trash2, X, Code2 } from 'lucide-react';
-import { fetchQuestions, fetchSubjects } from '@/lib/data/supabase-service';
-import { supabase } from '@/lib/supabase';
+import { fetchQuestions, fetchSubjects } from '@/lib/data/insforge-service';
+import { insforge } from '@/lib/insforge';
 import { useAuth } from '@/lib/auth-context';
 import type { QuestionType, Difficulty, QuestionOption, TestCase, CodingLanguage } from '@/types';
 import AiButton from '@/components/animata/button/ai-button';
@@ -129,7 +129,7 @@ export default function QuestionBankPage() {
 
       return base;
     });
-    const { data, error } = await supabase.from('questions').insert(inserts).select();
+    const { data, error } = await insforge.from('questions').insert(inserts).select();
     if (error) {
       addToast('Failed to save AI questions.', 'error');
       console.error(error);
@@ -185,7 +185,7 @@ export default function QuestionBankPage() {
 
   const handleDeleteSelected = async () => {
     const idsToDelete = Array.from(selected);
-    const { error } = await supabase.from('questions').delete().in('id', idsToDelete);
+    const { error } = await insforge.from('questions').delete().in('id', idsToDelete);
     if (error) {
       addToast('Failed to delete questions.', 'error');
       return;
@@ -237,7 +237,7 @@ export default function QuestionBankPage() {
     } else {
       insertData.options = newQ.options;
     }
-    const { data, error } = await supabase.from('questions').insert(insertData).select().single();
+    const { data, error } = await insforge.from('questions').insert(insertData).select().single();
 
     if (error) {
       addToast('Failed to create question.', 'error');

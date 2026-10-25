@@ -6,7 +6,7 @@ import type { User } from '@/types';
 import { ChevronRight } from 'lucide-react';
 import { MetricStrip, MetricItem } from '@/components/ui/stat-card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { fetchPlatformStats } from '@/lib/data/supabase-service';
+import { fetchPlatformStats } from '@/lib/data/insforge-service';
 import { CreateUserModal } from '@/components/admin/CreateUserModal';
 import { UserPlus } from 'lucide-react';
 import { useToast } from '@/components/ui/toast';

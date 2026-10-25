@@ -5,7 +5,7 @@ import { useAuth } from '@/lib/auth-context';
 import { PageHeader } from '@/components/ui/page-header';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Bell, Calendar, FileText, AlertCircle, CheckCircle2, XCircle } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { insforge } from '@/lib/insforge';
 import type { NotificationType, Notification as AppNotification } from '@/types';
 
 const typeIcons: Record<NotificationType, typeof Bell> = {
@@ -36,39 +36,33 @@ export default function NotificationsPage() {
     if (!user) return;
     
     const loadNotifications = async () => {
-      const { data } = await supabase
-        .from('notifications')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-        
-      if (data) {
-        const mapped = data.map(n => ({
-          ...n,
-          userId: n.user_id,
-          isRead: n.is_read,
-          createdAt: n.created_at,
-        })) as AppNotification[];
-        setNotifications(mapped);
+      try {
+        const { data } = await insforge
+          .from('notifications')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false });
+          
+        if (data) {
+          const mapped = data.map(n => ({
+            ...n,
+            userId: n.user_id,
+            isRead: n.is_read,
+            createdAt: n.created_at,
+          })) as AppNotification[];
+          setNotifications(mapped);
+        }
+      } catch (err) {
+        console.error('Failed to load notifications:', err);
       }
     };
 
     loadNotifications();
     
-    const channel = supabase
-      .channel('notifications_page_channel')
-      .on('postgres_changes', { 
-        event: '*', 
-        schema: 'public', 
-        table: 'notifications',
-        filter: `user_id=eq.${user.id}`
-      }, () => {
-        loadNotifications();
-      })
-      .subscribe();
+    const interval = setInterval(loadNotifications, 15000);
       
     return () => {
-      supabase.removeChannel(channel);
+      clearInterval(interval);
     };
   }, [user]);
 

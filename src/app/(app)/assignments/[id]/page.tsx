@@ -11,7 +11,7 @@ import {
   fetchSubjects,
   deleteAssignment,
   updateAssignment,
-} from '@/lib/data/supabase-service';
+} from '@/lib/data/insforge-service';
 import type { Assignment, AssignmentSubmission } from '@/types';
 import { SubmissionForm } from '@/components/assignments/submission-form';
 import { EvaluationResult } from '@/components/assignments/evaluation-result';

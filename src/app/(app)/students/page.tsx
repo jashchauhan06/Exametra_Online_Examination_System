@@ -7,7 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { useToast } from '@/components/ui/toast';
 import { Search, UserPlus } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { insforge } from '@/lib/insforge';
 import { useAuth } from '@/lib/auth-context';
 import { CreateUserModal } from '@/components/admin/CreateUserModal';
 
@@ -26,7 +26,7 @@ export default function StudentsPage() {
   React.useEffect(() => {
     async function loadStudents() {
       setLoading(true);
-      const { data } = await supabase.from('users').select('*').eq('role', 'student');
+      const { data } = await insforge.from('users').select('*').eq('role', 'student');
       setStudents(data || []);
       setLoading(false);
     }
@@ -45,7 +45,7 @@ export default function StudentsPage() {
     if (!confirmAction) return;
     const isActive = confirmAction.action === 'enable';
     
-    const { error } = await supabase.from('users').update({ is_active: isActive }).eq('id', confirmAction.id);
+    const { error } = await insforge.from('users').update({ is_active: isActive }).eq('id', confirmAction.id);
     
     if (error) {
       addToast('Failed to update student status.', 'error');
