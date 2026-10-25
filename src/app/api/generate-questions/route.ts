@@ -110,21 +110,39 @@ ${typeInstruction}
 CRITICAL RULES:
 1. Every generated question MUST strictly belong to the subject "${subject}" and focus on "${topic}".
 2. Do not include questions from unrelated subjects.
-3. Return ONLY a valid JSON array of questions, adhering to the format specified above without markdown code blocks.`;
+3. Return ONLY a valid JSON object matching:
+{
+  "questions": [
+    // array of questions formatted above
+  ]
+}`;
 
     const responseText = await callAI({
-      systemPrompt: 'You are an expert academic exam author. You return strictly a JSON array of questions.',
+      systemPrompt: 'You are an expert academic exam author. You return strictly a JSON object with a "questions" array.',
       prompt,
       jsonMode: true,
     });
 
-    let questions = extractJsonFromResponse<any[]>(responseText);
-    if (!Array.isArray(questions)) {
-      if ((questions as any).questions && Array.isArray((questions as any).questions)) {
-        questions = (questions as any).questions;
+    const parsed = extractJsonFromResponse<any>(responseText);
+    let questions: any[] = [];
+
+    if (Array.isArray(parsed)) {
+      questions = parsed;
+    } else if (parsed && typeof parsed === 'object') {
+      if (Array.isArray(parsed.questions)) {
+        questions = parsed.questions;
       } else {
-        throw new Error('LLM did not return an array of questions');
+        const foundArray = Object.values(parsed).find(v => Array.isArray(v));
+        if (foundArray) {
+          questions = foundArray as any[];
+        } else if (parsed.text) {
+          questions = [parsed];
+        }
       }
+    }
+
+    if (!questions || questions.length === 0) {
+      throw new Error('LLM did not return any valid questions');
     }
 
     return NextResponse.json({ questions });

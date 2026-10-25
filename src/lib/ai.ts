@@ -39,10 +39,10 @@ export async function callAI(options: AIMessageOptions): Promise<string> {
     throw new Error('Neither OPENROUTER_API_KEY nor GEMINI_API_KEY is configured.');
   }
 
-  // ── 1. Preferred: OpenRouter (google/gemma-4-26b-a4b-it:free) ──
+  // ── 1. Preferred: OpenRouter (nvidia/nemotron-3-ultra-550b-a55b:free) ──
   if (openRouterKey) {
     try {
-      const model = process.env.OPENROUTER_MODEL || 'google/gemma-4-26b-a4b-it:free';
+      const model = process.env.OPENROUTER_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b:free';
       
       const messages: any[] = [];
       if (options.systemPrompt) {
@@ -90,8 +90,9 @@ export async function callAI(options: AIMessageOptions): Promise<string> {
         }
       } else {
         const data = await res.json();
-        const content = data.choices?.[0]?.message?.content;
-        if (content) return content.trim();
+        const msg = data.choices?.[0]?.message;
+        const content = msg?.content || msg?.text || msg?.reasoning;
+        if (content) return String(content).trim();
         throw new Error('Empty response from OpenRouter');
       }
     } catch (openRouterErr: any) {
