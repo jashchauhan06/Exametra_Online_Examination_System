@@ -45,8 +45,15 @@ export function Header() {
 
     loadUnread();
     
-    // Listen to local events
-    const handleLocalUpdate = () => loadUnread();
+    // Listen to local events for instantaneous zero-latency badge update
+    const handleLocalUpdate = (e: Event) => {
+      const custom = e as CustomEvent<{ count?: number }>;
+      if (custom.detail && typeof custom.detail.count === 'number') {
+        setUnreadCount(custom.detail.count);
+      } else {
+        loadUnread();
+      }
+    };
     window.addEventListener('notifications_read', handleLocalUpdate);
     
     // Periodic refresh

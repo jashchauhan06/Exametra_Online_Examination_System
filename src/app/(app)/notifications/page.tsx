@@ -71,23 +71,39 @@ export default function NotificationsPage() {
   const unreadCount = notifications.filter(n => !n.isRead).length;
 
   const handleMarkRead = async (id: string) => {
-    setNotifications(prev => prev.map(n => n.id === id ? { ...n, isRead: true } : n));
-    window.dispatchEvent(new Event('notifications_read'));
-    await fetch('/api/notifications/mark-read', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id }),
+    // Optimistically update notifications list and immediately update header badge
+    setNotifications(prev => {
+      const next = prev.map(n => n.id === id ? { ...n, isRead: true } : n);
+      const remainingUnread = next.filter(n => !n.isRead).length;
+      window.dispatchEvent(new CustomEvent('notifications_read', { detail: { count: remainingUnread } }));
+      return next;
     });
+
+    try {
+      await fetch('/api/notifications/mark-read', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+    } catch (err) {
+      console.error('Failed to mark notification as read:', err);
+    }
   };
 
   const handleMarkAllRead = async () => {
+    // Optimistically update notifications list and immediately zero out header badge
     setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
-    window.dispatchEvent(new Event('notifications_read'));
-    await fetch('/api/notifications/mark-read', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ all: true, userId: user.id }),
-    });
+    window.dispatchEvent(new CustomEvent('notifications_read', { detail: { count: 0 } }));
+
+    try {
+      await fetch('/api/notifications/mark-read', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ all: true, userId: user.id }),
+      });
+    } catch (err) {
+      console.error('Failed to mark all notifications as read:', err);
+    }
   };
 
   return (
