@@ -125,6 +125,12 @@ export default function ExamTakePage() {
 
   // Anti-Cheat: Screen Obfuscation & Screenshot Blocking
   const [isWindowFocused, setIsWindowFocused] = useState(true);
+  const isCopyPasteAllowed = Boolean(
+    exam?.settings?.allowCopyPaste ||
+    user?.role === 'admin' ||
+    (typeof window !== 'undefined' && localStorage.getItem('exametra_admin_allow_copy_paste') === 'true')
+  );
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Block PrintScreen key
@@ -141,10 +147,15 @@ export default function ExamTakePage() {
         triggerViolation("Screenshots are strictly prohibited.");
       }
 
-      // Block Copy/Paste/Print
-      if ((e.metaKey || e.ctrlKey) && ['c', 'v', 'p', 'C', 'V', 'P'].includes(e.key)) {
-        e.preventDefault();
-        addToast("Action not allowed during exam", "error");
+      // Block Copy/Paste/Print unless allowed
+      if ((e.metaKey || e.ctrlKey)) {
+        if (['p', 'P'].includes(e.key)) {
+          e.preventDefault();
+          addToast("Printing is not allowed during exam", "error");
+        } else if (['c', 'v', 'C', 'V'].includes(e.key) && !isCopyPasteAllowed) {
+          e.preventDefault();
+          addToast("Copy and paste is not allowed during exam", "error");
+        }
       }
     };
 
@@ -157,8 +168,12 @@ export default function ExamTakePage() {
       setIsWindowFocused(true);
     };
 
-    // Block right click
-    const handleContextMenu = (e: MouseEvent) => e.preventDefault();
+    // Block right click if copy/paste not allowed
+    const handleContextMenu = (e: MouseEvent) => {
+      if (!isCopyPasteAllowed) {
+        e.preventDefault();
+      }
+    };
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('blur', handleBlur);
@@ -171,7 +186,7 @@ export default function ExamTakePage() {
       window.removeEventListener('focus', handleFocus);
       window.removeEventListener('contextmenu', handleContextMenu);
     };
-  }, [triggerViolation, addToast]);
+  }, [triggerViolation, addToast, isCopyPasteAllowed]);
 
   // Initialize exam
   useEffect(() => {
@@ -1099,8 +1114,10 @@ export default function ExamTakePage() {
                   rows={8}
                   className="w-full px-4 py-3 text-[15px] bg-surface border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary resize-y"
                   onPaste={(e) => {
-                    e.preventDefault();
-                    addToast('Pasting is not allowed during the exam.', 'error');
+                    if (!isCopyPasteAllowed) {
+                      e.preventDefault();
+                      addToast('Pasting is not allowed during the exam.', 'error');
+                    }
                   }}
                 />
               </div>

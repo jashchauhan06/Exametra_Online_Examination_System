@@ -16,6 +16,12 @@ export default function SettingsPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [examReminders, setExamReminders] = useState(true);
+  const [adminAllowCopyPaste, setAdminAllowCopyPaste] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('exametra_admin_allow_copy_paste') === 'true';
+    }
+    return false;
+  });
   const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'preferences'>('profile');
 
   if (!user) return null;
@@ -56,7 +62,10 @@ export default function SettingsPage() {
   };
 
   const handleSavePreferences = () => {
-    addToast('Preferences saved.', 'success');
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('exametra_admin_allow_copy_paste', String(adminAllowCopyPaste));
+    }
+    addToast('Preferences saved successfully.', 'success');
   };
 
   const initials = user.name.split(' ').map(n => n[0]).join('').slice(0, 2);
@@ -260,6 +269,28 @@ export default function SettingsPage() {
                       onClick={(e) => { e.preventDefault(); setExamReminders(!examReminders); }}
                     />
                   </label>
+
+                  {user.role === 'admin' && (
+                    <>
+                      <div style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }} />
+
+                      <label className="flex items-start justify-between cursor-pointer group">
+                        <div>
+                          <div className="text-[14px] font-medium text-[#18181B] mb-0.5 group-hover:text-[#6366F1] transition-colors flex items-center gap-2">
+                            <span>Allow Copy & Paste During Exams</span>
+                            <span className="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">Admin Override</span>
+                          </div>
+                          <div className="text-[13px] text-[#71717A]">
+                            Permit examinees to copy and paste text during exams. When disabled, copy-paste is blocked unless enabled on individual exams.
+                          </div>
+                        </div>
+                        <div
+                          className={`toggle-switch mt-1 ${adminAllowCopyPaste ? 'active' : ''}`}
+                          onClick={(e) => { e.preventDefault(); setAdminAllowCopyPaste(!adminAllowCopyPaste); }}
+                        />
+                      </label>
+                    </>
+                  )}
 
                   <div className="pt-2">
                     <button onClick={handleSavePreferences} className="btn-solid-secondary">

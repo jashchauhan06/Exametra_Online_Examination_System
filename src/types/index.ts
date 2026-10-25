@@ -137,6 +137,7 @@ export interface ExamSettings {
   enableNegativeMarking: boolean;
   autoSubmitOnTimeEnd: boolean;
   negativeMarkPercentage: number; // e.g., 25 means 25% of question marks
+  allowCopyPaste?: boolean; // When true, allows clipboard copy and paste during the exam
 }
 
 export type AttemptStatus = 'in-progress' | 'submitted' | 'evaluated' | 'timed-out';

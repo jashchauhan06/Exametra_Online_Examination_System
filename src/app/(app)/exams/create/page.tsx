@@ -79,6 +79,7 @@ export default function CreateExamPage() {
     showResultImmediately: true, allowAnswerReview: true,
     enableNegativeMarking: false, autoSubmitOnTimeEnd: true,
     negativeMarkPercentage: 25,
+    allowCopyPaste: false,
   });
   const [attemptsAllowed, setAttemptsAllowed] = useState(1);
   const [isDraftLoaded, setIsDraftLoaded] = useState(false);
@@ -454,6 +455,7 @@ export default function CreateExamPage() {
             ['allowAnswerReview', 'Allow answer review', 'Let students review correct answers after submission'],
             ['enableNegativeMarking', 'Enable negative marking', 'Deduct marks for incorrect answers'],
             ['autoSubmitOnTimeEnd', 'Auto-submit when time ends', 'Automatically submit when the timer reaches zero'],
+            ['allowCopyPaste', 'Allow Copy & Paste', 'Permit students to copy and paste text during this exam'],
           ] as const).map(([key, label, desc]) => (
             <label key={key} className="flex items-start gap-3 cursor-pointer">
               <input type="checkbox"
@@ -509,6 +511,7 @@ export default function CreateExamPage() {
               <div className="text-text-secondary">Negative Marking</div><div className="text-text">{settings.enableNegativeMarking ? `Yes (${settings.negativeMarkPercentage}%)` : 'No'}</div>
               <div className="text-text-secondary">Show Result</div><div className="text-text">{settings.showResultImmediately ? 'Immediately' : 'After review'}</div>
               <div className="text-text-secondary">Auto-submit</div><div className="text-text">{settings.autoSubmitOnTimeEnd ? 'Yes' : 'No'}</div>
+              <div className="text-text-secondary">Allow Copy/Paste</div><div className="text-text">{settings.allowCopyPaste ? 'Yes' : 'No'}</div>
             </div>
           </div>
         </div>
