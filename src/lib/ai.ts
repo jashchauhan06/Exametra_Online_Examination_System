@@ -65,10 +65,10 @@ export async function callAI(options: AIMessageOptions): Promise<string> {
     throw new Error('Neither OPENROUTER_API_KEY nor GEMINI_API_KEY is configured.');
   }
 
-  // ── 1. Preferred: OpenRouter (nvidia/nemotron-3-ultra-550b-a55b:free) ──
+  // ── 1. Preferred: OpenRouter (nvidia/nemotron-3.5-lightning:free) ──
   if (openRouterKey) {
     try {
-      const model = getEnv('OPENROUTER_MODEL') || 'nvidia/nemotron-3-ultra-550b-a55b:free';
+      const model = getEnv('OPENROUTER_MODEL') || 'nvidia/nemotron-3.5-lightning:free';
       
       const messages: any[] = [];
       if (options.systemPrompt) {

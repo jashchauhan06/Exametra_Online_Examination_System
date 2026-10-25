@@ -9,44 +9,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Topic and count are required' }, { status: 400 });
     }
 
-    // 1. Strict Curriculum & Subject Relevance Validation
-    if (subject && subject.trim() && subject.trim().toLowerCase() !== 'general knowledge') {
-      const validationPrompt = `Determine whether "${topic}" legitimately belongs to or has clear academic relevance within the curriculum and syllabus of "${subject}".
-Examples of mismatches:
-- "Topology" belongs to Computer Networks or Mathematics, NOT Database Management Systems.
-- "OSI Model" or "TCP/IP" belongs to Computer Networks, NOT Data Structures and Algorithms.
-- "Photosynthesis" belongs to Biology, NOT Computer Science.
-- "Foreign Key", "Normalization", "B+ Trees", "ACID properties" DO belong to Database Management Systems.
-
-Return ONLY a JSON object:
-{
-  "isRelevant": boolean,
-  "reason": "Detailed explanation of whether this topic belongs to ${subject} or which subject it actually belongs to"
-}`;
-
-      try {
-        const valText = await callAI({
-          systemPrompt: 'You are a strict academic curriculum and syllabus validator. Respond only with JSON.',
-          prompt: validationPrompt,
-          jsonMode: true,
-        });
-
-        const validationResult = extractJsonFromResponse<{ isRelevant: boolean; reason: string }>(valText);
-
-        if (validationResult && validationResult.isRelevant === false) {
-          return NextResponse.json(
-            {
-              error: `Topic mismatch: "${topic}" does not belong to the syllabus of "${subject}". ${validationResult.reason || 'Please enter a topic relevant to this subject.'}`
-            },
-            { status: 400 }
-          );
-        }
-      } catch (valErr: any) {
-        console.warn('Topic validation check warning:', valErr.message);
-      }
-    }
-
-    // 2. Build Generation Prompt & Schema
+    // Build Generation Prompt with integrated curriculum check
     let typeInstruction = '';
     if (type === 'mcq' || type === 'multi-select') {
       typeInstruction = `Generate ${count} ${type === 'mcq' ? 'Multiple Choice' : 'Multiple Select (multiple correct answers)'} questions.
@@ -100,32 +63,55 @@ Format for each item in the array:
 }`;
     }
 
-    const prompt = `You are an expert academic professor creating an exam for "${subject || 'General Knowledge'}".
+    const prompt = `You are an expert academic curriculum reviewer and exam question creator.
+
 Subject: ${subject || 'General Knowledge'}
 Topic / Syllabus: ${topic}
 Difficulty: ${difficulty || 'medium'} (Adjust complexity accordingly)
 
-${typeInstruction}
+TASK 1 (Curriculum Validation):
+Determine if "${topic}" legitimately belongs to or has clear academic relevance within the curriculum/syllabus of "${subject}".
+Examples of mismatches:
+- "Topology" belongs to Computer Networks or Mathematics, NOT Database Management Systems.
+- "OSI Model" or "TCP/IP" belongs to Computer Networks, NOT Data Structures and Algorithms.
+- "Photosynthesis" belongs to Biology, NOT Computer Science.
+
+IF the topic does NOT belong to "${subject}", return ONLY this JSON:
+{
+  "isRelevant": false,
+  "mismatchReason": "Explanation of which subject this topic actually belongs to instead of ${subject}"
+}
+
+IF the topic legitimately belongs to "${subject}", return this JSON:
+{
+  "isRelevant": true,
+  "questions": [
+    // ${typeInstruction}
+  ]
+}
 
 CRITICAL RULES:
 1. Every generated question MUST strictly belong to the subject "${subject}" and focus on "${topic}".
-2. Do not include questions from unrelated subjects.
-3. Return ONLY a valid JSON object matching:
-{
-  "questions": [
-    // array of questions formatted above
-  ]
-}`;
+2. Return ONLY a valid JSON object.`;
 
     const responseText = await callAI({
-      systemPrompt: 'You are an expert academic exam author. You return strictly a JSON object with a "questions" array.',
+      systemPrompt: 'You are an academic exam generator. You return strictly a JSON object.',
       prompt,
       jsonMode: true,
     });
 
     const parsed = extractJsonFromResponse<any>(responseText);
-    let questions: any[] = [];
 
+    if (parsed && parsed.isRelevant === false) {
+      return NextResponse.json(
+        {
+          error: `Topic mismatch: "${topic}" does not belong to the syllabus of "${subject}". ${parsed.mismatchReason || 'Please enter a topic relevant to this subject.'}`
+        },
+        { status: 400 }
+      );
+    }
+
+    let questions: any[] = [];
     if (Array.isArray(parsed)) {
       questions = parsed;
     } else if (parsed && typeof parsed === 'object') {
