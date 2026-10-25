@@ -27,13 +27,39 @@ export function extractJsonFromResponse<T = any>(text: string): T {
   return JSON.parse(cleaned);
 }
 
+function getEnv(key: string): string | undefined {
+  if (process.env[key]) return process.env[key];
+  if ((process.env as any)[`export ${key}`]) return (process.env as any)[`export ${key}`];
+  
+  // Runtime disk fallback if Next.js dev server was not restarted after .env edit
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const files = ['.env.local', '.env'];
+    for (const f of files) {
+      const p = path.resolve(process.cwd(), f);
+      if (fs.existsSync(p)) {
+        const content = fs.readFileSync(p, 'utf-8');
+        const match = content.match(new RegExp(`^(?:export\\s+)?${key}\\s*=\\s*["']?([^\\r\\n"']+)["']?`, 'm'));
+        if (match && match[1]) {
+          process.env[key] = match[1].trim();
+          return match[1].trim();
+        }
+      }
+    }
+  } catch (err) {
+    // Ignore in non-Node environments
+  }
+  return undefined;
+}
+
 /**
- * Executes an AI completion using OpenRouter (DeepSeek V4.1 Flash) by default if OPENROUTER_API_KEY is set,
+ * Executes an AI completion using OpenRouter by default if OPENROUTER_API_KEY is set,
  * or falls back to Google Gemini if GEMINI_API_KEY is configured.
  */
 export async function callAI(options: AIMessageOptions): Promise<string> {
-  const openRouterKey = process.env.OPENROUTER_API_KEY || (process.env as any)['export OPENROUTER_API_KEY'];
-  const geminiKey = process.env.GEMINI_API_KEY;
+  const openRouterKey = getEnv('OPENROUTER_API_KEY');
+  const geminiKey = getEnv('GEMINI_API_KEY');
 
   if (!openRouterKey && !geminiKey) {
     throw new Error('Neither OPENROUTER_API_KEY nor GEMINI_API_KEY is configured.');
@@ -42,7 +68,7 @@ export async function callAI(options: AIMessageOptions): Promise<string> {
   // ── 1. Preferred: OpenRouter (nvidia/nemotron-3-ultra-550b-a55b:free) ──
   if (openRouterKey) {
     try {
-      const model = process.env.OPENROUTER_MODEL || 'nvidia/nemotron-3-ultra-550b-a55b:free';
+      const model = getEnv('OPENROUTER_MODEL') || 'nvidia/nemotron-3-ultra-550b-a55b:free';
       
       const messages: any[] = [];
       if (options.systemPrompt) {
