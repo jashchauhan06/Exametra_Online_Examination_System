@@ -8,7 +8,7 @@ import { useToast } from '@/components/ui/toast';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
-import { ArrowLeft, Calendar, Clock, FileText, User, Award, Target, CheckCircle2, RotateCcw, Shield, AlertTriangle, Trash2 } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, FileText, User, Award, Target, CheckCircle2, RotateCcw, Shield, AlertTriangle, Trash2, Clipboard, Sliders, Eye, CheckSquare } from 'lucide-react';
 import { insforge } from '@/lib/insforge';
 import { getDynamicExamStatus } from '@/lib/utils/exam-status';
 
@@ -31,6 +31,7 @@ export default function ExamDetailPage() {
   const [resettingStudent, setResettingStudent] = useState<string | null>(null);
   const [timeUntilStart, setTimeUntilStart] = useState<number | null>(null);
   const [isElectron, setIsElectron] = useState<boolean | null>(null);
+  const [updatingSettings, setUpdatingSettings] = useState(false);
 
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -177,6 +178,50 @@ export default function ExamDetailPage() {
     }
   };
 
+  const handleToggleSetting = async (key: string, label: string) => {
+    if (!exam || updatingSettings) return;
+    const currentVal = Boolean(exam.settings?.[key]);
+    const newVal = !currentVal;
+    setUpdatingSettings(true);
+    const updatedSettings = {
+      ...(exam.settings || {}),
+      [key]: newVal,
+    };
+    const { error } = await insforge
+      .from('exams')
+      .update({ settings: updatedSettings })
+      .eq('id', exam.id);
+
+    setUpdatingSettings(false);
+    if (error) {
+      addToast(`Failed to update ${label}.`, 'error');
+    } else {
+      setExam((prev: any) => ({ ...prev, settings: updatedSettings }));
+      addToast(
+        `${label} is now ${newVal ? 'ENABLED' : 'DISABLED'} for examinees.`,
+        'success'
+      );
+    }
+  };
+
+  const handleExtendTime = async (extraMinutes: number) => {
+    if (!exam || updatingSettings) return;
+    const newDuration = (exam.duration || 60) + extraMinutes;
+    setUpdatingSettings(true);
+    const { error } = await insforge
+      .from('exams')
+      .update({ duration: newDuration })
+      .eq('id', exam.id);
+
+    setUpdatingSettings(false);
+    if (error) {
+      addToast('Failed to extend exam duration.', 'error');
+    } else {
+      setExam((prev: any) => ({ ...prev, duration: newDuration }));
+      addToast(`Exam duration extended by ${extraMinutes} minutes! Live examinees will automatically receive the added time.`, 'success');
+    }
+  };
+
   if (loading) {
     return (
       <div className="max-w-3xl mx-auto animate-fade-in space-y-6">
@@ -224,6 +269,7 @@ export default function ExamDetailPage() {
     { icon: Award, label: 'Maximum Marks', value: exam.total_marks },
     { icon: Target, label: 'Passing Marks', value: exam.passing_marks },
     { icon: CheckCircle2, label: 'Attempts Allowed', value: exam.attempts_allowed },
+    { icon: Clipboard, label: 'Copy & Paste', value: exam.settings?.allowCopyPaste ? 'Allowed' : 'Blocked' },
   ];
 
   return (
@@ -291,6 +337,162 @@ export default function ExamDetailPage() {
           </ul>
         </div>
       </section>
+
+      {/* ── Live Exam Controls & Settings (Faculty / Admin only) ── */}
+      {isFacultyOrAdmin && (
+        <section className="mb-6 bg-surface border border-border rounded-lg p-5">
+          <div className="flex items-center justify-between mb-4 pb-3 border-b border-border">
+            <div>
+              <h2 className="text-sm font-semibold text-text flex items-center gap-2">
+                <Sliders size={16} className="text-primary" />
+                Live Exam Controls & Settings
+              </h2>
+              <p className="text-xs text-text-secondary mt-0.5">
+                Changes apply in real time to all active examinees currently taking this exam.
+              </p>
+            </div>
+            {exam.status === 'live' && (
+              <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Live Session Active
+              </span>
+            )}
+          </div>
+
+          <div className="space-y-4">
+            {/* Setting 1: Copy & Paste */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <div className="text-sm font-medium text-text flex items-center gap-2">
+                  <Clipboard size={14} className="text-text-muted" />
+                  Allow Copy & Paste
+                </div>
+                <p className="text-xs text-text-secondary">
+                  Permit students to copy and paste text during this exam. When disabled, clipboard operations and text selection are restricted.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleToggleSetting('allowCopyPaste', 'Allow Copy & Paste')}
+                disabled={updatingSettings}
+                className={`toggle-switch flex-shrink-0 ${exam.settings?.allowCopyPaste ? 'active' : ''}`}
+                title={exam.settings?.allowCopyPaste ? 'Click to disable' : 'Click to enable'}
+              />
+            </div>
+
+            {/* Setting 2: Show Result Immediately */}
+            <div className="flex items-center justify-between gap-4 pt-3 border-t border-border">
+              <div className="space-y-0.5">
+                <div className="text-sm font-medium text-text flex items-center gap-2">
+                  <Eye size={14} className="text-text-muted" />
+                  Show Result Immediately
+                </div>
+                <p className="text-xs text-text-secondary">
+                  Show marks and pass/fail status immediately after student submits the exam.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleToggleSetting('showResultImmediately', 'Show Result Immediately')}
+                disabled={updatingSettings}
+                className={`toggle-switch flex-shrink-0 ${exam.settings?.showResultImmediately !== false ? 'active' : ''}`}
+                title="Toggle immediate result display"
+              />
+            </div>
+
+            {/* Setting 3: Allow Answer Review */}
+            <div className="flex items-center justify-between gap-4 pt-3 border-t border-border">
+              <div className="space-y-0.5">
+                <div className="text-sm font-medium text-text flex items-center gap-2">
+                  <CheckSquare size={14} className="text-text-muted" />
+                  Allow Answer Review
+                </div>
+                <p className="text-xs text-text-secondary">
+                  Allow students to review their submitted answers and correct answers after finishing.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleToggleSetting('allowAnswerReview', 'Allow Answer Review')}
+                disabled={updatingSettings}
+                className={`toggle-switch flex-shrink-0 ${exam.settings?.allowAnswerReview !== false ? 'active' : ''}`}
+                title="Toggle answer review"
+              />
+            </div>
+
+            {/* Setting 4: Auto Submit on Time End */}
+            <div className="flex items-center justify-between gap-4 pt-3 border-t border-border">
+              <div className="space-y-0.5">
+                <div className="text-sm font-medium text-text flex items-center gap-2">
+                  <Clock size={14} className="text-text-muted" />
+                  Auto-Submit on Time End
+                </div>
+                <p className="text-xs text-text-secondary">
+                  Automatically force-submit students&apos; tests when exam timer expires.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleToggleSetting('autoSubmitOnTimeEnd', 'Auto Submit on Time End')}
+                disabled={updatingSettings}
+                className={`toggle-switch flex-shrink-0 ${exam.settings?.autoSubmitOnTimeEnd !== false ? 'active' : ''}`}
+                title="Toggle auto submit"
+              />
+            </div>
+
+            {/* Setting 5: Negative Marking */}
+            <div className="flex items-center justify-between gap-4 pt-3 border-t border-border">
+              <div className="space-y-0.5">
+                <div className="text-sm font-medium text-text flex items-center gap-2">
+                  <AlertTriangle size={14} className="text-text-muted" />
+                  Negative Marking ({exam.settings?.negativeMarkPercentage || 25}%)
+                </div>
+                <p className="text-xs text-text-secondary">
+                  Deduct marks for incorrect answers.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleToggleSetting('enableNegativeMarking', 'Negative Marking')}
+                disabled={updatingSettings}
+                className={`toggle-switch flex-shrink-0 ${exam.settings?.enableNegativeMarking ? 'active' : ''}`}
+                title="Toggle negative marking"
+              />
+            </div>
+
+            {/* Live Time Extension */}
+            <div className="pt-3 border-t border-border">
+              <div className="flex items-center justify-between gap-4 mb-2">
+                <div className="space-y-0.5">
+                  <div className="text-sm font-medium text-text flex items-center gap-2">
+                    <Clock size={14} className="text-primary" />
+                    Extend Exam Duration
+                  </div>
+                  <p className="text-xs text-text-secondary">
+                    Add extra minutes live. Active examinees receive the extra time automatically.
+                  </p>
+                </div>
+                <div className="text-xs font-mono font-medium text-text px-2.5 py-1 bg-bg border border-border rounded-md">
+                  Current: {exam.duration}m
+                </div>
+              </div>
+              <div className="flex items-center gap-2 mt-2">
+                {[5, 10, 15, 30].map(mins => (
+                  <button
+                    key={mins}
+                    type="button"
+                    onClick={() => handleExtendTime(mins)}
+                    disabled={updatingSettings}
+                    className="px-3 py-1.5 text-xs font-medium bg-surface border border-border rounded-md hover:bg-primary/5 hover:border-primary/40 hover:text-primary transition-colors disabled:opacity-50"
+                  >
+                    +{mins} mins
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Start Exam (student only) */}
       {isStudent && (

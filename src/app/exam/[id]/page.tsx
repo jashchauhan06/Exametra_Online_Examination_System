@@ -131,10 +131,15 @@ export default function ExamTakePage() {
     (typeof window !== 'undefined' && localStorage.getItem('exametra_admin_allow_copy_paste') === 'true')
   );
 
+  const isCopyPasteAllowedRef = useRef(isCopyPasteAllowed);
+  useEffect(() => {
+    isCopyPasteAllowedRef.current = isCopyPasteAllowed;
+  }, [isCopyPasteAllowed]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Block PrintScreen key
-      if (e.key === 'PrintScreen' || e.code === 'PrintScreen') {
+      if (e.key === 'PrintScreen' || e.code === 'PrintScreen' || e.keyCode === 44) {
         e.preventDefault();
         navigator.clipboard.writeText('Screenshots are disabled.');
         triggerViolation("Screenshots are strictly prohibited.");
@@ -147,12 +152,12 @@ export default function ExamTakePage() {
         triggerViolation("Screenshots are strictly prohibited.");
       }
 
-      // Block Copy/Paste/Print unless allowed
-      if ((e.metaKey || e.ctrlKey)) {
-        if (['p', 'P'].includes(e.key)) {
+      // Block Copy/Paste/Print/Save unless allowed
+      if (e.metaKey || e.ctrlKey) {
+        if (['p', 'P', 's', 'S'].includes(e.key)) {
           e.preventDefault();
-          addToast("Printing is not allowed during exam", "error");
-        } else if (['c', 'v', 'C', 'V'].includes(e.key) && !isCopyPasteAllowed) {
+          addToast("Action is not allowed during exam", "error");
+        } else if (['c', 'v', 'x', 'C', 'V', 'X'].includes(e.key) && !isCopyPasteAllowedRef.current) {
           e.preventDefault();
           addToast("Copy and paste is not allowed during exam", "error");
         }
@@ -162,29 +167,96 @@ export default function ExamTakePage() {
     const handleBlur = () => {
       setIsWindowFocused(false);
       triggerViolation("Window focus lost. Please return immediately.");
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
     };
 
     const handleFocus = () => {
       setIsWindowFocused(true);
     };
 
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        addToast('Warning: Do not switch tabs during the exam!', 'error');
+        triggerViolation("Your test will end if you go out");
+        if (document.fullscreenElement) {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+    };
+
     // Block right click if copy/paste not allowed
     const handleContextMenu = (e: MouseEvent) => {
-      if (!isCopyPasteAllowed) {
+      if (!isCopyPasteAllowedRef.current) {
         e.preventDefault();
       }
+    };
+
+    const handleCopy = (e: ClipboardEvent) => {
+      if (!isCopyPasteAllowedRef.current) {
+        e.preventDefault();
+        addToast("Copying is not allowed during the exam.", "error");
+      }
+    };
+
+    const handleCut = (e: ClipboardEvent) => {
+      if (!isCopyPasteAllowedRef.current) {
+        e.preventDefault();
+      }
+    };
+
+    const handlePaste = (e: ClipboardEvent) => {
+      if (!isCopyPasteAllowedRef.current) {
+        e.preventDefault();
+        addToast("Pasting is not allowed during the exam.", "error");
+      }
+    };
+
+    const handleSelectStart = (e: Event) => {
+      if (!isCopyPasteAllowedRef.current) {
+        const target = e.target as HTMLElement | null;
+        if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+          return;
+        }
+        e.preventDefault();
+      }
+    };
+
+    const handleDragStart = (e: DragEvent) => {
+      if (!isCopyPasteAllowedRef.current) {
+        e.preventDefault();
+      }
+    };
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
     };
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('blur', handleBlur);
     window.addEventListener('focus', handleFocus);
     window.addEventListener('contextmenu', handleContextMenu);
+    window.addEventListener('copy', handleCopy);
+    window.addEventListener('cut', handleCut);
+    window.addEventListener('paste', handlePaste);
+    document.addEventListener('selectstart', handleSelectStart);
+    document.addEventListener('dragstart', handleDragStart);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('blur', handleBlur);
       window.removeEventListener('focus', handleFocus);
       window.removeEventListener('contextmenu', handleContextMenu);
+      window.removeEventListener('copy', handleCopy);
+      window.removeEventListener('cut', handleCut);
+      window.removeEventListener('paste', handlePaste);
+      document.removeEventListener('selectstart', handleSelectStart);
+      document.removeEventListener('dragstart', handleDragStart);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [triggerViolation, addToast, isCopyPasteAllowed]);
 
@@ -234,11 +306,12 @@ export default function ExamTakePage() {
 
       let currentAttemptId = existing?.id;
       if (!existing && !attemptId) {
-        const { data: newAtt } = await insforge.from('exam_attempts').insert({
+        const { data: newAtt, error: newAttErr } = await insforge.from('exam_attempts').insert([{
           exam_id: examId,
           student_id: user!.id,
           status: 'in-progress'
-        }).select().single();
+        }]).select().single();
+        if (newAttErr) console.error('Error creating attempt:', newAttErr);
         if (newAtt) currentAttemptId = newAtt.id;
       }
       setAttemptId(currentAttemptId || null);
@@ -311,68 +384,62 @@ export default function ExamTakePage() {
     }
 
     loadData();
-
-    // Anti-cheat: Fullscreen & Disable Screenshots
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'PrintScreen' || e.keyCode === 44) {
-        e.preventDefault();
-        navigator.clipboard.writeText(''); 
-        addToast('Screenshots are disabled during the exam.', 'error');
-      }
-      if ((e.ctrlKey || e.metaKey) && ['c', 'v', 'x', 'p', 's'].includes(e.key.toLowerCase())) {
-        e.preventDefault();
-      }
-    };
-
-    const handleContextMenu = (e: MouseEvent) => e.preventDefault();
-    const handleCopy = (e: ClipboardEvent) => e.preventDefault();
-    const handleSelectStart = (e: Event) => e.preventDefault();
-    const handleDragStart = (e: DragEvent) => e.preventDefault();
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        addToast('Warning: Do not switch tabs during the exam!', 'error');
-        triggerViolation("Your test will end if you go out");
-        if (document.fullscreenElement) {
-          document.exitFullscreen().catch(() => {});
-        }
-      }
-    };
-
-    const handleWindowBlur = () => {
-      addToast('Warning: Exam window lost focus!', 'error');
-      triggerViolation("Your test will end if you go out");
-      if (document.fullscreenElement) {
-        document.exitFullscreen().catch(() => {});
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('contextmenu', handleContextMenu);
-    window.addEventListener('copy', handleCopy);
-    window.addEventListener('blur', handleWindowBlur);
-    document.addEventListener('selectstart', handleSelectStart);
-    document.addEventListener('dragstart', handleDragStart);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    // Warn before leaving
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      e.preventDefault();
-    };
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('contextmenu', handleContextMenu);
-      window.removeEventListener('copy', handleCopy);
-      window.removeEventListener('blur', handleWindowBlur);
-      document.removeEventListener('selectstart', handleSelectStart);
-      document.removeEventListener('dragstart', handleDragStart);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
+
+  // Poll for live exam updates (settings, duration, etc.) from faculty while exam is in progress
+  useEffect(() => {
+    if (!examId || loadingData) return;
+
+    const pollLiveExam = async () => {
+      const { data: latestExam } = await insforge
+        .from('exams')
+        .select('settings, duration')
+        .eq('id', examId)
+        .single();
+
+      if (latestExam) {
+        setExam((prev: any) => {
+          if (!prev) return prev;
+          
+          let changed = false;
+          const next = { ...prev };
+
+          // Check if settings changed
+          if (latestExam.settings && JSON.stringify(prev.settings) !== JSON.stringify(latestExam.settings)) {
+            const oldCopyPaste = Boolean(prev.settings?.allowCopyPaste);
+            const newCopyPaste = Boolean(latestExam.settings?.allowCopyPaste);
+            if (oldCopyPaste !== newCopyPaste) {
+              addToast(
+                newCopyPaste 
+                  ? 'Instructor enabled copy and paste for this exam.' 
+                  : 'Instructor disabled copy and paste for this exam.',
+                'info'
+              );
+            }
+            next.settings = latestExam.settings;
+            changed = true;
+          }
+
+          // Check if duration was extended
+          if (latestExam.duration && latestExam.duration !== prev.duration) {
+            const diffMins = latestExam.duration - prev.duration;
+            if (diffMins > 0) {
+              setTimeRemaining(curr => curr + diffMins * 60);
+              addToast(`Instructor extended exam time by ${diffMins} minute(s).`, 'info');
+            }
+            next.duration = latestExam.duration;
+            changed = true;
+          }
+
+          return changed ? next : prev;
+        });
+      }
+    };
+
+    const interval = setInterval(pollLiveExam, 3000);
+    return () => clearInterval(interval);
+  }, [examId, loadingData, addToast]);
 
   // Timer
   useEffect(() => {
@@ -695,14 +762,29 @@ export default function ExamTakePage() {
     let resData: any = null;
     let resError: any = null;
 
-    const { data: existingResults } = await insforge
+    let currentActiveAttemptId = attemptId;
+    if (!currentActiveAttemptId) {
+      const { data: latestAtt } = await insforge.from('exam_attempts')
+        .select('id')
+        .eq('exam_id', exam.id)
+        .eq('student_id', user.id)
+        .order('started_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (latestAtt?.id) {
+        currentActiveAttemptId = latestAtt.id;
+        setAttemptId(latestAtt.id);
+      }
+    }
+
+    const { data: existingResults } = currentActiveAttemptId ? await insforge
       .from('results')
       .select('id')
-      .eq('attempt_id', attemptId)
-      .limit(1);
+      .eq('attempt_id', currentActiveAttemptId)
+      .limit(1) : { data: null };
 
     const resultPayload = {
-      attempt_id: attemptId,
+      attempt_id: currentActiveAttemptId,
       exam_id: exam.id,
       student_id: user.id,
       total_marks: exam.total_marks,
@@ -737,19 +819,21 @@ export default function ExamTakePage() {
       resError = insertRes.error;
     }
 
-    if (resError) console.error('Result save error:', resError);
+    if (resError) console.error('Result save error:', resError?.message || JSON.stringify(resError) || resError);
     
     // Update attempt
-    const { error: attError } = await insforge.from('exam_attempts').update({
-      status: 'submitted',
-      submitted_at: new Date().toISOString(),
-      answers: JSON.parse(JSON.stringify(studentAnswers)),
-      time_spent: timeSpent,
-      is_violation: isForcedViolation,
-      violation_reason: violationReason
-    }).eq('id', attemptId);
+    if (currentActiveAttemptId) {
+      const { error: attError } = await insforge.from('exam_attempts').update({
+        status: 'submitted',
+        submitted_at: new Date().toISOString(),
+        answers: JSON.parse(JSON.stringify(studentAnswers)),
+        time_spent: timeSpent,
+        is_violation: isForcedViolation,
+        violation_reason: violationReason
+      }).eq('id', currentActiveAttemptId);
 
-    if (attError) console.error('Attempt update error:', attError);
+      if (attError) console.error('Attempt update error:', attError?.message || attError);
+    }
 
     // Clean up localStorage
     localStorage.removeItem(`exam_${examId}_state`);
@@ -1071,9 +1155,7 @@ export default function ExamTakePage() {
           <div className="max-w-2xl mx-auto">
             {/* Question Header */}
             <div className="relative flex items-center justify-between mb-6">
-              {!isCopyPasteAllowed && (
-                <canvas className="absolute inset-0 w-full h-full z-10 opacity-0 cursor-default" aria-hidden="true" />
-              )}
+              <canvas className={`absolute inset-0 w-full h-full z-10 opacity-0 cursor-default ${isCopyPasteAllowed ? 'pointer-events-none' : 'pointer-events-auto'}`} aria-hidden="true" />
               <span className="text-sm font-semibold text-text">
                 Question {currentQ + 1} of {questions.length}
               </span>
@@ -1089,9 +1171,7 @@ export default function ExamTakePage() {
 
             {/* Question Text */}
             <div className={`relative text-[15px] text-text leading-relaxed mb-6 ${isCopyPasteAllowed ? 'select-text' : 'select-none'}`}>
-              {!isCopyPasteAllowed && (
-                <canvas className="absolute inset-0 w-full h-full z-10 opacity-0 cursor-default" aria-hidden="true" />
-              )}
+              <canvas className={`absolute inset-0 w-full h-full z-10 opacity-0 cursor-default ${isCopyPasteAllowed ? 'pointer-events-none' : 'pointer-events-auto'}`} aria-hidden="true" />
               {currentQuestion.text}
             </div>
 
@@ -1179,9 +1259,7 @@ export default function ExamTakePage() {
                         : 'border-border bg-surface hover:border-border-strong'
                     }`}
                   >
-                    {!isCopyPasteAllowed && (
-                      <canvas className="absolute inset-0 w-full h-full z-10 opacity-0 cursor-pointer" aria-hidden="true" />
-                    )}
+                    <canvas className={`absolute inset-0 w-full h-full z-10 opacity-0 cursor-pointer ${isCopyPasteAllowed ? 'pointer-events-none' : 'pointer-events-auto'}`} aria-hidden="true" />
                     <div className={`w-5 h-5 flex-shrink-0 flex items-center justify-center rounded-full border-2 text-xs font-medium ${
                       isSelected
                         ? 'border-primary bg-primary text-white'
