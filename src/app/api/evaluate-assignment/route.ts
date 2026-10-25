@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+import { callAI, extractJsonFromResponse } from '@/lib/ai';
 
 interface AssignmentEvalRequest {
   assignmentTitle: string;
@@ -16,13 +14,6 @@ interface AssignmentEvalRequest {
 
 export async function POST(req: NextRequest) {
   try {
-    if (!process.env.GEMINI_API_KEY) {
-      return NextResponse.json(
-        { error: 'GEMINI_API_KEY is not configured on the server.' },
-        { status: 500 }
-      );
-    }
-
     const body = (await req.json()) as AssignmentEvalRequest;
     const {
       assignmentTitle,
@@ -56,13 +47,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Fallback model chain (same pattern as evaluate-subjective)
-    const modelsToTry = [
-      'gemini-2.5-flash',
-      'gemini-2.0-flash',
-      'gemini-1.5-flash',
-    ];
-
     const systemPrompt = `You are an expert academic evaluator and grading assistant. You evaluate student assignment submissions thoroughly and fairly.
 
 Assignment Title: ${assignmentTitle}
@@ -82,69 +66,32 @@ Return ONLY a valid JSON object with this exact schema:
 {
   "score": number,
   "feedback": string
-}
+}`;
 
-Do NOT include any markdown code blocks, backticks, or extra text outside the JSON.`;
+    let userPrompt: string;
+    let imagePayload: { base64: string; mimeType?: string } | undefined;
 
-    let responseText: string | null = null;
-    let lastError: Error | null = null;
-
-    for (const modelName of modelsToTry) {
-      try {
-        const model = genAI.getGenerativeModel({ model: modelName });
-
-        let result;
-
-        if (submissionType === 'image' && imageBase64) {
-          // Multimodal: image + text prompt
-          const imagePart = {
-            inlineData: {
-              data: imageBase64,
-              mimeType: imageMimeType || 'image/jpeg',
-            },
-          };
-
-          result = await model.generateContent([
-            systemPrompt + '\n\nThe student has submitted an image-based response. Analyze the image content carefully and evaluate it.',
-            imagePart,
-          ]);
-        } else {
-          // Text-only prompt
-          const studentContent = submissionType === 'pdf'
-            ? `[Extracted from PDF]\n${textContent}`
-            : textContent;
-
-          result = await model.generateContent(
-            `${systemPrompt}\n\nStudent's Submission:\n${studentContent}`
-          );
-        }
-
-        const response = await result.response;
-        responseText = response.text().trim();
-        break; // success
-      } catch (err: any) {
-        console.warn(`Model ${modelName} failed:`, err.message);
-        lastError = err;
-      }
+    if (submissionType === 'image' && imageBase64) {
+      userPrompt = 'The student has submitted an image-based response. Carefully inspect and analyze the attached image of the student\'s work, then evaluate it according to the criteria.';
+      imagePayload = {
+        base64: imageBase64,
+        mimeType: imageMimeType || 'image/jpeg',
+      };
+    } else {
+      const studentContent = submissionType === 'pdf'
+        ? `[Extracted from PDF]\n${textContent}`
+        : textContent;
+      userPrompt = `Student's Submission:\n${studentContent}`;
     }
 
-    if (!responseText) {
-      throw lastError || new Error('All fallback models failed.');
-    }
+    const responseText = await callAI({
+      systemPrompt,
+      prompt: userPrompt,
+      image: imagePayload,
+      jsonMode: true,
+    });
 
-    // Clean up potential markdown formatting
-    let jsonString = responseText;
-    if (jsonString.startsWith('```')) {
-      const firstNewline = jsonString.indexOf('\n');
-      const lastBacktick = jsonString.lastIndexOf('```');
-      if (firstNewline !== -1 && lastBacktick > firstNewline) {
-        jsonString = jsonString.substring(firstNewline + 1, lastBacktick).trim();
-      } else {
-        jsonString = jsonString.replace(/^```(json)?|```$/g, '').trim();
-      }
-    }
-
-    const evaluation = JSON.parse(jsonString);
+    const evaluation = extractJsonFromResponse<{ score: number; feedback: string }>(responseText);
 
     if (typeof evaluation.score !== 'number' || typeof evaluation.feedback !== 'string') {
       throw new Error('Invalid evaluation format returned by AI');
