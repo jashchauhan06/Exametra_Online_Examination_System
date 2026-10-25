@@ -115,18 +115,18 @@ export default function CreateExamPage() {
   const [pickerTopic, setPickerTopic] = useState('');
   const [pickerType, setPickerType] = useState('');
 
+  const allQuestionsInTopic = useMemo(() => {
+    return allQuestions.filter(q => {
+      if (details.subjectId && q.subject_id !== details.subjectId) return false;
+      if (pickerTopic && q.topic !== pickerTopic) return false;
+      if (pickerType && q.type !== pickerType) return false;
+      if (pickerSearch && !q.text.toLowerCase().includes(pickerSearch.toLowerCase())) return false;
+      return true;
+    });
+  }, [allQuestions, details.subjectId, pickerTopic, pickerType, pickerSearch]);
+
   const subjectQs = useMemo(() => {
-    let filtered = allQuestions.filter(q => q.subject_id === details.subjectId && !selectedQuestionIds.includes(q.id));
-    
-    if (pickerSearch) {
-      filtered = filtered.filter(q => q.text.toLowerCase().includes(pickerSearch.toLowerCase()));
-    }
-    if (pickerTopic) {
-      filtered = filtered.filter(q => q.topic === pickerTopic);
-    }
-    if (pickerType) {
-      filtered = filtered.filter(q => q.type === pickerType);
-    }
+    let filtered = [...allQuestionsInTopic];
     
     // Sort
     if (pickerSort === 'marks-asc') filtered.sort((a, b) => a.marks - b.marks);
@@ -135,11 +135,11 @@ export default function CreateExamPage() {
       const weight: any = { easy: 1, medium: 2, hard: 3 };
       filtered.sort((a, b) => (weight[a.difficulty] || 0) - (weight[b.difficulty] || 0));
     } else {
-      // newest (assuming id or created_at, fallback to id for stable sort if created_at absent)
+      // newest
       filtered.sort((a, b) => a.id > b.id ? -1 : 1);
     }
     return filtered;
-  }, [allQuestions, details.subjectId, selectedQuestionIds, pickerSearch, pickerSort, pickerTopic, pickerType]);
+  }, [allQuestionsInTopic, pickerSort]);
 
   const availableTopics = useMemo(() => {
     const qs = allQuestions.filter(q => q.subject_id === details.subjectId);
@@ -396,9 +396,16 @@ export default function CreateExamPage() {
                   <div className="flex-1 overflow-y-auto px-5 py-3 min-h-0">
                     {subjectQs.length === 0 ? (
                       <div className="flex flex-col items-center justify-center py-8 text-center">
-                        <p className="text-sm text-text-secondary mb-3">
-                          {details.subjectId ? 'No matching questions found.' : 'Please select a subject first.'}
+                        <p className="text-sm text-text-secondary mb-1">
+                          {allQuestionsInTopic.length > 0 && allQuestionsInTopic.every(q => selectedQuestionIds.includes(q.id))
+                            ? `All ${allQuestionsInTopic.length} questions for "${pickerTopic || 'this filter'}" are already added to this exam!`
+                            : (details.subjectId ? 'No matching questions found.' : 'Please select a subject first.')}
                         </p>
+                        {allQuestionsInTopic.length > 0 && allQuestionsInTopic.every(q => selectedQuestionIds.includes(q.id)) && (
+                          <p className="text-xs text-text-muted mb-3">
+                            Check the exam question list behind this dialog, or clear the filter to pick from other topics.
+                          </p>
+                        )}
                         {details.subjectId && (
                           <button onClick={() => router.push('/question-bank')} className="text-xs text-primary hover:underline">
                             Go to Question Bank to create more
@@ -408,26 +415,61 @@ export default function CreateExamPage() {
                     ) : (
                       <div className="space-y-1.5">
                         <div className="flex justify-between items-center mb-2 px-1">
-                           <span className="text-xs font-medium text-text-secondary">{subjectQs.length} questions available</span>
+                          <span className="text-xs font-medium text-text-secondary">
+                            {subjectQs.length} question{subjectQs.length === 1 ? '' : 's'} available to add
+                          </span>
                         </div>
-                        {subjectQs.map(q => (
-                          <button key={q.id} onClick={() => {
-                            setSelectedQuestionIds(prev => [...prev, q.id]);
-                          }}
-                            className="w-full text-left flex items-start gap-3 px-3 py-2.5 rounded-md border border-border hover:border-primary hover:bg-primary-light transition-colors text-sm group">
-                            <Plus size={14} className="text-primary flex-shrink-0 mt-0.5" />
-                            <div className="flex-1 min-w-0">
-                               <span className="block truncate text-text group-hover:whitespace-normal group-hover:break-words">{q.text}</span>
-                               <div className="flex gap-2 mt-1">
-                                  <span className="text-[10px] uppercase font-semibold text-text-muted bg-bg px-1.5 rounded">{q.type === 'mcq' ? 'MCQ' : q.type === 'true-false' ? 'T/F' : q.type === 'coding' ? '{ }' : q.type === 'subjective' ? 'Subj' : 'Multi'}</span>
-                                  {q.topic && <span className="text-[10px] text-text-muted bg-bg px-1.5 rounded truncate max-w-[100px]">{q.topic}</span>}
-                               </div>
-                            </div>
-                            <span className="text-xs font-medium text-text-muted whitespace-nowrap bg-bg px-2 py-0.5 rounded border border-border flex items-center gap-1.5">
-                               {q.marks}m <span className="w-1 h-1 rounded-full bg-border inline-block"/> {q.difficulty}
-                            </span>
-                          </button>
-                        ))}
+                        {subjectQs.map(q => {
+                          const isAlreadySelected = selectedQuestionIds.includes(q.id);
+                          return (
+                            <button
+                              key={q.id}
+                              onClick={() => {
+                                if (isAlreadySelected) {
+                                  setSelectedQuestionIds(prev => prev.filter(id => id !== q.id));
+                                } else {
+                                  setSelectedQuestionIds(prev => [...prev, q.id]);
+                                }
+                              }}
+                              className={`w-full text-left flex items-start gap-3 px-3 py-2.5 rounded-md border transition-colors text-sm group ${
+                                isAlreadySelected
+                                  ? 'border-primary/50 bg-primary/5 hover:bg-primary/10'
+                                  : 'border-border hover:border-primary hover:bg-primary-light'
+                              }`}
+                            >
+                              <div className="mt-0.5 flex-shrink-0">
+                                {isAlreadySelected ? (
+                                  <span className="inline-flex items-center justify-center w-4 h-4 rounded bg-primary text-white text-[10px] font-bold">✓</span>
+                                ) : (
+                                  <Plus size={14} className="text-primary" />
+                                )}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <span className={`block truncate ${isAlreadySelected ? 'text-primary font-medium' : 'text-text'} group-hover:whitespace-normal group-hover:break-words`}>
+                                  {q.text}
+                                </span>
+                                <div className="flex gap-2 mt-1 items-center">
+                                  <span className="text-[10px] uppercase font-semibold text-text-muted bg-bg px-1.5 rounded">
+                                    {q.type === 'mcq' ? 'MCQ' : q.type === 'true-false' ? 'T/F' : q.type === 'coding' ? '{ }' : q.type === 'subjective' ? 'Subj' : 'Multi'}
+                                  </span>
+                                  {q.topic && (
+                                    <span className="text-[10px] text-text-muted bg-bg px-1.5 rounded truncate max-w-[120px]">
+                                      {q.topic}
+                                    </span>
+                                  )}
+                                  {isAlreadySelected && (
+                                    <span className="text-[10px] font-semibold text-success uppercase tracking-wider">
+                                      Added to exam
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                              <span className="text-xs font-medium text-text-muted whitespace-nowrap bg-bg px-2 py-0.5 rounded border border-border flex items-center gap-1.5">
+                                {q.marks}m <span className="w-1 h-1 rounded-full bg-border inline-block" /> {q.difficulty}
+                              </span>
+                            </button>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
