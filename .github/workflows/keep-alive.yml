@@ -1,0 +1,29 @@
+name: Database Keep-Alive
+
+on:
+  schedule:
+    # Runs every 12 hours (at 00:00 and 12:00 UTC) to prevent idle pause
+    - cron: '0 0,12 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install @insforge/sdk
+
+      - name: Ping InsForge Database
+        env:
+          NEXT_PUBLIC_INSFORGE_URL: ${{ secrets.NEXT_PUBLIC_INSFORGE_URL || 'https://kbia4qk4.us-east.insforge.app' }}
+          INSFORGE_API_KEY: ${{ secrets.INSFORGE_API_KEY || 'ik_73efec7fc1fa3227303d4dc7cb7f6577' }}
+        run: node scripts/keep-alive.mjs
+
