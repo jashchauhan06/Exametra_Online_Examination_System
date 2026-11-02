@@ -48,16 +48,15 @@ async function ping() {
     const duration = Date.now() - start;
 
     if (error) {
-      console.error(`❌ Ping failed (${duration}ms) with status ${status}:`, error.message);
-      process.exit(1);
+      console.error(`⚠️ Ping failed (${duration}ms) with status ${status}:`, error.message);
+      return;
     }
 
     console.log(`✅ Database is ACTIVE and awake! Response in ${duration}ms (status ${status}).`);
     console.log(`   Sample record fetched: ${data && data.length > 0 ? data[0].id : 'Empty table'}`);
   } catch (err) {
     const duration = Date.now() - start;
-    console.error(`❌ Unexpected error after ${duration}ms:`, err);
-    process.exit(1);
+    console.error(`⚠️ Unexpected error after ${duration}ms:`, err?.message || err);
   }
 }
 

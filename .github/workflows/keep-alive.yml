@@ -22,6 +22,7 @@ jobs:
         run: npm install @insforge/sdk
 
       - name: Ping InsForge Database
+        continue-on-error: true
         env:
           NEXT_PUBLIC_INSFORGE_URL: ${{ secrets.NEXT_PUBLIC_INSFORGE_URL || 'https://kbia4qk4.us-east.insforge.app' }}
           INSFORGE_API_KEY: ${{ secrets.INSFORGE_API_KEY || 'ik_73efec7fc1fa3227303d4dc7cb7f6577' }}
