@@ -1,0 +1,40 @@
+Mode: built-in image_gen
+
+Use case: ads-marketing.
+Asset type: Finished high-resolution portrait project poster, approximately 2:3 aspect ratio, for Exametra, an internal online assessment platform. Produce a polished flat poster design filling the image, not a photograph of a printed poster.
+
+Brand context: Exametra has a simple violet rounded-square EX monogram, a black/white interface, and violet accent #8B5CF6. Its implemented features include timed examinations, a question bank, AI-assisted written-answer grading, coding challenges with test cases, text/PDF/image assignments, result feedback and analytics. Its audiences are students, faculty and administrators.
+
+Art direction: premium contemporary editorial technology poster. Off-white canvas, deep charcoal typography, confident violet accents and pale lavender surfaces. Large beautiful sans-serif type with strong typographic hierarchy, meticulous spacing, thin dividers, generous safe margins. Restrained graphic depth and tiny violet geometric details. No busy background, neon cyberpunk, generic stock-photo students or excessive gradients. The result should look like a professionally art-directed university software project showcase.
+
+Composition:
+Top: compact violet EX monogram beside EXAMETRA wordmark; small category label.
+Upper third: striking oversized three-line headline with the final line in violet.
+Center: an elegant conceptual assessment-dashboard illustration, not a claim to be an actual screenshot. A slightly angled clean desktop window with a question card, compact timer glyph, code-bracket panel and a small ascending bar-chart card. Abstract rows/lines rather than tiny fake UI text. Use subtle dimensional shadows and a soft violet circular shape behind it. Keep illustration balanced and avoid covering text.
+Lower third: six feature summaries in a refined aligned 2-column by 3-row grid, each with a small simple violet line icon, clear feature title and concise smaller subtitle. Separate using subtle rules rather than chunky boxes.
+Bottom: dark charcoal horizontal footer band with the audience names in white.
+
+Render only the following copy, exactly spelled and fully legible:
+Brand: "EX" and "EXAMETRA"
+Category: "ONLINE ASSESSMENT PLATFORM"
+Main headline, three lines:
+"Online exams."
+"Assignments."
+"Clear results."
+
+Feature 1 title: "Timed exams"
+Feature 1 subtitle: "Schedule, attempt & review"
+Feature 2 title: "AI-assisted grading"
+Feature 2 subtitle: "Written answers & feedback"
+Feature 3 title: "Coding challenges"
+Feature 3 subtitle: "Run code against test cases"
+Feature 4 title: "Question bank"
+Feature 4 subtitle: "Create, organize & reuse"
+Feature 5 title: "Assignments"
+Feature 5 subtitle: "Text, PDF & image submissions"
+Feature 6 title: "Results & analytics"
+Feature 6 subtitle: "Scores, feedback & progress"
+
+Footer: "STUDENTS  /  FACULTY  /  ADMINISTRATORS"
+
+Constraints: all text accurate, no additional words, no random letters, no invented statistics, no certifications, no security guarantees, no fake QR code, no public signup call-to-action, no invented URLs, no watermark. Maintain strong readability and balanced breathing room. Finished crisp bitmap poster with an opaque background.
