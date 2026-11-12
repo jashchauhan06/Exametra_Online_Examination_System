@@ -2,12 +2,18 @@
 
 import React, { useState, useCallback } from 'react';
 import dynamic from 'next/dynamic';
+import loader from '@monaco-editor/loader';
+import * as monaco from 'monaco-editor';
 import LanguageSelector from './LanguageSelector';
 import { DEFAULT_STARTER_CODE } from '@/lib/judge0';
 import type { CodingLanguage } from '@/types';
 import { Maximize2, Minimize2, RotateCcw, Settings } from 'lucide-react';
 
 const Editor = dynamic(() => import('@monaco-editor/react'), { ssr: false });
+
+// The default loader fetches Monaco from jsDelivr, which can be unavailable in
+// the desktop exam environment or on restricted networks. Use the local package.
+loader.config({ monaco });
 
 const LANG_TO_MONACO: Record<string, string> = {
   c: 'c',
