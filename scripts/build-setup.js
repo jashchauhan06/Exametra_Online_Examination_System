@@ -2,8 +2,34 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-console.log('=== [1/4] Packaging Electron App with electron-packager ===');
-execSync('npx electron-packager . Exametra --platform=win32 --arch=x64 --out=dist-electron --overwrite', { stdio: 'inherit' });
+console.log('=== [1/4] Packaging Electron App from the installed runtime ===');
+const electronDist = path.resolve('node_modules/electron/dist');
+const packagedApp = path.resolve('dist-electron/Exametra-win32-x64');
+const packagedResources = path.join(packagedApp, 'resources');
+const packagedSource = path.join(packagedResources, 'app');
+const electronExe = path.join(electronDist, 'electron.exe');
+
+if (!fs.existsSync(electronExe)) {
+  throw new Error('Electron runtime is missing. Install dependencies before building the installer.');
+}
+
+fs.rmSync(packagedApp, { recursive: true, force: true });
+fs.mkdirSync(path.dirname(packagedApp), { recursive: true });
+fs.cpSync(electronDist, packagedApp, { recursive: true });
+fs.renameSync(path.join(packagedApp, 'electron.exe'), path.join(packagedApp, 'Exametra.exe'));
+fs.mkdirSync(packagedSource, { recursive: true });
+fs.copyFileSync(path.resolve('main.js'), path.join(packagedSource, 'main.js'));
+
+const appPackage = require(path.resolve('package.json'));
+fs.writeFileSync(path.join(packagedSource, 'package.json'), JSON.stringify({
+  name: appPackage.name,
+  version: appPackage.version,
+  description: appPackage.description,
+  main: 'main.js',
+}, null, 2));
+
+const packagedExe = path.join(packagedApp, 'Exametra.exe');
+fs.copyFileSync(packagedExe, path.resolve('public/Exametra.exe'));
 
 console.log('=== [2/4] Archiving packaged app into zip payload ===');
 const zipPath = path.resolve('public/Exametra-Setup.zip');
