@@ -6,7 +6,9 @@
   "author": "Exametra",
   "description": "Exametra Secure Lockdown Browser",
   "scripts": {
+    "predev": "node scripts/copy-monaco.js",
     "dev": "concurrently \"next dev\" \"npm run lockdown\"",
+    "prebuild": "node scripts/copy-monaco.js",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

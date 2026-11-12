@@ -48,6 +48,7 @@ next-env.d.ts
 *.asar
 /public/*.exe
 /public/*.zip
+/public/monaco/
 SetupStub*.exe
 # InsForge & AI agent skills
 .insforge
