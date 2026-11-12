@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { X, Trash2 } from 'lucide-react';
 import { useToast } from '@/components/ui/toast';
 import { insforge } from '@/lib/insforge';
+import { DEFAULT_STARTER_CODE } from '@/lib/judge0';
 
 interface AiQuestionDialogProps {
   isOpen: boolean;
@@ -48,7 +49,7 @@ export function AiQuestionDialog({ isOpen, onClose, subjects, user, onSave }: Ai
 
   const handleSaveAiQuestions = async () => {
     if (aiQuestions.length === 0) return;
-    const inserts = aiQuestions.map(q => {
+    const inserts = aiQuestions.map((q, questionIndex) => {
       const type = aiParams.type; // Force strict enum from dropdown
       const base: any = {
         text: q.text,
@@ -64,6 +65,19 @@ export function AiQuestionDialog({ isOpen, onClose, subjects, user, onSave }: Ai
         base.options = [];
         base.rubric = q.rubric || '';
         base.expected_answer = q.expected_answer || '';
+      } else if (type === 'coding') {
+        base.options = [];
+        base.coding_languages = ['python'];
+        base.starter_code = { python: DEFAULT_STARTER_CODE.python };
+        base.test_cases = (q.test_cases || []).map((testCase: any, caseIndex: number) => ({
+          id: `ai_tc_${Date.now()}_${questionIndex}_${caseIndex}`,
+          input: String(testCase.input ?? ''),
+          expected_output: String(testCase.expected_output ?? ''),
+          is_hidden: Boolean(testCase.is_hidden),
+          points: Math.max(1, Number(testCase.points) || 1),
+        }));
+        base.time_limit_ms = 2000;
+        base.memory_limit_kb = 128000;
       } else {
         base.options = q.options || [];
       }
@@ -125,6 +139,7 @@ export function AiQuestionDialog({ isOpen, onClose, subjects, user, onSave }: Ai
                     <option value="mcq">Multiple Choice</option>
                     <option value="true-false">True / False</option>
                     <option value="multi-select">Multiple Select</option>
+                    <option value="coding">Coding</option>
                     <option value="subjective">Subjective (AI Eval)</option>
                   </select>
                 </div>
@@ -171,6 +186,18 @@ export function AiQuestionDialog({ isOpen, onClose, subjects, user, onSave }: Ai
                       <div className="mt-3 text-xs">
                         <span className="text-text-muted">Expected Answer:</span>
                         <p className="mt-1 text-text-secondary whitespace-pre-wrap">{q.expected_answer}</p>
+                      </div>
+                    )}
+                    {q.test_cases?.length > 0 && (
+                      <div className="mt-3 space-y-2">
+                        <div className="text-[11px] font-semibold text-text-muted uppercase">Coding test cases ({q.test_cases.length})</div>
+                        {q.test_cases.map((testCase: any, j: number) => (
+                          <div key={j} className="grid grid-cols-2 gap-2 rounded bg-bg p-2 font-mono text-xs">
+                            <div><span className="text-text-muted">Input: </span><span className="whitespace-pre-wrap">{testCase.input}</span></div>
+                            <div><span className="text-text-muted">Expected: </span><span className="whitespace-pre-wrap">{testCase.expected_output}</span></div>
+                          </div>
+                        ))}
+                        <p className="text-[11px] text-text-muted">Saved with Python as the starter language. Review generated cases before using them in an exam.</p>
                       </div>
                     )}
                   </div>

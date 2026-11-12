@@ -11,6 +11,8 @@ import type { Exam } from '@/types';
  */
 export function getDynamicExamStatus(exam: Exam): Exam['status'] {
   if (exam.status === 'draft') return 'draft';
+  // A manually ended exam must remain closed even if its scheduled window is open.
+  if (exam.status === 'completed' || exam.status === 'cancelled') return exam.status;
 
   // Parse exam date and startTime
   // exam.date is 'YYYY-MM-DD'

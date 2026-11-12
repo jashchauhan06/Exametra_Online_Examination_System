@@ -394,11 +394,20 @@ export default function ExamTakePage() {
     const pollLiveExam = async () => {
       const { data: latestExam } = await insforge
         .from('exams')
-        .select('settings, duration')
+        .select('settings, duration, status')
         .eq('id', examId)
         .single();
 
       if (latestExam) {
+        if (latestExam.status === 'completed' || latestExam.status === 'cancelled') {
+          setExam((prev: any) => prev ? { ...prev, status: latestExam.status } : prev);
+          if (latestExam.status === 'completed') {
+            addToast('The instructor ended this test. Your answers are being submitted.', 'info');
+            submitRef.current();
+          }
+          return;
+        }
+
         setExam((prev: any) => {
           if (!prev) return prev;
           

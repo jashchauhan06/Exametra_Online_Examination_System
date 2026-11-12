@@ -8,7 +8,7 @@ import { useToast } from '@/components/ui/toast';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
-import { ArrowLeft, Calendar, Clock, FileText, User, Award, Target, CheckCircle2, RotateCcw, Shield, AlertTriangle, Trash2, Clipboard, Sliders, Eye, CheckSquare } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, FileText, User, Award, Target, CheckCircle2, RotateCcw, Shield, AlertTriangle, Trash2, Clipboard, Sliders, Eye, CheckSquare, Square } from 'lucide-react';
 import { insforge } from '@/lib/insforge';
 import { getDynamicExamStatus } from '@/lib/utils/exam-status';
 
@@ -19,6 +19,7 @@ export default function ExamDetailPage() {
   const { addToast } = useToast();
   const [acknowledged, setAcknowledged] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [endingExam, setEndingExam] = useState(false);
 
   const [exam, setExam] = useState<any>(null);
   const [subject, setSubject] = useState<any>(null);
@@ -222,6 +223,23 @@ export default function ExamDetailPage() {
     }
   };
 
+  const handleEndExam = async () => {
+    if (!exam || endingExam) return;
+    setEndingExam(true);
+    try {
+      const { error } = await insforge.from('exams').update({ status: 'completed' }).eq('id', exam.id);
+      if (error) throw error;
+
+      setExam((prev: any) => ({ ...prev, status: 'completed' }));
+      addToast('Test ended. Students can no longer continue or enter.', 'success');
+    } catch (error) {
+      console.error('Failed to end exam:', error);
+      addToast('Failed to end the test. Please try again.', 'error');
+    } finally {
+      setEndingExam(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="max-w-3xl mx-auto animate-fade-in space-y-6">
@@ -360,6 +378,22 @@ export default function ExamDetailPage() {
           </div>
 
           <div className="space-y-4">
+            {exam.status === 'live' && (
+              <div className="flex items-center justify-between gap-4 rounded-md border border-error/20 bg-error/5 p-3">
+                <div>
+                  <div className="text-sm font-medium text-text">End this test now</div>
+                  <p className="text-xs text-text-secondary mt-0.5">Stops active attempts and prevents students from starting.</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleEndExam}
+                  disabled={endingExam || updatingSettings}
+                  className="flex-shrink-0 flex items-center gap-1.5 rounded-md bg-error px-3 py-2 text-xs font-semibold text-white hover:bg-error/90 disabled:opacity-50"
+                >
+                  <Square size={13} fill="currentColor" /> {endingExam ? 'Ending…' : 'End Test'}
+                </button>
+              </div>
+            )}
             {/* Setting 1: Copy & Paste */}
             <div className="flex items-center justify-between gap-4">
               <div className="space-y-0.5">

@@ -47,6 +47,20 @@ Format for each item in the array:
   "expected_answer": "Model expected answer here",
   "rubric": "Grading criteria here"
 }`;
+    } else if (type === 'coding') {
+      typeInstruction = `Generate ${count} programming problems suitable for an online coding judge.
+Each problem statement must include a clear task, Input Format, Output Format, and Constraints. Use standard input/output (stdin/stdout), and describe a deterministic solution.
+Return each item in this shape:
+{
+  "text": "Complete problem statement including input/output format and constraints",
+  "marks": 5,
+  "type": "Coding",
+  "test_cases": [
+    { "input": "sample stdin", "expected_output": "exact expected stdout", "is_hidden": false, "points": 1 },
+    { "input": "another stdin including an edge case", "expected_output": "exact expected stdout", "is_hidden": true, "points": 1 }
+  ]
+}
+Provide 3-5 valid, mutually consistent test cases. Include at least one edge case. Test case input must match the stated input format; expected_output must match the stated output format exactly. Do not include code or answer keys in the problem statement.`;
     } else {
       typeInstruction = `Generate ${count} Multiple Choice questions.
 Format for each item in the array:
