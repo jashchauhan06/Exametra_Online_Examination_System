@@ -29,7 +29,11 @@ fs.writeFileSync(path.join(packagedSource, 'package.json'), JSON.stringify({
 }, null, 2));
 
 const packagedExe = path.join(packagedApp, 'Exametra.exe');
-fs.copyFileSync(packagedExe, path.resolve('public/Exametra.exe'));
+const publicExe = path.resolve('public/Exametra.exe');
+const buildTime = new Date();
+fs.utimesSync(packagedExe, buildTime, buildTime);
+fs.copyFileSync(packagedExe, publicExe);
+fs.utimesSync(publicExe, buildTime, buildTime);
 
 console.log('=== [2/4] Archiving packaged app into zip payload ===');
 const zipPath = path.resolve('public/Exametra-Setup.zip');
